@@ -9,12 +9,32 @@ namespace RetroPlatform
         public Transform player;
         public Transform roof;
         public Transform floor;
-        
+
+        private GameObject[] backgrounds;
+        private GameObject[] middlegrounds;
+
+        private void Awake()
+        {
+            backgrounds = GameObject.FindGameObjectsWithTag("Background");
+            middlegrounds = GameObject.FindGameObjectsWithTag("Middleground");
+        }
+
         void LateUpdate()
         {
             transform.position = new Vector3(player.transform.position.x + xOffset, transform.position.y + yOffset, -10);
-            roof.position =  new Vector3(player.transform.position.x, roof.transform.position.y, -10);
-            floor.position =  new Vector3(player.transform.position.x, floor.transform.position.y, -10);
+            roof.position = new Vector3(player.transform.position.x, roof.transform.position.y, -10);
+            floor.position = new Vector3(player.transform.position.x, floor.transform.position.y, -10);
+
+            SetPosition(backgrounds, 3);
+            SetPosition(middlegrounds, 30);
+        }
+
+        private void SetPosition(GameObject[] gameObjectArray, float factor)
+        {
+            for (int i = 0; i < gameObjectArray.Length; i++)
+            {
+                gameObjectArray[i].transform.position = new Vector3(player.transform.position.x / factor + i * 19 - 10, gameObjectArray[i].transform.position.y, gameObjectArray[i].transform.position.z);
+            }
         }
     }
 }
