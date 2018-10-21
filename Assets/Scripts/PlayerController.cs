@@ -12,7 +12,6 @@ namespace RetroPlatform
         
         public Player playerCore;
 
-        // Use this for initialization
         void Awake()
         {
             playerRigidBody2D = (Rigidbody2D)GetComponent(typeof(Rigidbody2D));
@@ -22,7 +21,6 @@ namespace RetroPlatform
             playerCore = new Player(new UnityEnvironmentData());
         }
 
-        // Update is called once per frame
         void Update()
         {
             MovePlayer();
