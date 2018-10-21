@@ -26,6 +26,14 @@ namespace RetroPlatform
             MovePlayer();
         }
 
+        void OnCollisionEnter2D(Collision2D col)
+        {
+            if (col.gameObject.CompareTag("FloorLimit"))
+            {
+                Debug.Log("Caiu no buraco!");
+            }
+        }
+
         private void MovePlayer()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
