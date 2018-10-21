@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace RetroPlatform
 {
@@ -9,8 +10,9 @@ namespace RetroPlatform
         private Rigidbody2D playerRigidBody2D;
         private Animator playerAnim;
         private SpriteRenderer playerSpriteImage;
-        
-        public Player playerCore;
+        private Player playerCore;
+
+        public GameObject UILives;
 
         void Awake()
         {
@@ -19,6 +21,18 @@ namespace RetroPlatform
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
             playerCore = new Player(new UnityEnvironmentData());
+            playerCore.OnLivesChanged += PlayerCore_OnLivesChanged;
+
+            playerCore.AddLives(3);
+        }
+
+        private void PlayerCore_OnLivesChanged(int totalLives)
+        {
+            var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
+            for (int i = 0; i < lives.Length; i++)
+            {
+                lives[i].SetAlpha(i < totalLives ? 100f : 0f);
+            }
         }
 
         void Update()
@@ -31,6 +45,7 @@ namespace RetroPlatform
             if (col.gameObject.CompareTag("FloorLimit"))
             {
                 Debug.Log("Caiu no buraco!");
+                playerCore.GetDamage(1);
             }
         }
 

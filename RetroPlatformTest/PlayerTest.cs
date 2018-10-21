@@ -139,6 +139,61 @@ namespace RetroPlatformTest
             Assert.True(isRunning);
         }
 
+        [Fact]
+        public void GetLivesShouldConsiderTotalAmount()
+        {
+            Player player = CreateUser();
+
+            player.AddLives(2);
+            player.AddLives(1);
+            var totalLives = player.GetLives();
+
+            Assert.Equal(3, totalLives);
+        }
+
+        [Fact]
+        public void GetLivesShouldConsiderDamages()
+        {
+            Player player = CreateUser();
+
+            player.AddLives(4);
+            player.GetDamage(2);
+            var totalLives = player.GetLives();
+
+            Assert.Equal(2, totalLives);
+        }
+
+        [Fact]
+        public void OnLivesChangedShouldConsiderTotalAmount()
+        {
+            int totalLives = 0;
+            Player player = CreateUser();
+            player.OnLivesChanged += delegate (int lives)
+            {
+                totalLives = lives;
+            };
+
+            player.AddLives(5);
+
+            Assert.Equal(5, totalLives);
+        }
+
+        [Fact]
+        public void OnLivesChangedShouldConsiderDamages()
+        {
+            int totalLives = 0;
+            Player player = CreateUser();
+            player.OnLivesChanged += delegate (int lives)
+            {
+                totalLives = lives;
+            };
+
+            player.AddLives(5);
+            player.GetDamage(2);
+
+            Assert.Equal(3, totalLives);
+        }
+
         private Player CreateUser()
         {
             return new Player(new TestEnvironmentData());

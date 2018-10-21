@@ -11,8 +11,12 @@ namespace RetroPlatform
         public float speed = 400f;
         public float jumpSpeed = 20;
 
-        bool isJumping = false;
-        bool isRunning = false;
+        public delegate void LivesChanged(int totalLives);
+        public event LivesChanged OnLivesChanged;
+
+        bool isJumping;
+        bool isRunning;
+        int lives;
         Direction currentDirection = Direction.Rigth;
 
         public Player(IEnvironmentData environmentData)
@@ -50,6 +54,23 @@ namespace RetroPlatform
         public bool IsRunning()
         {
             return isRunning;
+        }
+
+        public void AddLives(int lives)
+        {
+            this.lives += lives;
+            if (OnLivesChanged != null) OnLivesChanged(lives);
+        }
+
+        public object GetLives()
+        {
+            return lives;
+        }
+
+        public void GetDamage(int damage)
+        {
+            lives -= damage;
+            if (OnLivesChanged != null) OnLivesChanged(lives);
         }
     }
 }
