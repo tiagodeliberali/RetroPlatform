@@ -7,6 +7,7 @@ TagManager:
   - FloorLimit
   - Background
   - Middleground
+  - Floor
   layers:
   - Default
   - TransparentFX

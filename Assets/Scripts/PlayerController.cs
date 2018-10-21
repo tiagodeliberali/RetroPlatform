@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace RetroPlatform
 {
@@ -22,17 +19,9 @@ namespace RetroPlatform
 
             playerCore = new Player(new UnityEnvironmentData());
             playerCore.OnLivesChanged += PlayerCore_OnLivesChanged;
+            playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
 
             playerCore.AddLives(3);
-        }
-
-        private void PlayerCore_OnLivesChanged(int totalLives)
-        {
-            var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
-            for (int i = 0; i < lives.Length; i++)
-            {
-                lives[i].SetAlpha(i < totalLives ? 100f : 0f);
-            }
         }
 
         void Update()
@@ -43,10 +32,22 @@ namespace RetroPlatform
         void OnCollisionEnter2D(Collision2D col)
         {
             if (col.gameObject.CompareTag("FloorLimit"))
-            {
-                Debug.Log("Caiu no buraco!");
                 playerCore.GetDamage(1);
-            }
+
+            if (col.gameObject.CompareTag("Floor"))
+                playerCore.HitFloor();
+        }
+
+        private void PlayerCore_OnLivesFinished()
+        {
+            Debug.Log("GAME OVER!");
+        }
+
+        private void PlayerCore_OnLivesChanged(int totalLives)
+        {
+            var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
+            for (int i = 0; i < lives.Length; i++)
+                lives[i].SetAlpha(i < totalLives ? 100f : 0f);
         }
 
         private void MovePlayer()
@@ -57,8 +58,8 @@ namespace RetroPlatform
             playerCore.Move(Input.GetAxis("Horizontal"));
             playerRigidBody2D.velocity = playerCore.GetMovement(playerRigidBody2D.velocity);
 
-            playerSpriteImage.flipX = playerCore.GetDirection() == Direction.Left;
-            playerAnim.SetBool("isRunning", playerCore.IsRunning());
+            playerSpriteImage.flipX = playerCore.Direction == Direction.Left;
+            playerAnim.SetBool("isRunning", playerCore.IsRunning);
         }
     }
 }
