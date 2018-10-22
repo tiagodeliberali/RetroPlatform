@@ -204,9 +204,9 @@ namespace RetroPlatformTest
         {
             int totalLives = 0;
             Player player = CreateUser();
-            player.OnLivesChanged += delegate (int lives)
+            player.OnLivesChanged += delegate ()
             {
-                totalLives = lives;
+                totalLives = player.Lives;
             };
 
             player.AddLives(5);
@@ -219,9 +219,9 @@ namespace RetroPlatformTest
         {
             int totalLives = 0;
             Player player = CreateUser();
-            player.OnLivesChanged += delegate (int lives)
+            player.OnLivesChanged += delegate ()
             {
-                totalLives = lives;
+                totalLives = player.Lives;
             };
 
             player.AddLives(5);
@@ -261,6 +261,23 @@ namespace RetroPlatformTest
             player.GetDamage(6);
 
             Assert.True(livesFinished);
+        }
+
+        [Fact]
+        public void OnCoinsChangedShouldConsiderTotalAmount()
+        {
+            int totalCoins = 0;
+            Player player = CreateUser();
+            player.OnCoinsChanged += delegate ()
+            {
+                totalCoins = player.Coins;
+            };
+
+            player.AddCoins(1);
+            player.AddCoins(1);
+            player.AddCoins(1);
+
+            Assert.Equal(3, totalCoins);
         }
 
         private Player CreateUser()

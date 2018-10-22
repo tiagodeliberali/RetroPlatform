@@ -12,12 +12,12 @@ namespace RetroPlatform
         public bool IsRunning { get; private set; }
         public Direction Direction { get; private set; }
         public int Lives { get; private set; }
+        public int Coins { get; private set; }
 
-        public delegate void LivesChanged(int totalLives);
-        public event LivesChanged OnLivesChanged;
-
-        public delegate void LivesFinished();
-        public event LivesFinished OnLivesFinished;
+        public delegate void DataChanged();
+        public event DataChanged OnLivesChanged;
+        public event DataChanged OnLivesFinished;
+        public event DataChanged OnCoinsChanged;
 
         private IEnvironmentData environmentData;
         private float movePlayerHorizontal;
@@ -69,7 +69,7 @@ namespace RetroPlatform
 
         public void AddLives(int lives)
         {
-            this.Lives += lives;
+            Lives += lives;
             CallLifeEvents();
         }
 
@@ -79,10 +79,18 @@ namespace RetroPlatform
             CallLifeEvents();
         }
 
+        public void AddCoins(int coins)
+        {
+            Coins += coins;
+
+            if (OnCoinsChanged != null)
+                OnCoinsChanged();
+        }
+
         private void CallLifeEvents()
         {
             if (OnLivesChanged != null)
-                OnLivesChanged(Lives);
+                OnLivesChanged();
 
             if (Lives <= 0 && OnLivesFinished != null)
                 OnLivesFinished();

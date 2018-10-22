@@ -8,6 +8,7 @@ TagManager:
   - Background
   - Middleground
   - Floor
+  - Coin
   layers:
   - Default
   - TransparentFX

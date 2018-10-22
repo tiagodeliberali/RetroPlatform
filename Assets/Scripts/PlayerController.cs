@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace RetroPlatform
 {
@@ -10,6 +11,7 @@ namespace RetroPlatform
         private Player playerCore;
 
         public GameObject UILives;
+        public Text CoinsAmount;
 
         void Awake()
         {
@@ -20,6 +22,7 @@ namespace RetroPlatform
             playerCore = new Player(new UnityEnvironmentData());
             playerCore.OnLivesChanged += PlayerCore_OnLivesChanged;
             playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
+            playerCore.OnCoinsChanged += PlayerCore_OnCoinsChanged;
 
             playerCore.AddLives(3);
         }
@@ -36,6 +39,12 @@ namespace RetroPlatform
 
             if (col.gameObject.CompareTag("Floor"))
                 playerCore.HitFloor();
+
+            if (col.gameObject.CompareTag("Coin"))
+            {
+                playerCore.AddCoins(1);
+                col.gameObject.SetActive(false);
+            }
         }
 
         private void PlayerCore_OnLivesFinished()
@@ -43,11 +52,16 @@ namespace RetroPlatform
             Debug.Log("GAME OVER!");
         }
 
-        private void PlayerCore_OnLivesChanged(int totalLives)
+        private void PlayerCore_OnLivesChanged()
         {
             var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
             for (int i = 0; i < lives.Length; i++)
-                lives[i].SetAlpha(i < totalLives ? 100f : 0f);
+                lives[i].SetAlpha(i < playerCore.Lives ? 100f : 0f);
+        }
+
+        private void PlayerCore_OnCoinsChanged()
+        {
+            CoinsAmount.text = playerCore.Coins.ToString();
         }
 
         private void MovePlayer()
