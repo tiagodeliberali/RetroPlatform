@@ -280,6 +280,92 @@ namespace RetroPlatformTest
             Assert.Equal(3, totalCoins);
         }
 
+        [Fact]
+        public void ShouldNotMoveAfterStartConversation()
+        {
+            Player player = CreateUser();
+
+            player.Jump();
+            player.Move(1f);
+            player.StartConversation();
+            var movement = player.GetMovement(new Vector2(2f, 3f));
+
+            Assert.Equal(0f, movement.x);
+            Assert.Equal(3f, movement.y); // should keep falling down
+        }
+
+        [Fact]
+        public void ShouldMoveAfterFinishConversation()
+        {
+            Player player = CreateUser();
+
+            player.Jump();
+            player.Move(1f);
+            player.StartConversation();
+            player.FinishConversation();
+            var movement = player.GetMovement(new Vector2(2f, 3f));
+
+            Assert.Equal(DEFAULT_MOVEMENT_VALUE, movement.x);
+            Assert.Equal(3f, movement.y);
+        }
+
+        [Fact]
+        public void ShouldNotSetIsRunningStartConversation()
+        {
+            Player player = CreateUser();
+
+            player.Jump();
+            player.Move(1f);
+            player.StartConversation();
+            
+            Assert.False(player.IsRunning);
+            Assert.False(player.IsJumping);
+        }
+
+        [Fact]
+        public void ShouldNotChangeDirectionAfterStartConversation()
+        {
+            Player player = CreateUser();
+
+            player.Move(-1f);
+            player.StartConversation();
+            player.Move(11f);
+            var direction = player.Direction;
+
+            Assert.Equal(Direction.Left, direction);
+        }
+
+        [Fact]
+        public void ShouldZeroJumpsAfterFinishConversation()
+        {
+            Player player = CreateUser();
+
+            player.Jump();
+            player.Jump();
+            player.StartConversation();
+            player.FinishConversation();
+            player.Jump();
+            var movement = player.GetMovement(Vector2.zero);
+
+            Assert.Equal(0f, movement.x);
+            Assert.Equal(Player.JUMP_SPEED, movement.y);
+        }
+
+        [Fact]
+        public void ShouldClearJumpsDoneDuringConversation()
+        {
+            Player player = CreateUser();
+
+            player.StartConversation();
+            player.Jump();
+            player.FinishConversation();
+            
+            var movement = player.GetMovement(Vector2.zero);
+
+            Assert.Equal(0f, movement.x);
+            Assert.Equal(0f, movement.y);
+        }
+
         private Player CreateUser()
         {
             return new Player(new TestEnvironmentData());

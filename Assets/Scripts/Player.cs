@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RetroPlatform
 {
@@ -22,6 +23,7 @@ namespace RetroPlatform
         private IEnvironmentData environmentData;
         private float movePlayerHorizontal;
         private int currentJump = 0;
+        private bool isTalking;
         
         public Player(IEnvironmentData environmentData)
         {
@@ -31,6 +33,8 @@ namespace RetroPlatform
 
         public void Jump()
         {
+            if (isTalking) return;
+
             IsJumping = true;
             currentJump++;
         }
@@ -42,6 +46,8 @@ namespace RetroPlatform
 
         public void Move(float direction)
         {
+            if (isTalking) return;
+
             movePlayerHorizontal = direction * SPEED * environmentData.GetDeltaTime();
             IsRunning = movePlayerHorizontal != 0;
 
@@ -53,6 +59,8 @@ namespace RetroPlatform
 
         public Vector2 GetMovement(Vector2 currentMovement)
         {
+            if (isTalking) return new Vector2(0f, currentMovement.y);
+
             var movement = new Vector2(movePlayerHorizontal, ShouldApplyJump() ? JUMP_SPEED : currentMovement.y);
             IsJumping = false;
 
@@ -94,6 +102,19 @@ namespace RetroPlatform
 
             if (Lives <= 0 && OnLivesFinished != null)
                 OnLivesFinished();
+        }
+
+        public void FinishConversation()
+        {
+            isTalking = false;
+            currentJump = 0;
+        }
+
+        public void StartConversation()
+        {
+            isTalking = true;
+            IsRunning = false;
+            IsJumping = false;
         }
     }
 }

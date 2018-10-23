@@ -9,6 +9,7 @@ TagManager:
   - Middleground
   - Floor
   - Coin
+  - Boss
   layers:
   - Default
   - TransparentFX

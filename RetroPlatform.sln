@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{1C176E38-4136-77B8-628B-9F923F86E5EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{B52507EC-908C-B361-A83B-8A870F7D2DA8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPlatformTest", "RetroPlatformTest\RetroPlatformTest.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
 EndProject
 Global
@@ -15,6 +17,10 @@ Global
 		{1C176E38-4136-77B8-628B-9F923F86E5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C176E38-4136-77B8-628B-9F923F86E5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C176E38-4136-77B8-628B-9F923F86E5EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52507EC-908C-B361-A83B-8A870F7D2DA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52507EC-908C-B361-A83B-8A870F7D2DA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52507EC-908C-B361-A83B-8A870F7D2DA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52507EC-908C-B361-A83B-8A870F7D2DA8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.ActiveCfg = Release|Any CPU

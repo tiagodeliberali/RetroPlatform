@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using RetroPlatform.Conversation;
+using UnityEngine;
 
 namespace RetroPlatform
 {
@@ -10,8 +10,7 @@ namespace RetroPlatform
         private SpriteRenderer playerSpriteImage;
         private Player playerCore;
 
-        public GameObject UILives;
-        public Text CoinsAmount;
+        public UIController uiController;
 
         void Awake()
         {
@@ -20,9 +19,9 @@ namespace RetroPlatform
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
             playerCore = new Player(new UnityEnvironmentData());
-            playerCore.OnLivesChanged += PlayerCore_OnLivesChanged;
+            playerCore.OnLivesChanged += () => uiController.UpdateLives(playerCore.Lives);
             playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
-            playerCore.OnCoinsChanged += PlayerCore_OnCoinsChanged;
+            playerCore.OnCoinsChanged += () => uiController.UpdateCoins(playerCore.Coins);
 
             playerCore.AddLives(3);
         }
@@ -40,6 +39,18 @@ namespace RetroPlatform
             if (col.gameObject.CompareTag("Floor"))
                 playerCore.HitFloor();
 
+            if (col.gameObject.CompareTag("Boss"))
+            {
+                playerCore.StartConversation();
+                uiController.StartConversation(
+                    col.gameObject.GetComponent<ConversationComponent>().Conversations[0],
+                    () =>
+                    {
+                        playerCore.FinishConversation();
+                        col.gameObject.SetActive(false);
+                    });
+            }
+
             if (col.gameObject.CompareTag("Coin"))
             {
                 playerCore.AddCoins(1);
@@ -50,18 +61,6 @@ namespace RetroPlatform
         private void PlayerCore_OnLivesFinished()
         {
             Debug.Log("GAME OVER!");
-        }
-
-        private void PlayerCore_OnLivesChanged()
-        {
-            var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
-            for (int i = 0; i < lives.Length; i++)
-                lives[i].SetAlpha(i < playerCore.Lives ? 100f : 0f);
-        }
-
-        private void PlayerCore_OnCoinsChanged()
-        {
-            CoinsAmount.text = playerCore.Coins.ToString();
         }
 
         private void MovePlayer()
