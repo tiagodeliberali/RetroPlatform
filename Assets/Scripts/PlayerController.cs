@@ -19,11 +19,14 @@ namespace RetroPlatform
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
             playerCore = new Player(new UnityEnvironmentData());
-            playerCore.OnLivesChanged += () => uiController.UpdateLives(playerCore.Lives);
-            playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
-            playerCore.OnCoinsChanged += () => uiController.UpdateCoins(playerCore.Coins);
+            if (uiController != null)
+            {
+                playerCore.OnLivesChanged += () => uiController.UpdateLives(playerCore.Lives);
+                playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
+                playerCore.OnCoinsChanged += () => uiController.UpdateCoins(playerCore.Coins);
 
-            playerCore.AddLives(3);
+                playerCore.AddLives(3);
+            }
         }
 
         void Update()
