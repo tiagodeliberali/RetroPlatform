@@ -27,7 +27,7 @@ namespace RetroPlatform
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                uiController.StartConversation(conversationComponent.Conversations[1]);
+                uiController.StartConversation(conversationComponent.Conversations[0]);
             }
         }
 
