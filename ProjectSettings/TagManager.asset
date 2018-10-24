@@ -10,6 +10,8 @@ TagManager:
   - Floor
   - Coin
   - Boss
+  - Overworld
+  - EntryLevel
   layers:
   - Default
   - TransparentFX

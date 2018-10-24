@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RetroPlatform
 {
@@ -9,6 +10,9 @@ namespace RetroPlatform
         public Transform player;
         public Transform roof;
         public Transform floor;
+
+        public float minXPosition;
+        public float maxXPosition;
 
         private GameObject[] backgrounds;
         private GameObject[] middlegrounds;
@@ -21,7 +25,8 @@ namespace RetroPlatform
 
         void LateUpdate()
         {
-            transform.position = new Vector3(player.transform.position.x + xOffset, transform.position.y + yOffset, -10);
+            float xPosition = Math.Min(Math.Max(player.transform.position.x + xOffset, minXPosition), maxXPosition);
+            transform.position = new Vector3(xPosition, transform.position.y + yOffset, -10);
             roof.position = new Vector3(player.transform.position.x, roof.transform.position.y, -10);
             floor.position = new Vector3(player.transform.position.x, floor.transform.position.y, -10);
 
