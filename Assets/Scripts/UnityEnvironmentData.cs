@@ -2,7 +2,7 @@
 
 namespace RetroPlatform
 {
-    public class UnityEnvironmentData : MonoBehaviour, IEnvironmentData
+    public class UnityEnvironmentData : IEnvironmentData
     {
         public float GetDeltaTime()
         {

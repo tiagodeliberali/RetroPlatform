@@ -10,7 +10,6 @@ namespace RetroPlatform
         private PlayerCore playerCore;
 
         public Player player;
-        public UnityEnvironmentData unityEnvironmentData;
         public UIController uiController;
 
         void Awake()
@@ -20,7 +19,7 @@ namespace RetroPlatform
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
             playerCore = player.Core;
-            playerCore.EnvironmentData = unityEnvironmentData;
+            playerCore.EnvironmentData = new UnityEnvironmentData();
 
             if (uiController != null)
             {
