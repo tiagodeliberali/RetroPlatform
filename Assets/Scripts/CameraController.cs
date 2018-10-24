@@ -33,7 +33,10 @@ namespace RetroPlatform
         {
             for (int i = 0; i < gameObjectArray.Length; i++)
             {
-                gameObjectArray[i].transform.position = new Vector3(player.transform.position.x / factor + i * 19 - 10, gameObjectArray[i].transform.position.y, gameObjectArray[i].transform.position.z);
+                gameObjectArray[i].transform.position = new Vector3(
+                    player.transform.position.x / factor + i * 19 - 10,
+                    gameObjectArray[i].transform.position.y,
+                    gameObjectArray[i].transform.position.z);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using RetroPlatform.Conversation;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RetroPlatform
 {
@@ -8,8 +7,10 @@ namespace RetroPlatform
         private Rigidbody2D playerRigidBody2D;
         private Animator playerAnim;
         private SpriteRenderer playerSpriteImage;
-        private Player playerCore;
+        private PlayerCore playerCore;
 
+        public Player player;
+        public UnityEnvironmentData unityEnvironmentData;
         public UIController uiController;
 
         void Awake()
@@ -18,12 +19,17 @@ namespace RetroPlatform
             playerAnim = (Animator)GetComponent(typeof(Animator));
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
-            playerCore = new Player(new UnityEnvironmentData());
+            playerCore = player.Core;
+            playerCore.EnvironmentData = unityEnvironmentData;
+
             if (uiController != null)
             {
                 playerCore.OnLivesChanged += () => uiController.UpdateLives(playerCore.Lives);
                 playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
                 playerCore.OnCoinsChanged += () => uiController.UpdateCoins(playerCore.Coins);
+
+                uiController.OnStartConversation += () => playerCore.StartConversation();
+                uiController.OnFinishConversation += () => playerCore.FinishConversation();
 
                 playerCore.AddLives(3);
             }
@@ -41,24 +47,6 @@ namespace RetroPlatform
 
             if (col.gameObject.CompareTag("Floor"))
                 playerCore.HitFloor();
-
-            if (col.gameObject.CompareTag("Boss"))
-            {
-                playerCore.StartConversation();
-                uiController.StartConversation(
-                    col.gameObject.GetComponent<ConversationComponent>().Conversations[0],
-                    () =>
-                    {
-                        playerCore.FinishConversation();
-                        col.gameObject.SetActive(false);
-                    });
-            }
-
-            if (col.gameObject.CompareTag("Coin"))
-            {
-                playerCore.AddCoins(1);
-                col.gameObject.SetActive(false);
-            }
         }
 
         private void PlayerCore_OnLivesFinished()

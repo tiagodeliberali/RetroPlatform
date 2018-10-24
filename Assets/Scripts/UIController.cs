@@ -18,6 +18,9 @@ namespace RetroPlatform
         bool talking = false;
         ConversationEntry currentConversationLine;
 
+        public event Action OnStartConversation;
+        public event Action OnFinishConversation;
+
         public void UpdateLives(int totalLives)
         {
             var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
@@ -30,19 +33,21 @@ namespace RetroPlatform
             CoinsAmount.text = totalCoins.ToString();
         }
 
-        public void StartConversation(ConversationArray conversation, Action afterFinish)
+        public void StartConversation(ConversationArray conversation)
         {
+            if (OnStartConversation != null) OnStartConversation();
+
             dialogBox = GameObject.Find("Dialog Box").GetComponent<CanvasGroup>();
             imageHolder = GameObject.Find("Dialog Box Image").GetComponent<Image>();
             textHolder = GameObject.Find("Dialog Box Text").GetComponent<Text>();
 
             if (!talking)
             {
-                StartCoroutine(DisplayConversation(conversation, afterFinish));
+                StartCoroutine(DisplayConversation(conversation));
             }
         }
 
-        IEnumerator DisplayConversation(ConversationArray conversation, Action afterFinish)
+        IEnumerator DisplayConversation(ConversationArray conversation)
         {
             talking = true;
             foreach (var conversationLine in conversation.ConversationLines)
@@ -60,7 +65,8 @@ namespace RetroPlatform
                 yield return new WaitForSeconds(2f);
             }
             talking = false;
-            afterFinish();
+
+            if (OnFinishConversation != null) OnFinishConversation();
         }
 
         void OnGUI()
@@ -70,7 +76,7 @@ namespace RetroPlatform
                 dialogBox.alpha = 1;
                 dialogBox.blocksRaycasts = true;
             }
-            else
+            else if (dialogBox != null)
             {
                 dialogBox.alpha = 0;
                 dialogBox.blocksRaycasts = false;

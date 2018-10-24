@@ -11,7 +11,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetMovementShouldKeepStopedIfNoMovement()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             var movement = player.GetMovement(Vector2.zero);
 
@@ -22,19 +22,19 @@ namespace RetroPlatformTest
         [Fact]
         public void GetMovementShouldPointUpOnJump()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             var movement = player.GetMovement(Vector2.zero);
 
             Assert.Equal(0, movement.x);
-            Assert.Equal(Player.JUMP_SPEED, movement.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement.y);
         }
 
         [Fact]
         public void GetMovementShouldConsiderMovementVectorOnSecondCallAfterJump()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             player.GetMovement(Vector2.zero);
@@ -47,7 +47,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetMovementShouldPointUpOnJumpOnlyTwoTimesBeforeHitFloor()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             var movement1 = player.GetMovement(Vector2.zero);
@@ -56,15 +56,15 @@ namespace RetroPlatformTest
             player.Jump();
             var movement3 = player.GetMovement(Vector2.zero);
 
-            Assert.Equal(Player.JUMP_SPEED, movement1.y);
-            Assert.Equal(Player.JUMP_SPEED, movement2.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement1.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement2.y);
             Assert.Equal(0f, movement3.y);
         }
 
         [Fact]
         public void GetMovementShouldPointUpOnJumpAgainAfterHitFloor()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             var movement1 = player.GetMovement(Vector2.zero);
@@ -75,15 +75,15 @@ namespace RetroPlatformTest
             player.Jump();
             var movement3 = player.GetMovement(Vector2.zero);
 
-            Assert.Equal(Player.JUMP_SPEED, movement1.y);
-            Assert.Equal(Player.JUMP_SPEED, movement2.y);
-            Assert.Equal(Player.JUMP_SPEED, movement3.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement1.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement2.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement3.y);
         }
 
         [Fact]
         public void GetMovementShouldConsiderMove()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(1f);
             var movement = player.GetMovement(Vector2.zero);
@@ -95,20 +95,20 @@ namespace RetroPlatformTest
         [Fact]
         public void GetMovementShouldConsiderMoveAndJump()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             player.Move(1f);
             var movement = player.GetMovement(Vector2.zero);
 
             Assert.Equal(DEFAULT_MOVEMENT_VALUE, movement.x);
-            Assert.Equal(Player.JUMP_SPEED, movement.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement.y);
         }
 
         [Fact]
         public void GetDirectionShouldHaveDefaultValue()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             var direction = player.Direction;
 
@@ -118,7 +118,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetDirectionShouldConsiderLastMovingLeft()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(1f);
             player.Move(-1f);
@@ -130,7 +130,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetDirectionShouldConsiderLastMovingRigth()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(-1f);
             player.Move(1f);
@@ -142,7 +142,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetDirectionShouldConsiderLastMovingWhenMoveIsZero()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(-1f);
             player.Move(0f);
@@ -154,7 +154,7 @@ namespace RetroPlatformTest
         [Fact]
         public void IsRunningShouldBeFalseWhenLastMoveIsZero()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(-1f);
             player.Move(0f);
@@ -166,7 +166,7 @@ namespace RetroPlatformTest
         [Fact]
         public void IsRunningShouldBeTrueWhenLastMoveIsNotZero()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(0f);
             player.Move(-1f);
@@ -178,7 +178,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetLivesShouldConsiderTotalAmount()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.AddLives(2);
             player.AddLives(1);
@@ -190,7 +190,7 @@ namespace RetroPlatformTest
         [Fact]
         public void GetLivesShouldConsiderDamages()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.AddLives(4);
             player.GetDamage(2);
@@ -203,7 +203,7 @@ namespace RetroPlatformTest
         public void OnLivesChangedShouldConsiderTotalAmount()
         {
             int totalLives = 0;
-            Player player = CreateUser();
+             var player = CreateUser();
             player.OnLivesChanged += delegate ()
             {
                 totalLives = player.Lives;
@@ -218,7 +218,7 @@ namespace RetroPlatformTest
         public void OnLivesChangedShouldConsiderDamages()
         {
             int totalLives = 0;
-            Player player = CreateUser();
+             var player = CreateUser();
             player.OnLivesChanged += delegate ()
             {
                 totalLives = player.Lives;
@@ -234,7 +234,7 @@ namespace RetroPlatformTest
         public void OnLivesFinishedShouldExecuteOnZeroLife()
         {
             bool livesFinished = false;
-            Player player = CreateUser();
+             var player = CreateUser();
             player.OnLivesFinished += delegate ()
             {
                 livesFinished = true;
@@ -251,7 +251,7 @@ namespace RetroPlatformTest
         public void OnLivesFinishedShouldExecuteOnLowerThanZeroLife()
         {
             bool livesFinished = false;
-            Player player = CreateUser();
+             var player = CreateUser();
             player.OnLivesFinished += delegate ()
             {
                 livesFinished = true;
@@ -267,7 +267,7 @@ namespace RetroPlatformTest
         public void OnCoinsChangedShouldConsiderTotalAmount()
         {
             int totalCoins = 0;
-            Player player = CreateUser();
+             var player = CreateUser();
             player.OnCoinsChanged += delegate ()
             {
                 totalCoins = player.Coins;
@@ -283,7 +283,7 @@ namespace RetroPlatformTest
         [Fact]
         public void ShouldNotMoveAfterStartConversation()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             player.Move(1f);
@@ -297,7 +297,7 @@ namespace RetroPlatformTest
         [Fact]
         public void ShouldMoveAfterFinishConversation()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             player.Move(1f);
@@ -312,7 +312,7 @@ namespace RetroPlatformTest
         [Fact]
         public void ShouldNotSetIsRunningStartConversation()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             player.Move(1f);
@@ -325,7 +325,7 @@ namespace RetroPlatformTest
         [Fact]
         public void ShouldNotChangeDirectionAfterStartConversation()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Move(-1f);
             player.StartConversation();
@@ -338,7 +338,7 @@ namespace RetroPlatformTest
         [Fact]
         public void ShouldZeroJumpsAfterFinishConversation()
         {
-            Player player = CreateUser();
+             var player = CreateUser();
 
             player.Jump();
             player.Jump();
@@ -348,13 +348,13 @@ namespace RetroPlatformTest
             var movement = player.GetMovement(Vector2.zero);
 
             Assert.Equal(0f, movement.x);
-            Assert.Equal(Player.JUMP_SPEED, movement.y);
+            Assert.Equal(PlayerCore.JUMP_SPEED, movement.y);
         }
 
         [Fact]
         public void ShouldClearJumpsDoneDuringConversation()
         {
-            Player player = CreateUser();
+            PlayerCore player = CreateUser();
 
             player.StartConversation();
             player.Jump();
@@ -366,9 +366,13 @@ namespace RetroPlatformTest
             Assert.Equal(0f, movement.y);
         }
 
-        private Player CreateUser()
+        private PlayerCore CreateUser()
         {
-            return new Player(new TestEnvironmentData());
+            var player = new PlayerCore
+            {
+                EnvironmentData = new TestEnvironmentData()
+            };
+            return player;
         }
     }
 }

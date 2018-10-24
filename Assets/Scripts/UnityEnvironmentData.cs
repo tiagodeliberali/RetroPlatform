@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-
 namespace RetroPlatform
 {
-    public class UnityEnvironmentData : IEnvironmentData
+    public class UnityEnvironmentData : MonoBehaviour, IEnvironmentData
     {
         public float GetDeltaTime()
         {
