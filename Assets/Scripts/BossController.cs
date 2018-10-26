@@ -9,6 +9,7 @@ namespace RetroPlatform
         public ConversationComponent conversationComponent;
         public UIController uiController;
         public BoxCollider2D boxCollider;
+        public bool LeftScene;
 
         Rigidbody2D bossRigidBody2D;
         SpriteRenderer bossSpriteImage;
@@ -25,7 +26,7 @@ namespace RetroPlatform
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player") && !LeftScene)
             {
                 uiController.StartConversation(conversationComponent.Conversations[0]);
             }
@@ -34,6 +35,12 @@ namespace RetroPlatform
         void Update()
         {
             bossRigidBody2D.velocity = new Vector2(velocity, bossRigidBody2D.velocity.y);
+
+            if (LeftScene)
+            {
+                StartCoroutine(RunAway());
+                LeftScene = false;
+            }
         }
 
         IEnumerator RunAway()

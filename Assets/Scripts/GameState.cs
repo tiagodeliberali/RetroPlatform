@@ -10,36 +10,40 @@ namespace RetroPlatform
 
         public static string LastSceneName;
         public static Dictionary<string, Vector3> LastScenePositions = new Dictionary<string, Vector3>();
+        public static Dictionary<string, object> GameFacts = new Dictionary<string, object>();
+
+        public static object GetGameFact(string sceneName, string factName)
+        {
+            string factId = sceneName + "." + factName;
+            return GameState.GameFacts.ReturnIfExists(factId);
+        }
+
+        public static void SetGameFact(string sceneName, string factName, object fact)
+        {
+            string factId = sceneName + "." + factName;
+            GameState.GameFacts.SetValue(factId, fact);
+        }
 
         public static Vector3 GetLastScenePosition(string sceneName)
         {
-            if (GameState.LastScenePositions.ContainsKey(sceneName))
-            {
-                var lastPos = GameState.LastScenePositions[sceneName];
-                return lastPos;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
+            return GameState.LastScenePositions.ReturnIfExists(sceneName);
         }
 
         public static void SetLastScenePosition(string sceneName, Vector3 position)
         {
-            if (GameState.LastScenePositions.ContainsKey(sceneName))
-            {
-                GameState.LastScenePositions[sceneName] = position;
-            }
-            else
-            {
-                GameState.LastScenePositions.Add(sceneName, position);
-            }
+            GameState.LastScenePositions.SetValue(sceneName, position);
         }
 
         public static void UpdatePlayerData(PlayerCore core)
         {
             lives = core.Lives;
             coins = core.Coins;
+        }
+
+        public static void SetLastScene(string sceneName, Vector3 position)
+        {
+            LastSceneName = sceneName;
+            SetLastScenePosition(sceneName, position);
         }
     }
 }

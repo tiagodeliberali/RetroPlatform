@@ -61,7 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BattleController.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
+    <Compile Include="Assets\Scripts\Battle\RandomBattle.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CoinController.cs" />
@@ -69,15 +70,16 @@
     <Compile Include="Assets\Scripts\Conversation\ConversationComponent.cs" />
     <Compile Include="Assets\Scripts\Conversation\ConversationEntry.cs" />
     <Compile Include="Assets\Scripts\Direction.cs" />
+    <Compile Include="Assets\Scripts\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\IEnvironmentData.cs" />
+    <Compile Include="Assets\Scripts\Levels\EntryLevelController.cs" />
     <Compile Include="Assets\Scripts\Navigation\NavigationManager.cs" />
     <Compile Include="Assets\Scripts\Navigation\NavigationPrompt.cs" />
     <Compile Include="Assets\Scripts\Navigation\Route.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerCore.cs" />
-    <Compile Include="Assets\Scripts\RandomBattle.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
     <Compile Include="Assets\Scripts\UnityEnvironmentData.cs" />
     <None Include="Assets\DragonWarriorFiles\Read Me.txt" />

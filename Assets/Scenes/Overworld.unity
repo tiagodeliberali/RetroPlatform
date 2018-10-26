@@ -313,6 +313,12 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c86583243ddbdb243b249b9bd21a2e85, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &86904662 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114376648684763804, guid: c86583243ddbdb243b249b9bd21a2e85,
+    type: 2}
+  m_PrefabInternal: {fileID: 86904661}
+  m_Script: {fileID: 11500000, guid: 50da413f94816c04dadbc9c3d183cc30, type: 3}
 --- !u!1 &267188439
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,10 +753,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 394597803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8bd3e78c2a68f48ae62065a650072b, type: 3}
+  m_Script: {fileID: 11500000, guid: ca419a3bdc4ddda4c86f7e607a2c5cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTexture: {fileID: 2800000, guid: c12de5812c9bec44ab9d04388b66cbfe, type: 3}
+  battleProbability: 100
+  secondsBetweenBattles: 10
+  battleSceneName: BattleScene
+  GoBackPosition: {x: 0, y: 1.5}
+  player: {fileID: 86904662}
 --- !u!61 &394597805
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2384,6 +2394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTexture: {fileID: 2800000, guid: c12de5812c9bec44ab9d04388b66cbfe, type: 3}
+  player: {fileID: 86904662}
 --- !u!1 &1776308074
 GameObject:
   m_ObjectHideFlags: 0

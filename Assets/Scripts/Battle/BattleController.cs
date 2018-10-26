@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace RetroPlatform
+namespace RetroPlatform.Battle
 {
     public class BattleController : MonoBehaviour
     {
@@ -20,7 +20,6 @@ namespace RetroPlatform
         }
         private BattlePhase phase;
 
-        // Use this for initialization
         void Start()
         {
             enemyCount = Random.Range(1, EnemySpawnPoints.Length);
@@ -30,7 +29,6 @@ namespace RetroPlatform
 
         IEnumerator SpawnEnemies()
         {
-            // Spawn enemies in over time 
             for (int i = 0; i < enemyCount; i++)
             {
                 var newEnemy = (GameObject)Instantiate(EnemyPrefabs[0]);

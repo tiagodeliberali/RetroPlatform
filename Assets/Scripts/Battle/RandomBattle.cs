@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace RetroPlatform
+namespace RetroPlatform.Battle
 {
     public class RandomBattle : MonoBehaviour
     {
@@ -37,8 +37,7 @@ namespace RetroPlatform
             if (encounterChance <= battleProbability)
             {
                 GameState.UpdatePlayerData(player.Core);
-                GameState.LastSceneName = SceneManager.GetActiveScene().name;
-                GameState.SetLastScenePosition(GameState.LastSceneName, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
+                GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
                 NavigationManager.NavigateTo(battleSceneName);
             }
         }
