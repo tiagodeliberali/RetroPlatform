@@ -5,6 +5,9 @@ namespace RetroPlatform
 {
     public static class GameState
     {
+        public static int lives = 3;
+        public static int coins;
+
         public static string LastSceneName;
         public static Dictionary<string, Vector3> LastScenePositions = new Dictionary<string, Vector3>();
 
@@ -31,6 +34,12 @@ namespace RetroPlatform
             {
                 GameState.LastScenePositions.Add(sceneName, position);
             }
+        }
+
+        public static void UpdatePlayerData(PlayerCore core)
+        {
+            lives = core.Lives;
+            coins = core.Coins;
         }
     }
 }

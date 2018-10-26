@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RetroPlatform
 {
@@ -30,7 +31,11 @@ namespace RetroPlatform
                 uiController.OnStartConversation += () => playerCore.StartConversation();
                 uiController.OnFinishConversation += () => playerCore.FinishConversation();
 
-                playerCore.AddLives(3);
+                playerCore.AddLives(GameState.lives);
+                playerCore.AddCoins(GameState.coins);
+
+                var lastPosition = GameState.GetLastScenePosition(SceneManager.GetActiveScene().name);
+                if (lastPosition != Vector3.zero) transform.position = lastPosition;
             }
         }
 

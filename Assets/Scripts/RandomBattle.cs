@@ -12,6 +12,7 @@ namespace RetroPlatform
         public int secondsBetweenBattles;
         public string battleSceneName;
         public Vector2 GoBackPosition;
+        public Player player;
 
 
         void OnTriggerEnter2D(Collider2D col)
@@ -35,6 +36,7 @@ namespace RetroPlatform
         {
             if (encounterChance <= battleProbability)
             {
+                GameState.UpdatePlayerData(player.Core);
                 GameState.LastSceneName = SceneManager.GetActiveScene().name;
                 GameState.SetLastScenePosition(GameState.LastSceneName, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
                 NavigationManager.NavigateTo(battleSceneName);

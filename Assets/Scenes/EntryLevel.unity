@@ -2047,6 +2047,7 @@ MonoBehaviour:
   secondsBetweenBattles: 5
   battleSceneName: BattleScene
   GoBackPosition: {x: 12, y: 3}
+  player: {fileID: 1857128880}
 --- !u!1 &647381525
 GameObject:
   m_ObjectHideFlags: 0

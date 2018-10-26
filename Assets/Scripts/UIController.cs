@@ -70,22 +70,6 @@ namespace RetroPlatform
             if (OnFinishConversation != null) OnFinishConversation();
         }
 
-        //void Awake()
-        //{
-        //    UILives = GameObject.Find("Lives");
-        //    CoinsAmount = GameObject.Find("CoinsAmount").GetComponent<Text>();
-        //    var lastPosition = GameState.GetLastScenePosition(SceneManager.GetActiveScene().name);
-
-        //    if (lastPosition != Vector3.zero)
-        //    {
-        //        var player = GameObject.Find("Player");
-        //        player.transform.position = lastPosition;
-        //    }
-
-        //    UpdateLives(GameState.CurrentPlayer.Lives);
-        //    UpdateCoins(GameState.CurrentPlayer.Coins);
-        //}
-
         void OnGUI()
         {
             if (talking)
