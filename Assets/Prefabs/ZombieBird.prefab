@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4266957730416550}
   - component: {fileID: 212119544062817866}
   - component: {fileID: 95436275871721914}
+  - component: {fileID: 114775724167800070}
+  - component: {fileID: 61906744417895556}
   m_Layer: 0
   m_Name: ZombieBird
   m_TagString: Untagged
@@ -41,6 +43,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61906744417895556
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102801710275946}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.93, y: 4}
+    newSize: {x: 5.93, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.93, y: 4}
+  m_EdgeRadius: 0
 --- !u!95 &95436275871721914
 Animator:
   serializedVersion: 3
@@ -50,7 +77,7 @@ Animator:
   m_GameObject: {fileID: 1102801710275946}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3a0f75169bb71464c88a1e743b791025, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b00bb8bc044b294684104ae0e96641d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -59,6 +86,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114775724167800070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102801710275946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc2d0681daad634b912c85d276acf42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyProfile: {fileID: 0}
+  BattleController: {fileID: 0}
+  lifeCanvas: {fileID: 1455839222093188, guid: 40d0bce88ac88ca4abd9178aed88ac7b, type: 2}
 --- !u!212 &212119544062817866
 SpriteRenderer:
   m_ObjectHideFlags: 1

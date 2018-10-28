@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace RetroPlatform
+namespace RetroPlatform.Levels
 {
     public class CameraController : MonoBehaviour
     {

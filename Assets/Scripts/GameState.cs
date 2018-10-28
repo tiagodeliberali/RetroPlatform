@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RetroPlatform
@@ -32,6 +33,11 @@ namespace RetroPlatform
         public static void SetLastScenePosition(string sceneName, Vector3 position)
         {
             GameState.LastScenePositions.SetValue(sceneName, position);
+        }
+
+        internal static void UpdatePlayerData(object core)
+        {
+            throw new NotImplementedException();
         }
 
         public static void UpdatePlayerData(PlayerCore core)

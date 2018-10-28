@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RetroPlatform
+namespace RetroPlatform.Levels
 {
     public class CoinController : MonoBehaviour
     {
@@ -8,8 +8,8 @@ namespace RetroPlatform
 
         void Awake()
         {
-            var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            playerCore = player.Core;
+            var player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerCore = player.PlayerCore;
         }
 
         void OnTriggerEnter2D(Collider2D collision)

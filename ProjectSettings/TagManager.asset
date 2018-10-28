@@ -13,6 +13,8 @@ TagManager:
   - Overworld
   - EntryLevel
   - BattleScene
+  - SelectionCircle
+  - SwordParticleSystem
   layers:
   - Default
   - TransparentFX

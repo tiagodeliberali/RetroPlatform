@@ -8,9 +8,18 @@ namespace RetroPlatform
         private Rigidbody2D playerRigidBody2D;
         private Animator playerAnim;
         private SpriteRenderer playerSpriteImage;
-        private PlayerCore playerCore;
 
-        public Player player;
+        private PlayerCore _core;
+        public PlayerCore PlayerCore
+        {
+            get
+            {
+                if (_core == null) _core = new PlayerCore();
+                return _core;
+            }
+        }
+
+        public PlayerController player;
         public UIController uiController;
 
         void Awake()
@@ -19,21 +28,20 @@ namespace RetroPlatform
             playerAnim = (Animator)GetComponent(typeof(Animator));
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
-            playerCore = player.Core;
-            playerCore.EnvironmentData = new UnityEnvironmentData();
+            PlayerCore.EnvironmentData = new UnityEnvironmentData();
 
             if (uiController != null)
             {
-                playerCore.OnLivesChanged += () => uiController.UpdateLives(playerCore.Lives);
-                playerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
-                playerCore.OnCoinsChanged += () => uiController.UpdateCoins(playerCore.Coins);
+                PlayerCore.OnLivesChanged += () => uiController.UpdateLives(PlayerCore.Lives);
+                PlayerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
+                PlayerCore.OnCoinsChanged += () => uiController.UpdateCoins(PlayerCore.Coins);
 
-                uiController.OnStartConversation += () => playerCore.StartConversation();
-                uiController.OnFinishConversation += () => playerCore.FinishConversation();
+                uiController.OnStartConversation += () => PlayerCore.StartConversation();
+                uiController.OnFinishConversation += () => PlayerCore.FinishConversation();
             }
 
-            playerCore.AddLives(GameState.lives);
-            playerCore.AddCoins(GameState.coins);
+            PlayerCore.AddLives(GameState.lives);
+            PlayerCore.AddCoins(GameState.coins);
 
             var lastPosition = GameState.GetLastScenePosition(SceneManager.GetActiveScene().name);
             if (lastPosition != Vector3.zero) transform.position = lastPosition;
@@ -47,10 +55,10 @@ namespace RetroPlatform
         void OnCollisionEnter2D(Collision2D col)
         {
             if (col.gameObject.CompareTag("FloorLimit"))
-                playerCore.GetDamage(1);
+                PlayerCore.GetDamage(1);
 
             if (col.gameObject.CompareTag("Floor"))
-                playerCore.HitFloor();
+                PlayerCore.HitFloor();
         }
 
         private void PlayerCore_OnLivesFinished()
@@ -61,13 +69,13 @@ namespace RetroPlatform
         private void MovePlayer()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
-                playerCore.Jump();
+                PlayerCore.Jump();
 
-            playerCore.Move(Input.GetAxis("Horizontal"));
-            playerRigidBody2D.velocity = playerCore.GetMovement(playerRigidBody2D.velocity);
+            PlayerCore.Move(Input.GetAxis("Horizontal"));
+            playerRigidBody2D.velocity = PlayerCore.GetMovement(playerRigidBody2D.velocity);
 
-            playerSpriteImage.flipX = playerCore.Direction == Direction.Left;
-            playerAnim.SetBool("isRunning", playerCore.IsRunning);
+            playerSpriteImage.flipX = PlayerCore.Direction == Direction.Left;
+            playerAnim.SetBool("isRunning", PlayerCore.IsRunning);
         }
     }
 }

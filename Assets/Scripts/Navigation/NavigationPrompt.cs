@@ -6,7 +6,7 @@ namespace RetroPlatform.Navigation
     public class NavigationPrompt : MonoBehaviour
     {
         public Texture2D fadeTexture;
-        public Player player;
+        public PlayerController player;
 
         float fadespeed = 0.5f;
         int drawDepth = -1000;
@@ -21,7 +21,7 @@ namespace RetroPlatform.Navigation
             string destination = tag;
             if (col.gameObject.CompareTag("Player") && NavigationManager.CanNavigate(destination))
             {
-                GameState.UpdatePlayerData(player.Core);
+                GameState.UpdatePlayerData(player.PlayerCore);
                 fadeOut = true;
                 col.gameObject.SetActive(false);
                 StartCoroutine(MoveToScene(destination));
