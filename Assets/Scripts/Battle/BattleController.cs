@@ -14,6 +14,9 @@ namespace RetroPlatform.Battle
         public CanvasGroup buttons;
         public Text DebugInfo;
 
+        public PlayerController player;
+        public Slider playerLife;
+
         public Animator battleStateManager;
         private Dictionary<int, BattleState> battleStateHash = new Dictionary<int, BattleState>();
         private BattleState currentBattleState;
@@ -40,6 +43,8 @@ namespace RetroPlatform.Battle
             battleStateManager = GetComponent<Animator>();
             introPanelAnim = introPanel.GetComponent<Animator>();
             attack = GetComponent<Attack>();
+
+            player.PlayerCore.StartConversation();
         }
 
         void Start()
@@ -195,6 +200,8 @@ namespace RetroPlatform.Battle
 
         private void DisplayPlayerHUD()
         {
+            playerLife.maxValue = player.PlayerCore.MaxLives;
+            playerLife.value = player.PlayerCore.Lives;
             if (currentBattleState == BattleState.Player_Move)
             {
                 buttons.alpha = 1;

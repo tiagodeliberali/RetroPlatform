@@ -307,6 +307,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   buttons: {fileID: 849518411}
   DebugInfo: {fileID: 861172101}
+  player: {fileID: 1191142927}
+  playerLife: {fileID: 1806770383}
   battleStateManager: {fileID: 0}
   introPanel: {fileID: 1857139377}
   selectionCircle: {fileID: 1840903707882876, guid: f8cba155b78bf0949bc0d025f3ffe162,
@@ -2451,6 +2453,12 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 0.9398438, b: 0.6509804, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!114 &1191142927 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114085567062568178, guid: c86583243ddbdb243b249b9bd21a2e85,
+    type: 2}
+  m_PrefabInternal: {fileID: 1993386383}
+  m_Script: {fileID: 11500000, guid: f14e2321eacf19649ace4c5e7bbdc1fc, type: 3}
 --- !u!1 &1196082991
 GameObject:
   m_ObjectHideFlags: 0

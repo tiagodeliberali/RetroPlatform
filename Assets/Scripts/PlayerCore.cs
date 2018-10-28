@@ -12,6 +12,7 @@ namespace RetroPlatform
         public bool IsRunning { get; private set; }
         public Direction Direction { get; private set; }
         public int Lives { get; private set; }
+        public int MaxLives { get; private set; }
         public int Coins { get; private set; }
 
         public delegate void DataChanged();
@@ -27,6 +28,7 @@ namespace RetroPlatform
         public PlayerCore()
         {
             Direction = Direction.Rigth;
+            MaxLives = 3;
         }
 
         public void Jump()
