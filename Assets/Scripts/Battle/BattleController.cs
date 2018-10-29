@@ -36,6 +36,7 @@ namespace RetroPlatform.Battle
         bool attacking = false;
 
         bool canSelectEnemy;
+        bool canBeAttacked;
         public int EnemyCount { get; private set; }
 
         void Awake()
@@ -73,8 +74,9 @@ namespace RetroPlatform.Battle
                 enemyController.DebugInfo = DebugInfo;
 
                 var EnemyProfile = ScriptableObject.CreateInstance<Enemy>();
-                EnemyProfile.enemyClass = EnemyClass.Dragon;
+                EnemyProfile.enemyClass = EnemyClass.ZombieBird;
                 EnemyProfile.health = 3;
+                EnemyProfile.attack = 1;
                 EnemyProfile.name = EnemyProfile.enemyClass + " " + i.ToString();
 
                 enemyController.EnemyProfile = EnemyProfile;
@@ -143,7 +145,8 @@ namespace RetroPlatform.Battle
         void Update()
         {
             currentBattleState = battleAnimatorView.GetCurrentStatus();
-            
+            if (DebugInfo != null) DebugInfo.text = currentBattleState.ToString();
+
             switch (currentBattleState)
             {
                 case BattleState.Intro:
@@ -154,15 +157,15 @@ namespace RetroPlatform.Battle
                     break;
                 case BattleState.Player_Attack:
                     canSelectEnemy = false;
-                    if (!attacking && attack.ReadyToAttack)
-                    {
-                        StartCoroutine(AttackTarget());
-                    }
+                    if (!attacking && attack.ReadyToAttack) StartCoroutine(AttackTarget());
                     break;
                 case BattleState.Change_Control:
                     ClearEnemySelection();
+                    canBeAttacked = true;
                     break;
                 case BattleState.Enemy_Attack:
+                    if (canBeAttacked) player.PlayerCore.GetDamage(Random.Range(0, EnemyCount));
+                    canBeAttacked = false;
                     battleStateManager.SetBool("BattleReady", EnemyCount > 0);
                     break;
                 case BattleState.Battle_Result:
@@ -181,19 +184,16 @@ namespace RetroPlatform.Battle
         {
             StopCoroutine("SpinObject");
 
-            var circles = GameObject.FindGameObjectsWithTag("SelectionCircle");
-            foreach (var target in circles)
-            {
-                Destroy(target);
-            }
-
-            var particles = GameObject.FindGameObjectsWithTag("SwordParticleSystem");
-            foreach (var target in particles)
-            {
-                Destroy(target);
-            }
+            DestroyGameObjects("SelectionCircle");
+            DestroyGameObjects("SwordParticleSystem");
 
             selectedEnemies.Clear();
+        }
+
+        private void DestroyGameObjects(string tag)
+        {
+            var gameObjectList = GameObject.FindGameObjectsWithTag(tag);
+            foreach (var target in gameObjectList) Destroy(target);
         }
 
         private void DisplayPlayerHUD()

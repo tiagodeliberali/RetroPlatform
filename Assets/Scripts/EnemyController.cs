@@ -47,8 +47,7 @@ namespace RetroPlatform
         void Update()
         {
             curentSatus = enemyAnimatorView.GetCurrentStatus();
-            if (DebugInfo != null) DebugInfo.text = curentSatus.ToString();
-
+            
             if (OnEnemyRunAway != null && curentSatus == EnemyBattleState.Run_Away)
             {
                 OnEnemyRunAway(this);
