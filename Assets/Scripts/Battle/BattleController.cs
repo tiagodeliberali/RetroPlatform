@@ -37,6 +37,7 @@ namespace RetroPlatform.Battle
 
         bool canSelectEnemy;
         bool canBeAttacked;
+        int enemyAttackForce;
         public int EnemyCount { get; private set; }
 
         void Awake()
@@ -73,24 +74,26 @@ namespace RetroPlatform.Battle
                 enemyController.OnEnemyRunAway += EnemyController_OnEnemyRunAway;
                 enemyController.DebugInfo = DebugInfo;
 
-                var EnemyProfile = ScriptableObject.CreateInstance<Enemy>();
-                EnemyProfile.enemyClass = EnemyClass.ZombieBird;
-                EnemyProfile.health = 3;
-                EnemyProfile.attack = 1;
-                EnemyProfile.name = EnemyProfile.enemyClass + " " + i.ToString();
+                var EnemyProfile = Enemy.GetByName(EnemyPrefabs[0].name);
+                EnemyProfile.name = EnemyProfile.EnemyName + " " + i.ToString();
+                enemyAttackForce += EnemyProfile.attack;
 
                 enemyController.EnemyProfile = EnemyProfile;
             }
+
+            battleStateManager.SetBool("IntroFinished", true);
         }
 
         private void EnemyController_OnEnemyRunAway(EnemyController enemy)
         {
-            StartCoroutine(MoveCharacterToPoint(new Vector3(1300, enemy.transform.position.y, enemy.transform.position.z), enemy.gameObject, 0.1f));
+            enemyAttackForce -= enemy.EnemyProfile.attack;
             EnemyCount--;
+            StartCoroutine(MoveCharacterToPoint(new Vector3(1300, enemy.transform.position.y, enemy.transform.position.z), enemy.gameObject, 0.1f));
         }
 
         private void EnemyController_OnEnemyDie(EnemyController enemy)
         {
+            enemyAttackForce -= enemy.EnemyProfile.attack;
             EnemyCount--;
             enemy.gameObject.SetActive(false);
             Destroy(enemy);
@@ -164,7 +167,12 @@ namespace RetroPlatform.Battle
                     canBeAttacked = true;
                     break;
                 case BattleState.Enemy_Attack:
-                    if (canBeAttacked) player.PlayerCore.GetDamage(Random.Range(0, EnemyCount));
+                    if (canBeAttacked && EnemyCount > 0)
+                    {
+                        int damage = Random.Range(0, EnemyCount) * enemyAttackForce / EnemyCount;
+                        Debug.Log("Damage: " + damage);
+                        player.PlayerCore.GetDamage(damage);
+                    }
                     canBeAttacked = false;
                     battleStateManager.SetBool("BattleReady", EnemyCount > 0);
                     break;

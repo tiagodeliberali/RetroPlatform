@@ -68,14 +68,15 @@
     <Compile Include="Assets\Scripts\Battle\AttackSword.cs" />
     <Compile Include="Assets\Scripts\Battle\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
+    <Compile Include="Assets\Scripts\Battle\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Battle\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\Battle\EnemyZombieBird.cs" />
     <Compile Include="Assets\Scripts\Battle\RandomBattle.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
     <Compile Include="Assets\Scripts\Conversation\ConversationArray.cs" />
     <Compile Include="Assets\Scripts\Conversation\ConversationComponent.cs" />
     <Compile Include="Assets\Scripts\Conversation\ConversationEntry.cs" />
     <Compile Include="Assets\Scripts\Direction.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\IEnvironmentData.cs" />
