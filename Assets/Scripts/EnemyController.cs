@@ -1,5 +1,6 @@
 ﻿using RetroPlatform.Battle;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,16 +8,24 @@ namespace RetroPlatform
 {
     public class EnemyController : MonoBehaviour
     {
+        public AnimationCurve SpawnAnimationCurve;
         public Enemy EnemyProfile;
         public BattleController BattleController;
         PlayerController player;
         Animator enemyAI;
+        AnimatorView<EnemyBattleState> enemyAnimatorView;
         public GameObject lifeCanvas;
         Slider lifeSlider;
         CanvasGroup lifeCanvasGroup;
+        public EnemyBattleState curentSatus;
 
         public event Action<EnemyController> OnEnemySelected;
         public event Action<EnemyController> OnEnemyDie;
+        public event Action<EnemyController> OnEnemyRunAway;
+
+        public Text DebugInfo;
+
+        public EnemyBattleState BattleState { get; private set; }
 
         void OnMouseDown()
         {
@@ -27,6 +36,7 @@ namespace RetroPlatform
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             enemyAI = GetComponent<Animator>();
+            enemyAnimatorView = new AnimatorView<EnemyBattleState>(enemyAI);
 
             var life = Instantiate(lifeCanvas.gameObject);
             life.transform.SetParent(gameObject.transform);
@@ -36,6 +46,15 @@ namespace RetroPlatform
 
         void Update()
         {
+            curentSatus = enemyAnimatorView.GetCurrentStatus();
+            if (DebugInfo != null) DebugInfo.text = curentSatus.ToString();
+
+            if (OnEnemyRunAway != null && curentSatus == EnemyBattleState.Run_Away)
+            {
+                OnEnemyRunAway(this);
+                OnEnemyRunAway = null;
+            }
+
             UpdateAI();
 
             if (EnemyProfile != null)
@@ -57,7 +76,17 @@ namespace RetroPlatform
                 enemyAI.SetInteger("EnemyHealth", EnemyProfile.health);
                 enemyAI.SetInteger("PlayerHealth", player.PlayerCore.Lives);
                 enemyAI.SetInteger("EnemiesInBattle", BattleController.EnemyCount);
+                enemyAI.SetBool("PlayerSeen", true);
+                enemyAI.SetBool("PlayerAttacking", BattleController.currentBattleState != Battle.BattleState.Enemy_Attack);
             }
         }
+    }
+
+    public enum EnemyBattleState
+    {
+        Idle,
+        Attack,
+        Defend,
+        Run_Away
     }
 }

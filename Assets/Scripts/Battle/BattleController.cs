@@ -18,8 +18,8 @@ namespace RetroPlatform.Battle
         public Slider playerLife;
 
         public Animator battleStateManager;
-        private Dictionary<int, BattleState> battleStateHash = new Dictionary<int, BattleState>();
-        private BattleState currentBattleState;
+        AnimatorView<BattleState> battleAnimatorView;
+        public BattleState currentBattleState;
 
         public GameObject introPanel;
         Animator introPanelAnim;
@@ -41,6 +41,7 @@ namespace RetroPlatform.Battle
         void Awake()
         {
             battleStateManager = GetComponent<Animator>();
+            battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
             introPanelAnim = introPanel.GetComponent<Animator>();
             attack = GetComponent<Attack>();
 
@@ -51,8 +52,6 @@ namespace RetroPlatform.Battle
         {
             EnemyCount = Random.Range(1, EnemySpawnPoints.Length);
             StartCoroutine(SpawnEnemies());
-
-            GetAnimationStates();
         }
 
         IEnumerator SpawnEnemies()
@@ -63,21 +62,29 @@ namespace RetroPlatform.Battle
             {
                 var newEnemy = (GameObject)Instantiate(EnemyPrefabs[0]);
                 newEnemy.transform.position = new Vector3(10, -1, 0);
-                yield return StartCoroutine(MoveCharacterToPoint(EnemySpawnPoints[i], newEnemy));
+                yield return StartCoroutine(MoveCharacterToPoint(EnemySpawnPoints[i].transform.position, newEnemy, 1));
                 newEnemy.transform.parent = EnemySpawnPoints[i].transform;
 
                 var enemyController = newEnemy.GetComponent<EnemyController>();
                 enemyController.BattleController = this;
                 enemyController.OnEnemySelected += EnemyController_OnEnemySelected;
                 enemyController.OnEnemyDie += EnemyController_OnEnemyDie;
+                enemyController.OnEnemyRunAway += EnemyController_OnEnemyRunAway;
+                enemyController.DebugInfo = DebugInfo;
 
                 var EnemyProfile = ScriptableObject.CreateInstance<Enemy>();
                 EnemyProfile.enemyClass = EnemyClass.Dragon;
-                EnemyProfile.health = 20;
+                EnemyProfile.health = 3;
                 EnemyProfile.name = EnemyProfile.enemyClass + " " + i.ToString();
 
                 enemyController.EnemyProfile = EnemyProfile;
             }
+        }
+
+        private void EnemyController_OnEnemyRunAway(EnemyController enemy)
+        {
+            StartCoroutine(MoveCharacterToPoint(new Vector3(1300, enemy.transform.position.y, enemy.transform.position.z), enemy.gameObject, 0.1f));
+            EnemyCount--;
         }
 
         private void EnemyController_OnEnemyDie(EnemyController enemy)
@@ -87,7 +94,7 @@ namespace RetroPlatform.Battle
             Destroy(enemy);
         }
 
-        IEnumerator MoveCharacterToPoint(GameObject destination, GameObject character)
+        IEnumerator MoveCharacterToPoint(Vector3 destination, GameObject character, float speed)
         {
             float timer = 0f;
             var StartPosition = character.transform.position;
@@ -95,14 +102,14 @@ namespace RetroPlatform.Battle
             {
                 while (timer < SpawnAnimationCurve.keys[SpawnAnimationCurve.length - 1].time)
                 {
-                    character.transform.position = Vector3.Lerp(StartPosition, destination.transform.position, SpawnAnimationCurve.Evaluate(timer));
-                    timer += Time.deltaTime;
+                    character.transform.position = Vector3.Lerp(StartPosition, destination, SpawnAnimationCurve.Evaluate(timer));
+                    timer += Time.deltaTime * speed;
                     yield return new WaitForEndOfFrame();
                 }
             }
             else
             {
-                character.transform.position = destination.transform.position;
+                character.transform.position = destination;
             }
         }
 
@@ -133,20 +140,10 @@ namespace RetroPlatform.Battle
             }
         }
 
-        void GetAnimationStates()
-        {
-            foreach (BattleState state in (BattleState[])
-              System.Enum.GetValues(typeof(BattleState)))
-            {
-                battleStateHash.Add(Animator.StringToHash(state.ToString()), state);
-            }
-        }
-
         void Update()
         {
-            currentBattleState = battleStateHash[battleStateManager.GetCurrentAnimatorStateInfo(0).shortNameHash];
-            DebugInfo.text = currentBattleState.ToString();
-
+            currentBattleState = battleAnimatorView.GetCurrentStatus();
+            
             switch (currentBattleState)
             {
                 case BattleState.Intro:
@@ -171,6 +168,7 @@ namespace RetroPlatform.Battle
                 case BattleState.Battle_Result:
                     break;
                 case BattleState.Battle_End:
+                    NavigationManager.NavigateTo(GameState.LastSceneName);
                     break;
                 default:
                     break;

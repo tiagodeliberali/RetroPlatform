@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AnimatorView.cs" />
     <Compile Include="Assets\Scripts\Battle\Attack.cs" />
     <Compile Include="Assets\Scripts\Battle\AttackBow.cs" />
     <Compile Include="Assets\Scripts\Battle\AttackMagic.cs" />

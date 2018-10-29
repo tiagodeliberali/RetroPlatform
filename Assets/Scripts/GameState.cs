@@ -6,7 +6,7 @@ namespace RetroPlatform
 {
     public static class GameState
     {
-        public static int lives = 3;
+        public static int lives = -1;
         public static int coins;
 
         public static string LastSceneName;

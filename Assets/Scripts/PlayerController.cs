@@ -19,7 +19,6 @@ namespace RetroPlatform
             }
         }
 
-        public PlayerController player;
         public UIController uiController;
 
         void Awake()
@@ -32,13 +31,15 @@ namespace RetroPlatform
 
             if (uiController != null)
             {
-                PlayerCore.OnLivesChanged += () => uiController.UpdateLives(PlayerCore.Lives);
+                PlayerCore.OnLivesChanged += () => uiController.UpdateLives(PlayerCore.Lives, PlayerCore.MaxLives);
                 PlayerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
                 PlayerCore.OnCoinsChanged += () => uiController.UpdateCoins(PlayerCore.Coins);
 
                 uiController.OnStartConversation += () => PlayerCore.StartConversation();
                 uiController.OnFinishConversation += () => PlayerCore.FinishConversation();
             }
+
+            if (GameState.lives == -1) GameState.lives = PlayerCore.MaxLives;
 
             PlayerCore.AddLives(GameState.lives);
             PlayerCore.AddCoins(GameState.coins);

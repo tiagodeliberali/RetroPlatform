@@ -28,7 +28,7 @@ namespace RetroPlatform
         public PlayerCore()
         {
             Direction = Direction.Rigth;
-            MaxLives = 3;
+            MaxLives = 8;
         }
 
         public void Jump()

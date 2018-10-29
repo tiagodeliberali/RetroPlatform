@@ -21,11 +21,12 @@ namespace RetroPlatform
         public event Action OnStartConversation;
         public event Action OnFinishConversation;
 
-        public void UpdateLives(int totalLives)
+        public void UpdateLives(int totalLives, int maxLives)
         {
-            var lives = UILives.GetComponentsInChildren<CanvasRenderer>();
-            for (int i = 0; i < lives.Length; i++)
-                lives[i].SetAlpha(i < totalLives ? 100f : 0f);
+            var lives = UILives.GetComponentInChildren<Slider>();
+
+            lives.maxValue = maxLives;
+            lives.value = totalLives;
         }
 
         public void UpdateCoins(int totalCoins)
