@@ -123,8 +123,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   EnemyProfile: {fileID: 0}
   BattleController: {fileID: 0}
-  lifeCanvas: {fileID: 1455839222093188, guid: 40d0bce88ac88ca4abd9178aed88ac7b, type: 2}
-  curentSatus: 0
+  LifeCanvas: {fileID: 1455839222093188, guid: 40d0bce88ac88ca4abd9178aed88ac7b, type: 2}
+  CurrentSatus: 0
   DebugInfo: {fileID: 0}
 --- !u!212 &212119544062817866
 SpriteRenderer:

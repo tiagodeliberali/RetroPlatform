@@ -5,11 +5,11 @@ namespace RetroPlatform
 {
     public class PlayerController : MonoBehaviour
     {
-        private Rigidbody2D playerRigidBody2D;
-        private Animator playerAnim;
-        private SpriteRenderer playerSpriteImage;
+        Rigidbody2D playerRigidBody2D;
+        Animator playerAnim;
+        SpriteRenderer playerSpriteImage;
 
-        private PlayerCore _core;
+        PlayerCore _core;
         public PlayerCore PlayerCore
         {
             get
@@ -62,12 +62,12 @@ namespace RetroPlatform
                 PlayerCore.HitFloor();
         }
 
-        private void PlayerCore_OnLivesFinished()
+        void PlayerCore_OnLivesFinished()
         {
             Debug.Log("GAME OVER!");
         }
 
-        private void MovePlayer()
+        void MovePlayer()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
                 PlayerCore.Jump();

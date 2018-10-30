@@ -5,8 +5,8 @@
         public EnemyZombieBird()
         {
             EnemyName = "ZombieBird";
-            health = 3;
-            attack = 1;
+            Health = 3;
+            Attack = 1;
         }
     }
 }

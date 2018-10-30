@@ -5,25 +5,23 @@ namespace RetroPlatform.Navigation
 {
     public class NavigationPrompt : MonoBehaviour
     {
-        public Texture2D fadeTexture;
-        public PlayerController player;
+        public Texture2D FadeTexture;
+        public PlayerController PlayerController;
 
         float fadespeed = 0.5f;
         int drawDepth = -1000;
-
-        private float alpha = 0f;
-        private float fadeDir = -1f;
-
+        float alpha = 0f;
+        float fadeDir = -1f;
         bool fadeOut;
 
-        void OnTriggerEnter2D(Collider2D col)
+        void OnTriggerEnter2D(Collider2D collider)
         {
             string destination = tag;
-            if (col.gameObject.CompareTag("Player") && NavigationManager.CanNavigate(destination))
+            if (collider.gameObject.CompareTag("Player") && NavigationManager.CanNavigate(destination))
             {
-                GameState.UpdatePlayerData(player.PlayerCore);
+                GameState.UpdatePlayerData(PlayerController.PlayerCore);
                 fadeOut = true;
-                col.gameObject.SetActive(false);
+                collider.gameObject.SetActive(false);
                 StartCoroutine(MoveToScene(destination));
             }
         }
@@ -43,12 +41,9 @@ namespace RetroPlatform.Navigation
 
             Color newColor = GUI.color;
             newColor.a = alpha;
-
             GUI.color = newColor;
-
             GUI.depth = drawDepth;
-
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeTexture);
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), FadeTexture);
         }
     }
 }

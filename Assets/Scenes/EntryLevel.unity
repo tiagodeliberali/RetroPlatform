@@ -557,8 +557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8bd3e78c2a68f48ae62065a650072b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTexture: {fileID: 2800000, guid: c12de5812c9bec44ab9d04388b66cbfe, type: 3}
-  player: {fileID: 1379869095}
+  FadeTexture: {fileID: 2800000, guid: c12de5812c9bec44ab9d04388b66cbfe, type: 3}
+  PlayerController: {fileID: 1379869095}
 --- !u!1001 &240027793
 Prefab:
   m_ObjectHideFlags: 0
@@ -2204,11 +2204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca419a3bdc4ddda4c86f7e607a2c5cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleProbability: 100
-  secondsBetweenBattles: 5
-  battleSceneName: BattleScene
+  BattleProbability: 100
+  SecondsBetweenBattles: 10
   GoBackPosition: {x: 12, y: 3}
-  player: {fileID: 1379869095}
+  Player: {fileID: 1379869095}
 --- !u!1 &647381525
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,9 +2673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc1a7d51d8bd7a42b00e3b2f534b1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conversationComponent: {fileID: 739853758}
-  uiController: {fileID: 1181821550}
-  boxCollider: {fileID: 739853761}
+  UIController: {fileID: 1181821550}
 --- !u!50 &739853760
 Rigidbody2D:
   serializedVersion: 4
@@ -5124,9 +5121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UILives: {fileID: 410502292}
   CoinsAmount: {fileID: 2023335261}
-  dialogBox: {fileID: 0}
-  imageHolder: {fileID: 0}
-  textHolder: {fileID: 0}
+  DialogBox: {fileID: 0}
+  ImageHolder: {fileID: 0}
+  TextHolder: {fileID: 0}
 --- !u!1001 &1196997967
 Prefab:
   m_ObjectHideFlags: 0

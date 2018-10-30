@@ -68,7 +68,9 @@
     <Compile Include="Assets\Scripts\Battle\AttackSword.cs" />
     <Compile Include="Assets\Scripts\Battle\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleState.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Battle\EnemyBattleState.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyZombieBird.cs" />
     <Compile Include="Assets\Scripts\Battle\RandomBattle.cs" />

@@ -6,8 +6,8 @@ namespace RetroPlatform.Battle
 {
     public class AnimatorView<T>
     {
-        private Animator animator;
-        private Dictionary<int, T> animatorStateHash = new Dictionary<int, T>();
+        Animator animator;
+        Dictionary<int, T> animatorStateHash = new Dictionary<int, T>();
 
         public AnimatorView(Animator animator)
         {
@@ -15,7 +15,7 @@ namespace RetroPlatform.Battle
             GetAnimationStates();
         }
 
-        private void GetAnimationStates()
+        void GetAnimationStates()
         {
             foreach (T state in (T[])Enum.GetValues(typeof(T)))
             {

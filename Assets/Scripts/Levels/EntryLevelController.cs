@@ -5,7 +5,7 @@ namespace RetroPlatform.Levels
 {
     public class EntryLevelController : MonoBehaviour
     {
-        private const string LEFT_SCENE = "BossLeftScene";
+        const string LEFT_SCENE = "BossLeftScene";
 
         public UIController uiController;
         public BossController bossController;

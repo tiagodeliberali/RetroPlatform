@@ -4,7 +4,8 @@ namespace RetroPlatform
 {
     public class PopUpMenu : MonoBehaviour
     {
-        private bool enabled;
+        bool displayMenu;
+
         public CanvasGroup popUp;
 
         void Awake()
@@ -14,10 +15,10 @@ namespace RetroPlatform
 
         public void ToggleMenu()
         {
-            if (enabled) DisableTheMenu();
+            if (displayMenu) DisableTheMenu();
             else EnableTheMenu();
 
-            enabled = !enabled;
+            displayMenu = !displayMenu;
         }
 
         public void EnableTheMenu()

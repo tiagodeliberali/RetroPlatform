@@ -8,8 +8,8 @@ namespace RetroPlatform.Levels
 
         void Awake()
         {
-            var player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            playerCore = player.PlayerCore;
+            var playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerCore = playerController.PlayerCore;
         }
 
         void OnTriggerEnter2D(Collider2D collision)

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198783495343913786}
   - component: {fileID: 199888580466787480}
   m_Layer: 0
-  m_Name: swordParticles
+  m_Name: SwordParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

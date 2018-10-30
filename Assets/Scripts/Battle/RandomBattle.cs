@@ -1,5 +1,5 @@
-﻿using RetroPlatform.Navigation;
-using System.Collections;
+﻿using System.Collections;
+using RetroPlatform.Navigation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,18 +7,18 @@ namespace RetroPlatform.Battle
 {
     public class RandomBattle : MonoBehaviour
     {
-        public int battleProbability;
         int encounterChance = 100;
-        public int secondsBetweenBattles;
-        public string battleSceneName;
-        public Vector2 GoBackPosition;
-        public PlayerController player;
+        const string battleSceneName = "BattleScene";
 
+        public int BattleProbability;
+        public int SecondsBetweenBattles;
+        public Vector2 GoBackPosition;
+        public PlayerController Player;
 
         void OnTriggerEnter2D(Collider2D col)
         {
             encounterChance = Random.Range(1, 100);
-            if (encounterChance > battleProbability)
+            if (encounterChance > BattleProbability)
             {
                 StartCoroutine(RecalculateChance());
             }
@@ -26,21 +26,23 @@ namespace RetroPlatform.Battle
 
         IEnumerator RecalculateChance()
         {
-            while (encounterChance > battleProbability)
+            while (encounterChance > BattleProbability)
             {
-                yield return new WaitForSeconds(secondsBetweenBattles);
+                yield return new WaitForSeconds(SecondsBetweenBattles);
                 encounterChance = Random.Range(1, 100);
             }
         }
+
         void OnTriggerStay2D(Collider2D col)
         {
-            if (encounterChance <= battleProbability)
+            if (encounterChance <= BattleProbability)
             {
-                GameState.UpdatePlayerData(player.PlayerCore);
+                GameState.UpdatePlayerData(Player.PlayerCore);
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
                 NavigationManager.NavigateTo(battleSceneName);
             }
         }
+
         void OnTriggerExit2D(Collider2D col)
         {
             encounterChance = 100;

@@ -1,6 +1,6 @@
-﻿using RetroPlatform.Conversation;
-using System;
+﻿using System;
 using System.Collections;
+using RetroPlatform.Conversation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +10,9 @@ namespace RetroPlatform
     {
         public GameObject UILives;
         public Text CoinsAmount;
-
-        public CanvasGroup dialogBox;
-        public Image imageHolder;
-        public Text textHolder;
+        public CanvasGroup DialogBox;
+        public Image ImageHolder;
+        public Text TextHolder;
 
         bool talking = false;
         ConversationEntry currentConversationLine;
@@ -38,9 +37,9 @@ namespace RetroPlatform
         {
             if (OnStartConversation != null) OnStartConversation();
 
-            dialogBox = GameObject.Find("Dialog Box").GetComponent<CanvasGroup>();
-            imageHolder = GameObject.Find("Dialog Box Image").GetComponent<Image>();
-            textHolder = GameObject.Find("Dialog Box Text").GetComponent<Text>();
+            DialogBox = GameObject.Find("Dialog Box").GetComponent<CanvasGroup>();
+            ImageHolder = GameObject.Find("Dialog Box Image").GetComponent<Image>();
+            TextHolder = GameObject.Find("Dialog Box Text").GetComponent<Text>();
 
             if (!talking)
             {
@@ -54,15 +53,15 @@ namespace RetroPlatform
             foreach (var conversationLine in conversation.ConversationLines)
             {
                 currentConversationLine = conversationLine;
-                imageHolder.sprite = currentConversationLine.DisplayPic;
+                ImageHolder.sprite = currentConversationLine.DisplayPic;
 
                 int textySize = currentConversationLine.ConversationText.Length;
                 for (int i = 0; i < textySize; i++)
                 {
-                    textHolder.text = currentConversationLine.ConversationText.Substring(0, i);
+                    TextHolder.text = currentConversationLine.ConversationText.Substring(0, i);
                     yield return new WaitForSeconds(0.05f);
                 }
-                textHolder.text = currentConversationLine.ConversationText;
+                TextHolder.text = currentConversationLine.ConversationText;
                 yield return new WaitForSeconds(2f);
             }
             talking = false;
@@ -74,13 +73,13 @@ namespace RetroPlatform
         {
             if (talking)
             {
-                dialogBox.alpha = 1;
-                dialogBox.blocksRaycasts = true;
+                DialogBox.alpha = 1;
+                DialogBox.blocksRaycasts = true;
             }
-            else if (dialogBox != null)
+            else if (DialogBox != null)
             {
-                dialogBox.alpha = 0;
-                dialogBox.blocksRaycasts = false;
+                DialogBox.alpha = 0;
+                DialogBox.blocksRaycasts = false;
             }
         }
     }

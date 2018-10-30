@@ -1,33 +1,34 @@
-﻿using RetroPlatform.Conversation;
-using System.Collections;
+﻿using System.Collections;
+using RetroPlatform.Conversation;
 using UnityEngine;
 
 namespace RetroPlatform
 {
     public class BossController : MonoBehaviour
     {
-        public ConversationComponent conversationComponent;
-        public UIController uiController;
-        public BoxCollider2D boxCollider;
-        
+        public UIController UIController;
+
+        ConversationComponent conversationComponent;
+        BoxCollider2D boxCollider;
         Rigidbody2D bossRigidBody2D;
         SpriteRenderer bossSpriteImage;
-        
         float velocity = 0f;
 
         void Awake()
         {
+            boxCollider = (BoxCollider2D)GetComponent(typeof(BoxCollider2D));
             bossRigidBody2D = (Rigidbody2D)GetComponent(typeof(Rigidbody2D));
             bossSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
+            conversationComponent = (ConversationComponent)GetComponent(typeof(ConversationComponent));
 
-            uiController.OnFinishConversation += () => StartCoroutine(RunAwayAnimation());
+            UIController.OnFinishConversation += () => StartCoroutine(RunAwayAnimation());
         }
 
         void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                uiController.StartConversation(conversationComponent.Conversations[0]);
+                UIController.StartConversation(conversationComponent.Conversations[0]);
             }
         }
 

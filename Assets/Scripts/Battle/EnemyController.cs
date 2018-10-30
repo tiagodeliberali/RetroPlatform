@@ -1,6 +1,5 @@
-﻿using RetroPlatform.Battle;
-using System;
-using System.Collections;
+﻿using System;
+using RetroPlatform.Battle;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,16 +7,17 @@ namespace RetroPlatform
 {
     public class EnemyController : MonoBehaviour
     {
+        private PlayerController playerController;
+        private Animator enemyAI;
+        private AnimatorView<EnemyBattleState> enemyAnimatorView;
+        private Slider lifeSlider;
+        private CanvasGroup lifeCanvasGroup;
+
         public AnimationCurve SpawnAnimationCurve;
         public Enemy EnemyProfile;
         public BattleController BattleController;
-        PlayerController player;
-        Animator enemyAI;
-        AnimatorView<EnemyBattleState> enemyAnimatorView;
-        public GameObject lifeCanvas;
-        Slider lifeSlider;
-        CanvasGroup lifeCanvasGroup;
-        public EnemyBattleState curentSatus;
+        public GameObject LifeCanvas;
+        public EnemyBattleState CurrentSatus;
 
         public event Action<EnemyController> OnEnemySelected;
         public event Action<EnemyController> OnEnemyDie;
@@ -27,18 +27,13 @@ namespace RetroPlatform
 
         public EnemyBattleState BattleState { get; private set; }
 
-        void OnMouseDown()
+        void Awake()
         {
-            if (OnEnemySelected != null) OnEnemySelected(this);
-        }
-
-        public void Awake()
-        {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             enemyAI = GetComponent<Animator>();
             enemyAnimatorView = new AnimatorView<EnemyBattleState>(enemyAI);
 
-            var life = Instantiate(lifeCanvas.gameObject);
+            var life = Instantiate(LifeCanvas.gameObject);
             life.transform.SetParent(gameObject.transform);
             lifeSlider = life.GetComponent<Canvas>().GetComponentInChildren<Slider>();
             lifeCanvasGroup = life.GetComponent<CanvasGroup>();
@@ -46,46 +41,52 @@ namespace RetroPlatform
 
         void Update()
         {
-            curentSatus = enemyAnimatorView.GetCurrentStatus();
-            
-            if (OnEnemyRunAway != null && curentSatus == EnemyBattleState.Run_Away)
+            CurrentSatus = enemyAnimatorView.GetCurrentStatus();
+
+            CheckRunAway();
+            UpdateAI();
+            UpdateLives();
+        }
+
+        void OnMouseDown()
+        {
+            if (OnEnemySelected != null) OnEnemySelected(this);
+        }
+
+        void CheckRunAway()
+        {
+            if (OnEnemyRunAway != null && CurrentSatus == EnemyBattleState.Run_Away)
             {
                 OnEnemyRunAway(this);
                 OnEnemyRunAway = null;
             }
+        }
 
-            UpdateAI();
-
+        void UpdateLives()
+        {
             if (EnemyProfile != null)
             {
                 if (lifeSlider.maxValue == 0)
                 {
-                    lifeSlider.maxValue = EnemyProfile.health;
+                    lifeSlider.maxValue = EnemyProfile.Health;
                     lifeCanvasGroup.alpha = 1;
                 }
-                lifeSlider.value = EnemyProfile.health;
-                if (EnemyProfile.health <= 0 && OnEnemyDie != null) OnEnemyDie(this);
+
+                lifeSlider.value = EnemyProfile.Health;
+                if (EnemyProfile.Health <= 0 && OnEnemyDie != null) OnEnemyDie(this);
             }
         }
 
-        public void UpdateAI()
+        void UpdateAI()
         {
             if (enemyAI != null && EnemyProfile != null)
             {
-                enemyAI.SetInteger("EnemyHealth", EnemyProfile.health);
-                enemyAI.SetInteger("PlayerHealth", player.PlayerCore.Lives);
+                enemyAI.SetInteger("EnemyHealth", EnemyProfile.Health);
+                enemyAI.SetInteger("PlayerHealth", playerController.PlayerCore.Lives);
                 enemyAI.SetInteger("EnemiesInBattle", BattleController.EnemyCount);
                 enemyAI.SetBool("PlayerSeen", true);
-                enemyAI.SetBool("PlayerAttacking", BattleController.currentBattleState != Battle.BattleState.Enemy_Attack);
+                enemyAI.SetBool("PlayerAttacking", BattleController.CurrentBattleState != Battle.BattleState.Enemy_Attack);
             }
         }
-    }
-
-    public enum EnemyBattleState
-    {
-        Idle,
-        Attack,
-        Defend,
-        Run_Away
     }
 }

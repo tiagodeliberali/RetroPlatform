@@ -14,10 +14,10 @@ namespace RetroPlatform.Levels
         public float minXPosition;
         public float maxXPosition;
 
-        private GameObject[] backgrounds;
-        private GameObject[] middlegrounds;
+        GameObject[] backgrounds;
+        GameObject[] middlegrounds;
 
-        private void Awake()
+        void Awake()
         {
             backgrounds = GameObject.FindGameObjectsWithTag("Background");
             middlegrounds = GameObject.FindGameObjectsWithTag("Middleground");
@@ -34,7 +34,7 @@ namespace RetroPlatform.Levels
             SetPosition(middlegrounds, 30);
         }
 
-        private void SetPosition(GameObject[] gameObjectArray, float factor)
+        void SetPosition(GameObject[] gameObjectArray, float factor)
         {
             for (int i = 0; i < gameObjectArray.Length; i++)
             {

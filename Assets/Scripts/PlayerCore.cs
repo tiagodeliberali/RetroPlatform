@@ -19,11 +19,11 @@ namespace RetroPlatform
         public event DataChanged OnLivesChanged;
         public event DataChanged OnLivesFinished;
         public event DataChanged OnCoinsChanged;
-
         public IEnvironmentData EnvironmentData;
-        private float movePlayerHorizontal;
-        private int currentJump = 0;
-        private bool isTalking;
+
+        float movePlayerHorizontal;
+        int currentJump = 0;
+        bool isTalking;
 
         public PlayerCore()
         {

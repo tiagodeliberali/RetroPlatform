@@ -4,8 +4,8 @@ namespace RetroPlatform
 {
     public abstract class Enemy : ScriptableObject
     {
-        public int health;
-        public int attack;
+        public int Health;
+        public int Attack;
 
         public string EnemyName { get; protected set; }
 

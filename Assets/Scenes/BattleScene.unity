@@ -305,18 +305,15 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  buttons: {fileID: 849518411}
+  Buttons: {fileID: 849518411}
+  PlayerController: {fileID: 1191142927}
+  PlayerLife: {fileID: 1806770383}
+  IntroPanel: {fileID: 1857139377}
+  SwordParticle: {fileID: 1020342267282846, guid: 108ab4d3af2c7894cb885fdcde9378e7,
+    type: 2}
+  SelectionCircle: {fileID: 1840903707882876, guid: f8cba155b78bf0949bc0d025f3ffe162,
+    type: 2}
   DebugInfo: {fileID: 861172101}
-  player: {fileID: 1191142927}
-  playerLife: {fileID: 1806770383}
-  battleStateManager: {fileID: 0}
-  currentBattleState: 0
-  introPanel: {fileID: 1857139377}
-  selectionCircle: {fileID: 1840903707882876, guid: f8cba155b78bf0949bc0d025f3ffe162,
-    type: 2}
-  selectedEnemies: []
-  swordParticle: {fileID: 1020342267282846, guid: 108ab4d3af2c7894cb885fdcde9378e7,
-    type: 2}
 --- !u!4 &21695401
 Transform:
   m_ObjectHideFlags: 0

@@ -9,11 +9,11 @@ namespace RetroPlatform.Battle
         public Button sword;
         public Button bow;
         public Button magic;
-
         public BaseAttack CurrentAttack;
 
-        private void Awake()
+        void Awake()
         {
+            CurrentAttack = null;
             HighlightButton();
         }
 
@@ -67,8 +67,8 @@ namespace RetroPlatform.Battle
 
         public void ClearAttack()
         {
-            HighlightButton();
             CurrentAttack = null;
+            HighlightButton();
         }
     }
 }
