@@ -39,10 +39,10 @@ namespace RetroPlatform
                 uiController.OnFinishConversation += () => PlayerCore.FinishConversation();
             }
 
-            if (GameState.lives == -1) GameState.lives = PlayerCore.MaxLives;
+            if (GameState.Lives == -1) GameState.Lives = PlayerCore.MaxLives;
 
-            PlayerCore.AddLives(GameState.lives);
-            PlayerCore.AddCoins(GameState.coins);
+            PlayerCore.AddLives(GameState.Lives);
+            PlayerCore.AddCoins(GameState.Coins);
 
             var lastPosition = GameState.GetLastScenePosition(SceneManager.GetActiveScene().name);
             if (lastPosition != Vector3.zero) transform.position = lastPosition;

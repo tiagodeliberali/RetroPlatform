@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d06a8580950bfe4cb58a386eb1e478b, type: 3}
+  m_Name: FirstLevel_FIndTheMapAgain
+  m_EditorClassIdentifier: 
+  ConversationLines:
+  - SpeakingCharacterName: "Drag\xE3o guerreiro"
+    ConversationText: "Voc\xEA precisa encontrar o mapa antes de partir em viagem!"
+    DisplayPic: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}
+  - SpeakingCharacterName: Menino gato robo
+    ConversationText: "Eu n\xE3o consigo ach\xE1-lo!"
+    DisplayPic: {fileID: 21300000, guid: f7d34ad91f388f84d84e7fdd6a08b9d3, type: 3}
+  - SpeakingCharacterName: "Drag\xE3o guerreiro"
+    ConversationText: "Procure na floresta, na \xE1rea mais alta dessa terra!"
+    DisplayPic: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}

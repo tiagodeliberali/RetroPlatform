@@ -14,6 +14,13 @@ namespace RetroPlatform.Battle
         public int SecondsBetweenBattles;
         public Vector2 GoBackPosition;
         public PlayerController Player;
+        public SpriteRenderer collectable;
+
+        public void DisableZone()
+        {
+            BoxCollider2D boxColider = (BoxCollider2D)GetComponent(typeof(BoxCollider2D));
+            boxColider.gameObject.SetActive(false);
+        }
 
         void OnTriggerEnter2D(Collider2D col)
         {
@@ -39,6 +46,8 @@ namespace RetroPlatform.Battle
             {
                 GameState.UpdatePlayerData(Player.PlayerCore);
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
+                GameState.BattleCollectable = collectable;
+                GameState.BattleResult = BattleResult.None;
                 NavigationManager.NavigateTo(battleSceneName);
             }
         }

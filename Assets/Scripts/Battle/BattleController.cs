@@ -29,6 +29,7 @@ namespace RetroPlatform.Battle
         GameObject attackParticle;
         Attack attack;
         PlayerCore playerCore;
+        SpriteRenderer collectable;
         List<EnemyController> selectedEnemies = new List<EnemyController>();
 
         bool attacking = false;
@@ -43,6 +44,7 @@ namespace RetroPlatform.Battle
             introPanelAnim = IntroPanel.GetComponent<Animator>();
             attack = GetComponent<Attack>();
             playerCore = PlayerController.PlayerCore;
+            collectable = GameState.BattleCollectable;
 
             playerCore.StartConversation();
         }
@@ -175,6 +177,14 @@ namespace RetroPlatform.Battle
                     battleStateManager.SetBool("BattleReady", EnemyCount > 0);
                     break;
                 case BattleState.Battle_Result:
+                    if (playerCore.Lives > 0)
+                    {
+                        GameState.BattleResult = BattleResult.Win;
+                    }
+                    else
+                    {
+                        GameState.BattleResult = BattleResult.Lose;
+                    }
                     break;
                 case BattleState.Battle_End:
                     NavigationManager.NavigateTo(GameState.LastSceneName);
@@ -244,6 +254,7 @@ namespace RetroPlatform.Battle
 
         public void RunAway()
         {
+            GameState.BattleResult = BattleResult.RunAway;
             NavigationManager.NavigateTo(GameState.LastSceneName);
         }
 

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using RetroPlatform.Conversation;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace RetroPlatform
@@ -8,7 +8,8 @@ namespace RetroPlatform
     {
         public UIController UIController;
 
-        ConversationComponent conversationComponent;
+        public event Action OnTouchPlayer;
+
         BoxCollider2D boxCollider;
         Rigidbody2D bossRigidBody2D;
         SpriteRenderer bossSpriteImage;
@@ -19,17 +20,11 @@ namespace RetroPlatform
             boxCollider = (BoxCollider2D)GetComponent(typeof(BoxCollider2D));
             bossRigidBody2D = (Rigidbody2D)GetComponent(typeof(Rigidbody2D));
             bossSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
-            conversationComponent = (ConversationComponent)GetComponent(typeof(ConversationComponent));
-
-            UIController.OnFinishConversation += () => StartCoroutine(RunAwayAnimation());
         }
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                UIController.StartConversation(conversationComponent.Conversations[0]);
-            }
+            if (collision.gameObject.CompareTag("Player") && OnTouchPlayer != null) OnTouchPlayer();
         }
 
         void Update()

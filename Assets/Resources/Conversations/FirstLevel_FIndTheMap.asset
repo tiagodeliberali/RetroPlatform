@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d06a8580950bfe4cb58a386eb1e478b, type: 3}
-  m_Name: FirstConversationDragonWarrior
+  m_Name: FirstLevel_FIndTheMap
   m_EditorClassIdentifier: Assembly-CSharp:RetroPlatform.Conversation:ConversationArray
   ConversationLines:
   - SpeakingCharacterName: "Drag\xE3o guerreiro"
@@ -17,15 +17,15 @@ MonoBehaviour:
       gato robo"
     DisplayPic: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}
   - SpeakingCharacterName: Menino gato robo
-    ConversationText: "Estou atr\xE1s da espada m\xE1gica de fogo!"
+    ConversationText: "Estou atr\xE1s da espada m\xE1gica de fogo, para vencer o zumbi
+      de cabe\xE7a de ab\xF3bora!"
     DisplayPic: {fileID: 21300000, guid: e1e23c36c09b9d84a913342245258c94, type: 3}
   - SpeakingCharacterName: "Drag\xE3o guerreiro"
-    ConversationText: "Esse \xE9 um artefato muito importante para nosso povo..."
+    ConversationText: "Para encontr\xE1-lo, voc\xEA precisar\xE1 encontrar um mapa!"
     DisplayPic: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}
   - SpeakingCharacterName: Menino gato robo
-    ConversationText: "Preciso dela para vencer o zumbi de cabe\xE7a de ab\xF3bora
-      que est\xE1 atacando minha vila"
+    ConversationText: "Onde ele est\xE1?"
     DisplayPic: {fileID: 21300000, guid: e1e23c36c09b9d84a913342245258c94, type: 3}
   - SpeakingCharacterName: "Drag\xE3o guerreiro"
-    ConversationText: "Voc\xEA precisar\xE1 provar o seu valor!"
+    ConversationText: Escondido na mais alta floresta dessa terra
     DisplayPic: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}

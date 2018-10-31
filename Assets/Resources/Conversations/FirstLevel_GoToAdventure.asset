@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d06a8580950bfe4cb58a386eb1e478b, type: 3}
+  m_Name: FirstLevel_GoToAdventure
+  m_EditorClassIdentifier: 
+  ConversationLines:
+  - SpeakingCharacterName: "Drag\xE3o guerreiro"
+    ConversationText: "Vejo que voc\xEA encontrou o mapa!"
+    DisplayPic: {fileID: 21300000, guid: 761e277bc5c84c3419e2a42c396dde31, type: 3}
+  - SpeakingCharacterName: Menino gato robo
+    ConversationText: "Sim! Alguns papagaios zumbis estavam tentando roub\xE1-lo"
+    DisplayPic: {fileID: 21300000, guid: f7d34ad91f388f84d84e7fdd6a08b9d3, type: 3}
+  - SpeakingCharacterName: "Drag\xE3o guerreiro"
+    ConversationText: "Eles s\xE3o umas pestes mesmo... Boa sorte na sua jornada!"
+    DisplayPic: {fileID: 21300000, guid: d6f80947af627e947b45cfa7a5ccc2c9, type: 3}
+  - SpeakingCharacterName: Menino gato robo
+    ConversationText: "Obrigado, Drag\xE3o guerreiro! Nos vemos em breve"
+    DisplayPic: {fileID: 21300002, guid: f7d34ad91f388f84d84e7fdd6a08b9d3, type: 3}
