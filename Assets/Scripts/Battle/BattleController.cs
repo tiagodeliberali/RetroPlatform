@@ -17,6 +17,7 @@ namespace RetroPlatform.Battle
         public GameObject IntroPanel;
         public GameObject SwordParticle;
         public GameObject SelectionCircle;
+        public GameObject CollectableItem;
 
         public BattleState CurrentBattleState { get; private set; }
         public int EnemyCount { get; private set; }
@@ -27,7 +28,6 @@ namespace RetroPlatform.Battle
         AnimatorView<BattleState> battleAnimatorView;
         Animator battlePanelAnim;
         Text battlePanelAnimText;
-        Image[] battlePanelAnimImage;
         GameObject attackParticle;
         Attack attack;
         PlayerCore playerCore;
@@ -45,12 +45,24 @@ namespace RetroPlatform.Battle
             battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
             battlePanelAnim = IntroPanel.GetComponent<Animator>();
             battlePanelAnimText = battlePanelAnim.GetComponentInChildren<Text>();
-            battlePanelAnimImage = battlePanelAnim.GetComponentsInChildren<Image>();
             attack = GetComponent<Attack>();
             playerCore = PlayerController.PlayerCore;
             collectable = GameState.BattleCollectable;
 
+            LoadCollectable();
             playerCore.StartConversation();
+        }
+
+        private void LoadCollectable()
+        {
+            if (collectable)
+            {
+                CollectableItem.GetComponent<SpriteRenderer>().sprite = collectable;
+            }
+            else
+            {
+                CollectableItem.SetActive(false);
+            }
         }
 
         void Start()
@@ -67,7 +79,7 @@ namespace RetroPlatform.Battle
             {
                 var newEnemy = (GameObject)Instantiate(EnemyPrefabs[0]);
                 newEnemy.transform.position = new Vector3(10, -1, 0);
-                yield return StartCoroutine(MoveCharacterToPoint(EnemySpawnPoints[i].transform.position, newEnemy, 1));
+                yield return StartCoroutine(MoveObjectToPoint(EnemySpawnPoints[i].transform.position, newEnemy, 1));
                 newEnemy.transform.parent = EnemySpawnPoints[i].transform;
 
                 var enemyController = newEnemy.GetComponent<EnemyController>();
@@ -91,7 +103,7 @@ namespace RetroPlatform.Battle
         {
             enemyAttackForce -= enemy.EnemyProfile.Attack;
             EnemyCount--;
-            StartCoroutine(MoveCharacterToPoint(new Vector3(1300, enemy.transform.position.y, enemy.transform.position.z), enemy.gameObject, 0.1f));
+            StartCoroutine(MoveObjectToPoint(new Vector3(1300, enemy.transform.position.y, enemy.transform.position.z), enemy.gameObject, 0.1f));
         }
 
         void EnemyController_OnEnemyDie(EnemyController enemy)
@@ -106,7 +118,7 @@ namespace RetroPlatform.Battle
         {
             if (!canSelectEnemy) return;
 
-            var selectionCircleInstance = (GameObject)GameObject.Instantiate(SelectionCircle);
+            var selectionCircleInstance = Instantiate(SelectionCircle);
             selectionCircleInstance.transform.parent = enemy.transform;
             selectionCircleInstance.transform.localPosition = new Vector3(0f, -1f, 0f);
             selectionCircleInstance.transform.localScale = new Vector3(4f, 4f, 1f);
@@ -120,22 +132,22 @@ namespace RetroPlatform.Battle
             }
         }
 
-        IEnumerator MoveCharacterToPoint(Vector3 destination, GameObject character, float speed)
+        IEnumerator MoveObjectToPoint(Vector3 destination, GameObject gameObject, float speed)
         {
             float timer = 0f;
-            var StartPosition = character.transform.position;
+            var StartPosition = gameObject.transform.position;
             if (SpawnAnimationCurve.length > 0)
             {
                 while (timer < SpawnAnimationCurve.keys[SpawnAnimationCurve.length - 1].time)
                 {
-                    character.transform.position = Vector3.Lerp(StartPosition, destination, SpawnAnimationCurve.Evaluate(timer));
+                    gameObject.transform.position = Vector3.Lerp(StartPosition, destination, SpawnAnimationCurve.Evaluate(timer));
                     timer += Time.deltaTime * speed;
                     yield return new WaitForEndOfFrame();
                 }
             }
             else
             {
-                character.transform.position = destination;
+                gameObject.transform.position = destination;
             }
         }
 
@@ -183,6 +195,11 @@ namespace RetroPlatform.Battle
                 case BattleState.Battle_Result:
                     if (playerCore.Lives > 0)
                     {
+                        if (CollectableItem != null && GameState.BattleResult == BattleResult.None)
+                        {
+                            Vector3 collectablePosition = new Vector3(PlayerController.transform.position.x + 2, PlayerController.transform.position.y + 1);
+                            StartCoroutine(MoveObjectToPoint(collectablePosition, CollectableItem, 2f));
+                        }
                         GameState.BattleResult = BattleResult.Win;
                         battlePanelAnimText.text = "Você venceu!";
                     }
@@ -192,8 +209,6 @@ namespace RetroPlatform.Battle
                         battlePanelAnimText.text = "Você perdeu";
                     }
                     battlePanelAnimText.fontSize = 60;
-                    battlePanelAnimImage[1].sprite = collectable;
-                    battlePanelAnimImage[2].sprite = collectable;
                     battlePanelAnim.SetTrigger("Finish");
                     break;
                 case BattleState.Battle_End:
@@ -247,7 +262,7 @@ namespace RetroPlatform.Battle
 
             foreach (var target in selectedEnemies)
             {
-                attackParticle = (GameObject)GameObject.Instantiate(SwordParticle);
+                attackParticle = Instantiate(SwordParticle);
                 attackParticle.tag = "SwordParticleSystem";
 
                 if (attackParticle != null)

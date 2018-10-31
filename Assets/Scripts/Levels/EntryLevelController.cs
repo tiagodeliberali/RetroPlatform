@@ -51,7 +51,7 @@ namespace RetroPlatform.Levels
             {
                 bossController.gameObject.SetActive(false);
             }
-            if (GameState.BattleResult == Battle.BattleResult.Win)
+            if (GameState.BattleResult == BattleResult.Win)
             {
                 map.gameObject.SetActive(false);
                 battleZone.DisableZone();
@@ -60,7 +60,7 @@ namespace RetroPlatform.Levels
 
         private void BossController_OnTouchPlayer()
         {
-            if (GameState.BattleResult == Battle.BattleResult.Win)
+            if (GameState.BattleResult == BattleResult.Win)
             {
                 uiController.StartConversation(conversationComponent.Conversations[2]);
             }
@@ -77,7 +77,7 @@ namespace RetroPlatform.Levels
 
         void UiController_OnFinishConversation()
         {
-            if (GameState.BattleResult == Battle.BattleResult.Win)
+            if (GameState.BattleResult == BattleResult.Win)
             {
                 LeftTheScene = true;
                 bossController.RunAway();
