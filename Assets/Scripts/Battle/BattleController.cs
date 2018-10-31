@@ -25,11 +25,13 @@ namespace RetroPlatform.Battle
 
         Animator battleStateManager;
         AnimatorView<BattleState> battleAnimatorView;
-        Animator introPanelAnim;
+        Animator battlePanelAnim;
+        Text battlePanelAnimText;
+        Image[] battlePanelAnimImage;
         GameObject attackParticle;
         Attack attack;
         PlayerCore playerCore;
-        SpriteRenderer collectable;
+        Sprite collectable;
         List<EnemyController> selectedEnemies = new List<EnemyController>();
 
         bool attacking = false;
@@ -41,7 +43,9 @@ namespace RetroPlatform.Battle
         {
             battleStateManager = GetComponent<Animator>();
             battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
-            introPanelAnim = IntroPanel.GetComponent<Animator>();
+            battlePanelAnim = IntroPanel.GetComponent<Animator>();
+            battlePanelAnimText = battlePanelAnim.GetComponentInChildren<Text>();
+            battlePanelAnimImage = battlePanelAnim.GetComponentsInChildren<Image>();
             attack = GetComponent<Attack>();
             playerCore = PlayerController.PlayerCore;
             collectable = GameState.BattleCollectable;
@@ -152,7 +156,7 @@ namespace RetroPlatform.Battle
             switch (CurrentBattleState)
             {
                 case BattleState.Intro:
-                    introPanelAnim.SetTrigger("Intro");
+                    battlePanelAnim.SetTrigger("Intro");
                     break;
                 case BattleState.Player_Move:
                     canSelectEnemy = attack.ReadyToAttack;
@@ -180,11 +184,17 @@ namespace RetroPlatform.Battle
                     if (playerCore.Lives > 0)
                     {
                         GameState.BattleResult = BattleResult.Win;
+                        battlePanelAnimText.text = "Você venceu!";
                     }
                     else
                     {
                         GameState.BattleResult = BattleResult.Lose;
+                        battlePanelAnimText.text = "Você perdeu";
                     }
+                    battlePanelAnimText.fontSize = 60;
+                    battlePanelAnimImage[1].sprite = collectable;
+                    battlePanelAnimImage[2].sprite = collectable;
+                    battlePanelAnim.SetTrigger("Finish");
                     break;
                 case BattleState.Battle_End:
                     NavigationManager.NavigateTo(GameState.LastSceneName);
@@ -249,6 +259,7 @@ namespace RetroPlatform.Battle
             }
             attack.ClearAttack();
             attacking = false;
+            battleStateManager.SetBool("NoMoreEnemies", EnemyCount == 0);
             battleStateManager.SetBool("PlayerReady", false);
         }
 

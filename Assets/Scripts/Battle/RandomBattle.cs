@@ -46,7 +46,7 @@ namespace RetroPlatform.Battle
             {
                 GameState.UpdatePlayerData(Player.PlayerCore);
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
-                GameState.BattleCollectable = collectable;
+                GameState.BattleCollectable = collectable.sprite;
                 GameState.BattleResult = BattleResult.None;
                 NavigationManager.NavigateTo(battleSceneName);
             }

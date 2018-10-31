@@ -13,8 +13,8 @@ namespace RetroPlatform
         public static Dictionary<string, Vector3> LastScenePositions = new Dictionary<string, Vector3>();
         public static Dictionary<string, object> GameFacts = new Dictionary<string, object>();
 
-        public static SpriteRenderer BattleCollectable { get; set; }
-        public static BattleResult BattleResult { get; set; }
+        public static Sprite BattleCollectable;
+        public static BattleResult BattleResult;
 
         public static bool GetGameFactBoolean(string sceneName, string factName)
         {
