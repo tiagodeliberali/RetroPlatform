@@ -6,10 +6,10 @@ namespace RetroPlatform.Navigation
     public static class NavigationManager
     {
         public static Dictionary<string, Route> RouteInformation = new Dictionary<string, Route>() {
-            { "Overworld", new Route { RouteDescription = "The big bad world", CanTravel = true} },
-            { "EntryLevel", new Route { RouteDescription = "Start of the game", CanTravel = true} },
-            { "Construction", new Route { RouteDescription = "The construction area", CanTravel = false} },
-            { "BattleScene", new Route { RouteDescription = "Where all things are solved", CanTravel = true}}
+            { "Overworld", new Route { RouteDescription = "Mapa com todas as aventuras", CanTravel = true} },
+            { "EntryLevel", new Route { RouteDescription = "Início da aventura", CanTravel = true} },
+            { "HalloweenLevel", new Route { RouteDescription = "A floresta das aranhas", CanTravel = true} },
+            { "BattleScene", new Route { RouteDescription = "Batalha contra todos inimigos", CanTravel = true}}
         }; 
 
         public static string GetRouteInfo(string destination)
