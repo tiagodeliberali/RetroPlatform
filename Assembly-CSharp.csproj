@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Levels\CameraController.cs" />
     <Compile Include="Assets\Scripts\Levels\CoinController.cs" />
     <Compile Include="Assets\Scripts\Levels\EntryLevelController.cs" />
+    <Compile Include="Assets\Scripts\Levels\HalloweenLevelController.cs" />
     <Compile Include="Assets\Scripts\Navigation\NavigationManager.cs" />
     <Compile Include="Assets\Scripts\Navigation\NavigationPrompt.cs" />
     <Compile Include="Assets\Scripts\Navigation\Route.cs" />
