@@ -15,6 +15,7 @@ TagManager:
   - BattleScene
   - SelectionCircle
   - SwordParticleSystem
+  - HalloweenLevel
   layers:
   - Default
   - TransparentFX

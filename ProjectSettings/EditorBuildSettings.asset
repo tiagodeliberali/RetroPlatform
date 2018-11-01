@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: a9a46deb5ae0f8f43a60beea70e18047
+  - enabled: 1
+    path: Assets/Scenes/HalloweenLevel.unity
+    guid: 18ce2ea09ed3c814093aa1aa51eb3507
   m_configObjects: {}

@@ -30,8 +30,8 @@ namespace RetroPlatform.Levels
             roof.position = new Vector3(player.transform.position.x, roof.transform.position.y, -10);
             floor.position = new Vector3(player.transform.position.x, floor.transform.position.y, -10);
 
-            SetPosition(backgrounds, 3);
-            SetPosition(middlegrounds, 30);
+            SetPosition(backgrounds, 2);
+            SetPosition(middlegrounds, 6);
         }
 
         void SetPosition(GameObject[] gameObjectArray, float factor)
@@ -39,7 +39,7 @@ namespace RetroPlatform.Levels
             for (int i = 0; i < gameObjectArray.Length; i++)
             {
                 gameObjectArray[i].transform.position = new Vector3(
-                    player.transform.position.x / factor + i * 19 - 10,
+                    transform.position.x / factor + i * 19 - 10,
                     gameObjectArray[i].transform.position.y,
                     gameObjectArray[i].transform.position.z);
             }
