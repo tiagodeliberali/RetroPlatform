@@ -16,6 +16,7 @@ TagManager:
   - SelectionCircle
   - SwordParticleSystem
   - HalloweenLevel
+  - Trap
   layers:
   - Default
   - TransparentFX

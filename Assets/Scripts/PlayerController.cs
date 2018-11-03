@@ -55,7 +55,7 @@ namespace RetroPlatform
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            if (col.gameObject.CompareTag("FloorLimit"))
+            if (col.gameObject.CompareTag("FloorLimit") || col.gameObject.CompareTag("Trap"))
                 PlayerCore.GetDamage(1);
 
             if (col.gameObject.CompareTag("Floor"))
