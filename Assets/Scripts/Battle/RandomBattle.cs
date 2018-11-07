@@ -15,6 +15,7 @@ namespace RetroPlatform.Battle
         public Vector2 GoBackPosition;
         public PlayerController Player;
         public SpriteRenderer collectable;
+        public bool FightOnTouch = false;
 
         public void DisableZone()
         {
@@ -23,6 +24,42 @@ namespace RetroPlatform.Battle
         }
 
         void OnTriggerEnter2D(Collider2D col)
+        {
+            if (FightOnTouch) return;
+            Calculate();
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (!FightOnTouch) return;
+            Calculate();
+        }
+
+        void OnTriggerStay2D(Collider2D col)
+        {
+            if (FightOnTouch) return;
+            Fight();
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (!FightOnTouch) return;
+            Fight();
+        }
+
+        void OnTriggerExit2D(Collider2D col)
+        {
+            if (FightOnTouch) return;
+            FinishCalculate();
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (!FightOnTouch) return;
+            FinishCalculate();
+        }
+
+        void Calculate()
         {
             encounterChance = Random.Range(1, 100);
             if (encounterChance > BattleProbability)
@@ -40,19 +77,19 @@ namespace RetroPlatform.Battle
             }
         }
 
-        void OnTriggerStay2D(Collider2D col)
+        void Fight()
         {
             if (encounterChance <= BattleProbability)
             {
                 GameState.UpdatePlayerData(Player.PlayerCore);
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
-                GameState.BattleCollectable = collectable.sprite;
+                GameState.BattleCollectable = collectable == null ? null : collectable.sprite;
                 GameState.BattleResult = BattleResult.None;
                 NavigationManager.NavigateTo(battleSceneName);
             }
         }
 
-        void OnTriggerExit2D(Collider2D col)
+        private void FinishCalculate()
         {
             encounterChance = 100;
             StopCoroutine(RecalculateChance());
