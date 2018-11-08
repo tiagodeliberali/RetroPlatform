@@ -13,10 +13,17 @@ namespace RetroPlatform
         {
             switch (name)
             {
+                case "Ghost":
+                    return ScriptableObject.CreateInstance<EnemyGhost>();
                 case "ZombieBird":
                 default:
                     return ScriptableObject.CreateInstance<EnemyZombieBird>();
             }
+        }
+
+        public void GetDamage(int hitAmount)
+        {
+            Health -= hitAmount;
         }
     }
 }

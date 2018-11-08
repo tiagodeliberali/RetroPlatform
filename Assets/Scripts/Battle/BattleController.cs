@@ -28,11 +28,14 @@ namespace RetroPlatform.Battle
         AnimatorView<BattleState> battleAnimatorView;
         Animator battlePanelAnim;
         Text battlePanelAnimText;
+        Image[] enemyImage;
         GameObject attackParticle;
         Attack attack;
         PlayerCore playerCore;
         Sprite collectable;
         List<EnemyController> selectedEnemies = new List<EnemyController>();
+        SpriteRenderer background;
+        GameObject selectedEnemyPrefab;
 
         bool attacking = false;
         bool canSelectEnemy;
@@ -45,12 +48,25 @@ namespace RetroPlatform.Battle
             battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
             battlePanelAnim = IntroPanel.GetComponent<Animator>();
             battlePanelAnimText = battlePanelAnim.GetComponentInChildren<Text>();
+            enemyImage = battlePanelAnim.GetComponentsInChildren<Image>();
             attack = GetComponent<Attack>();
             playerCore = PlayerController.PlayerCore;
             collectable = GameState.BattleCollectable;
+            selectedEnemyPrefab = EnemyPrefabs[GameState.BattleEnemy];
+            enemyImage[2].sprite = selectedEnemyPrefab.GetComponent<SpriteRenderer>().sprite;
 
             LoadCollectable();
             playerCore.StartConversation();
+
+            SetBackground();
+        }
+
+        private void SetBackground()
+        {
+            if (GameState.BattleBackground == null) return;
+
+            background = GetComponentInChildren<SpriteRenderer>();
+            background.sprite = GameState.BattleBackground;
         }
 
         private void LoadCollectable()
@@ -67,7 +83,9 @@ namespace RetroPlatform.Battle
 
         void Start()
         {
-            EnemyCount = Random.Range(1, EnemySpawnPoints.Length);
+            int minEnemies = 2;
+            int maxEnemies = System.Math.Max(minEnemies, GameState.BattleMaxEnemies == 0 ? EnemySpawnPoints.Length : GameState.BattleMaxEnemies);
+            EnemyCount = Random.Range(minEnemies, maxEnemies);
             StartCoroutine(SpawnEnemies());
         }
 
@@ -77,8 +95,9 @@ namespace RetroPlatform.Battle
 
             for (int i = 0; i < EnemyCount; i++)
             {
-                var newEnemy = (GameObject)Instantiate(EnemyPrefabs[0]);
+                var newEnemy = (GameObject)Instantiate(selectedEnemyPrefab);
                 newEnemy.transform.position = new Vector3(10, -1, 0);
+                newEnemy.transform.localScale = new Vector3(GameState.BattleMaxEnemyScale, GameState.BattleMaxEnemyScale, 0);
                 yield return StartCoroutine(MoveObjectToPoint(EnemySpawnPoints[i].transform.position, newEnemy, 1));
                 newEnemy.transform.parent = EnemySpawnPoints[i].transform;
 
@@ -89,7 +108,7 @@ namespace RetroPlatform.Battle
                 enemyController.OnEnemyRunAway += EnemyController_OnEnemyRunAway;
                 enemyController.DebugInfo = DebugInfo;
 
-                var EnemyProfile = Enemy.GetByName(EnemyPrefabs[0].name);
+                var EnemyProfile = Enemy.GetByName(selectedEnemyPrefab.name);
                 EnemyProfile.name = EnemyProfile.EnemyName + " " + i.ToString();
                 enemyAttackForce += EnemyProfile.Attack;
 
@@ -117,6 +136,7 @@ namespace RetroPlatform.Battle
         void EnemyController_OnEnemySelected(EnemyController enemy)
         {
             if (!canSelectEnemy) return;
+            attack.Lock();
 
             var selectionCircleInstance = Instantiate(SelectionCircle);
             selectionCircleInstance.transform.parent = enemy.transform;
@@ -187,7 +207,6 @@ namespace RetroPlatform.Battle
                         int damage = Random.Range(0, EnemyCount) * enemyAttackForce / EnemyCount;
                         Debug.Log("Damage: " + damage);
                         playerCore.GetDamage(damage);
-                        GameState.UpdatePlayerData(playerCore);
                     }
                     canBeAttacked = false;
                     battleStateManager.SetBool("BattleReady", EnemyCount > 0);
@@ -213,6 +232,7 @@ namespace RetroPlatform.Battle
                     break;
                 case BattleState.Battle_End:
                     NavigationManager.NavigateTo(GameState.LastSceneName);
+                    GameState.UpdatePlayerData(playerCore);
                     break;
                 default:
                     break;
@@ -270,7 +290,7 @@ namespace RetroPlatform.Battle
                     attackParticle.transform.position = target.transform.position;
                 }
                 yield return new WaitForSeconds(1);
-                target.EnemyProfile.Health -= attack.CurrentAttack.HitAmount;
+                target.GetDamage(attack.CurrentAttack.HitAmount);
             }
             attack.ClearAttack();
             attacking = false;
@@ -280,6 +300,7 @@ namespace RetroPlatform.Battle
 
         public void RunAway()
         {
+            GameState.UpdatePlayerData(playerCore);
             GameState.BattleResult = BattleResult.RunAway;
             NavigationManager.NavigateTo(GameState.LastSceneName);
         }

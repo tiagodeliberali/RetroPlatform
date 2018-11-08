@@ -13,7 +13,7 @@ namespace RetroPlatform.PlatformEnemies
 
         public void DestroyGameObject()
         {
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         void OnTriggerEnter2D(Collider2D collision)

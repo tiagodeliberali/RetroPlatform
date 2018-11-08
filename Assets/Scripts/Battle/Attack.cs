@@ -6,6 +6,7 @@ namespace RetroPlatform.Battle
 {
     public class Attack : MonoBehaviour
     {
+        bool locked;
         public Button sword;
         public Button bow;
         public Button magic;
@@ -19,19 +20,24 @@ namespace RetroPlatform.Battle
 
         public void Bow()
         {
-            CurrentAttack = new AttackBow();
-            AttackSelected();
+            SelectAttack<AttackBow>();
         }
 
         public void Sword()
         {
-            CurrentAttack = new AttackSword();
-            AttackSelected();
+            SelectAttack<AttackSword>();
         }
 
         public void Magic()
         {
-            CurrentAttack = new AttackMagic();
+            SelectAttack<AttackMagic>();
+        }
+
+        private void SelectAttack<T>()
+            where T : BaseAttack, new()
+        {
+            if (locked) return;
+            CurrentAttack = new T();
             AttackSelected();
         }
 
@@ -69,6 +75,12 @@ namespace RetroPlatform.Battle
         {
             CurrentAttack = null;
             HighlightButton();
+            locked = false;
+        }
+
+        public void Lock()
+        {
+            locked = true;
         }
     }
 }

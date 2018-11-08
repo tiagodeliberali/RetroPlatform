@@ -15,6 +15,10 @@ namespace RetroPlatform.Battle
         public Vector2 GoBackPosition;
         public PlayerController Player;
         public SpriteRenderer collectable;
+        public int enemy;
+        public int maxEnemies;
+        public float enemyScale;
+        public SpriteRenderer background;
         public bool FightOnTouch = false;
 
         public void DisableZone()
@@ -84,6 +88,10 @@ namespace RetroPlatform.Battle
                 GameState.UpdatePlayerData(Player.PlayerCore);
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
                 GameState.BattleCollectable = collectable == null ? null : collectable.sprite;
+                GameState.BattleEnemy = enemy;
+                GameState.BattleMaxEnemies = maxEnemies;
+                GameState.BattleMaxEnemyScale = enemyScale;
+                GameState.BattleBackground = background == null ? null : background.sprite;
                 GameState.BattleResult = BattleResult.None;
                 NavigationManager.NavigateTo(battleSceneName);
             }

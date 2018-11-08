@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Battle\Enemy.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyBattleState.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\Battle\EnemyGhost.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyZombieBird.cs" />
     <Compile Include="Assets\Scripts\Battle\RandomBattle.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />

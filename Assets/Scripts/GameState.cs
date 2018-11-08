@@ -14,7 +14,12 @@ namespace RetroPlatform
         public static Dictionary<string, object> GameFacts = new Dictionary<string, object>();
 
         public static Sprite BattleCollectable;
+        public static int BattleEnemy;
+        public static Sprite BattleBackground;
+        public static int BattleMaxEnemies;
+        public static float BattleMaxEnemyScale;
         public static BattleResult BattleResult;
+        
 
         public static bool GetGameFactBoolean(string sceneName, string factName)
         {

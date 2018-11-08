@@ -12,6 +12,7 @@ namespace RetroPlatform
         private AnimatorView<EnemyBattleState> enemyAnimatorView;
         private Slider lifeSlider;
         private CanvasGroup lifeCanvasGroup;
+        private bool canBeSelected;
 
         public AnimationCurve SpawnAnimationCurve;
         public Enemy EnemyProfile;
@@ -37,6 +38,7 @@ namespace RetroPlatform
             life.transform.SetParent(gameObject.transform);
             lifeSlider = life.GetComponent<Canvas>().GetComponentInChildren<Slider>();
             lifeCanvasGroup = life.GetComponent<CanvasGroup>();
+            canBeSelected = true;
         }
 
         void Update()
@@ -50,6 +52,8 @@ namespace RetroPlatform
 
         void OnMouseDown()
         {
+            if (!canBeSelected) return;
+            canBeSelected = false;
             if (OnEnemySelected != null) OnEnemySelected(this);
         }
 
@@ -87,6 +91,12 @@ namespace RetroPlatform
                 enemyAI.SetBool("PlayerSeen", true);
                 enemyAI.SetBool("PlayerAttacking", BattleController.CurrentBattleState != Battle.BattleState.Enemy_Attack);
             }
+        }
+
+        public void GetDamage(int hitAmount)
+        {
+            EnemyProfile.GetDamage(hitAmount);
+            canBeSelected = true;
         }
     }
 }
