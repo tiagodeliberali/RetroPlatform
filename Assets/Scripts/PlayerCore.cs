@@ -17,7 +17,7 @@ namespace RetroPlatform
 
         public delegate void DataChanged();
         public event DataChanged OnLivesChanged;
-        public event DataChanged OnLivesFinished;
+        public event DataChanged OnPlayerDie;
         public event DataChanged OnCoinsChanged;
         public IEnvironmentData EnvironmentData;
 
@@ -100,8 +100,8 @@ namespace RetroPlatform
             if (OnLivesChanged != null)
                 OnLivesChanged();
 
-            if (Lives <= 0 && OnLivesFinished != null)
-                OnLivesFinished();
+            if (Lives <= 0 && OnPlayerDie != null)
+                OnPlayerDie();
         }
 
         public void FinishConversation()

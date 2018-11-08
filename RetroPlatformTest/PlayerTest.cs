@@ -235,7 +235,7 @@ namespace RetroPlatformTest
         {
             bool livesFinished = false;
              var player = CreateUser();
-            player.OnLivesFinished += delegate ()
+            player.OnPlayerDie += delegate ()
             {
                 livesFinished = true;
             };
@@ -252,7 +252,7 @@ namespace RetroPlatformTest
         {
             bool livesFinished = false;
              var player = CreateUser();
-            player.OnLivesFinished += delegate ()
+            player.OnPlayerDie += delegate ()
             {
                 livesFinished = true;
             };

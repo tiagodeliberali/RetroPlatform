@@ -1,12 +1,12 @@
 ﻿using RetroPlatform.Battle;
 using RetroPlatform.Conversation;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace RetroPlatform.Levels
 {
     public class EntryLevelController : MonoBehaviour
     {
+        public static string ENTRY_LEVEL = "EntryLevel";
         const string FIRST_TALK = "FirstTalk";
         const string LEFT_SCENE = "BossLeftScene";
         
@@ -15,26 +15,26 @@ namespace RetroPlatform.Levels
         public SpriteRenderer map;
         public RandomBattle battleZone;
 
-        bool LeftTheScene
+        public static bool BossLeftTheScene
         {
             get
             {
-                return GameState.GetGameFactBoolean(SceneManager.GetActiveScene().name, LEFT_SCENE);
+                return GameState.GetGameFactBoolean(ENTRY_LEVEL, LEFT_SCENE);
             }
             set
             {
-                GameState.SetGameFact(SceneManager.GetActiveScene().name, LEFT_SCENE, value);
+                GameState.SetGameFact(ENTRY_LEVEL, LEFT_SCENE, value);
             }
         }
         bool HadFirstTalkFact
         {
             get
             {
-                return GameState.GetGameFactBoolean(SceneManager.GetActiveScene().name, FIRST_TALK);
+                return GameState.GetGameFactBoolean(ENTRY_LEVEL, FIRST_TALK);
             }
             set
             {
-                GameState.SetGameFact(SceneManager.GetActiveScene().name, FIRST_TALK, value);
+                GameState.SetGameFact(ENTRY_LEVEL, FIRST_TALK, value);
             }
         }
 
@@ -47,7 +47,7 @@ namespace RetroPlatform.Levels
             uiController.OnFinishConversation += UiController_OnFinishConversation;
             bossController.OnTouchPlayer += BossController_OnTouchPlayer;
 
-            if (LeftTheScene)
+            if (BossLeftTheScene)
             {
                 bossController.gameObject.SetActive(false);
             }
@@ -79,7 +79,7 @@ namespace RetroPlatform.Levels
         {
             if (GameState.BattleResult == BattleResult.Win)
             {
-                LeftTheScene = true;
+                BossLeftTheScene = true;
                 bossController.RunAway();
             }
         }

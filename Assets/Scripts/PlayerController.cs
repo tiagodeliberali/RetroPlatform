@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using RetroPlatform.Levels;
+using RetroPlatform.Navigation;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace RetroPlatform
@@ -8,6 +11,9 @@ namespace RetroPlatform
         Rigidbody2D playerRigidBody2D;
         Animator playerAnim;
         SpriteRenderer playerSpriteImage;
+
+        float alpha = 0f;
+        bool fadeOut;
 
         PlayerCore _core;
         public PlayerCore PlayerCore
@@ -20,6 +26,7 @@ namespace RetroPlatform
         }
 
         public UIController uiController;
+        public Texture2D FadeTexture;
 
         void Awake()
         {
@@ -32,7 +39,6 @@ namespace RetroPlatform
             if (uiController != null)
             {
                 PlayerCore.OnLivesChanged += () => uiController.UpdateLives(PlayerCore.Lives, PlayerCore.MaxLives);
-                PlayerCore.OnLivesFinished += PlayerCore_OnLivesFinished;
                 PlayerCore.OnCoinsChanged += () => uiController.UpdateCoins(PlayerCore.Coins);
 
                 uiController.OnStartConversation += () => PlayerCore.StartConversation();
@@ -40,6 +46,8 @@ namespace RetroPlatform
             }
 
             if (GameState.Lives == -1) GameState.Lives = PlayerCore.MaxLives;
+
+            PlayerCore.OnPlayerDie += PlayerCore_OnPlayerDie;
 
             PlayerCore.AddLives(GameState.Lives);
             PlayerCore.AddCoins(GameState.Coins);
@@ -62,9 +70,41 @@ namespace RetroPlatform
                 PlayerCore.HitFloor();
         }
 
-        void PlayerCore_OnLivesFinished()
+        void PlayerCore_OnPlayerDie()
         {
             Debug.Log("GAME OVER!");
+            fadeOut = true;
+            StartCoroutine(GameOver());
+        }
+
+        IEnumerator GameOver()
+        {
+            yield return new WaitForSeconds(5f);
+            GameState.Lives = PlayerCore.MaxLives;
+            if (!EntryLevelController.BossLeftTheScene)
+            {
+                NavigationManager.NavigateTo(EntryLevelController.ENTRY_LEVEL);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("Overworld");
+            }
+        }
+
+        void OnGUI()
+        {
+            float fadespeed = 0.5f;
+
+            if (!fadeOut) return;
+
+            alpha -= -1 * fadespeed * Time.deltaTime;
+            alpha = Mathf.Clamp01(alpha);
+
+            Color newColor = GUI.color;
+            newColor.a = alpha;
+            GUI.color = newColor;
+            GUI.depth = -1000;
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), FadeTexture);
         }
 
         void MovePlayer()

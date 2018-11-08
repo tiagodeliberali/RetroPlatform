@@ -2792,8 +2792,8 @@ MonoBehaviour:
   Player: {fileID: 1379869095}
   collectable: {fileID: 675877791}
   enemy: 0
-  maxEnemies: 0
-  enemyScale: 0
+  maxEnemies: 9
+  enemyScale: 0.3
   background: {fileID: 0}
   FightOnTouch: 0
 --- !u!1 &647381525

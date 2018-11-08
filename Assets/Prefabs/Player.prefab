@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14e2321eacf19649ace4c5e7bbdc1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   uiController: {fileID: 0}
+  FadeTexture: {fileID: 2800000, guid: c45fc24c18193874ba872c3ad0b9b418, type: 3}
 --- !u!212 &212483902356012222
 SpriteRenderer:
   m_ObjectHideFlags: 1
