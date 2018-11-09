@@ -88,6 +88,12 @@
     <Compile Include="Assets\Scripts\Levels\CoinController.cs" />
     <Compile Include="Assets\Scripts\Levels\EntryLevelController.cs" />
     <Compile Include="Assets\Scripts\Levels\HalloweenLevelController.cs" />
+    <Compile Include="Assets\Scripts\Maze\MazeBuilder.cs" />
+    <Compile Include="Assets\Scripts\Maze\MazeController.cs" />
+    <Compile Include="Assets\Scripts\Maze\MazeDrawerGameObject.cs" />
+    <Compile Include="Assets\Scripts\Maze\MazeDrawerSingleSide.cs" />
+    <Compile Include="Assets\Scripts\Maze\MazeSlot.cs" />
+    <Compile Include="Assets\Scripts\Maze\WallPosition.cs" />
     <Compile Include="Assets\Scripts\Navigation\NavigationManager.cs" />
     <Compile Include="Assets\Scripts\Navigation\NavigationPrompt.cs" />
     <Compile Include="Assets\Scripts\Navigation\Route.cs" />
