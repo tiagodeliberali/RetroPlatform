@@ -14,7 +14,8 @@ namespace RetroPlatform
         public Image ImageHolder;
         public Text TextHolder;
 
-        bool talking = false;
+        bool talking;
+        bool skipText;
         ConversationEntry currentConversationLine;
 
         public event Action OnStartConversation;
@@ -59,14 +60,21 @@ namespace RetroPlatform
                 for (int i = 0; i < textySize; i++)
                 {
                     TextHolder.text = currentConversationLine.ConversationText.Substring(0, i);
-                    yield return new WaitForSeconds(0.05f);
+                    if (skipText) yield return new WaitForEndOfFrame();
+                    else yield return new WaitForSeconds(0.05f); ;
                 }
                 TextHolder.text = currentConversationLine.ConversationText;
                 yield return new WaitForSeconds(2f);
+                skipText = false;
             }
             talking = false;
 
             if (OnFinishConversation != null) OnFinishConversation();
+        }
+
+        void Update()
+        {
+            if (Input.anyKeyDown) skipText = true;
         }
 
         void OnGUI()
