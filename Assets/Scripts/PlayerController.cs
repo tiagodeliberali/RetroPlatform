@@ -48,12 +48,18 @@ namespace RetroPlatform
             if (GameState.Lives == -1) GameState.Lives = PlayerCore.MaxLives;
 
             PlayerCore.OnPlayerDie += PlayerCore_OnPlayerDie;
+            PlayerCore.OnPlayerProtected += PlayerCore_OnPlayerProtected;
 
             PlayerCore.AddLives(GameState.Lives);
             PlayerCore.AddCoins(GameState.Coins);
 
             var lastPosition = GameState.GetLastScenePosition(SceneManager.GetActiveScene().name);
             if (lastPosition != Vector3.zero) transform.position = lastPosition;
+        }
+
+        private void PlayerCore_OnPlayerProtected()
+        {
+            StartCoroutine(FinishPlayerProtection());
         }
 
         void Update()
@@ -69,11 +75,8 @@ namespace RetroPlatform
 
         private void OnCollisionStay2D(Collision2D collision)
         {
-            if (!PlayerCore.Protected && (collision.gameObject.CompareTag("FloorLimit") || collision.gameObject.CompareTag("Trap")))
-            {
+            if (collision.gameObject.CompareTag("FloorLimit") || collision.gameObject.CompareTag("Trap"))
                 PlayerCore.GetDamage(1);
-                StartCoroutine(FinishPlayerProtection());
-            }
         }
 
         IEnumerator FinishPlayerProtection()

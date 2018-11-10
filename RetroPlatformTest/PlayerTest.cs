@@ -291,6 +291,22 @@ namespace RetroPlatformTest
         }
 
         [Fact]
+        public void OnGetDamageShouldExecuteOnProtected()
+        {
+            bool playerProtected = false;
+            var player = CreateUser();
+            player.OnPlayerProtected += delegate ()
+            {
+                playerProtected = true;
+            };
+
+            player.AddLives(5);
+            player.GetDamage(3);
+
+            Assert.True(playerProtected);
+        }
+
+        [Fact]
         public void OnCoinsChangedShouldConsiderTotalAmount()
         {
             int totalCoins = 0;

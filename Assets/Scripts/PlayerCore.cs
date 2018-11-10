@@ -20,6 +20,7 @@ namespace RetroPlatform
         public delegate void DataChanged();
         public event DataChanged OnLivesChanged;
         public event DataChanged OnPlayerDie;
+        public event DataChanged OnPlayerProtected;
         public event DataChanged OnCoinsChanged;
         public IEnvironmentData EnvironmentData;
 
@@ -90,6 +91,7 @@ namespace RetroPlatform
                 Lives -= damage;
                 CallLifeEvents();
                 Protected = true;
+                if (OnPlayerProtected != null) OnPlayerProtected();
             }
         }
 
