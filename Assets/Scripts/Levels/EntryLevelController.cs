@@ -15,7 +15,7 @@ namespace RetroPlatform.Levels
         public SpriteRenderer map;
         public RandomBattle battleZone;
 
-        public static bool BossLeftTheScene
+        public static bool LevelConcluded
         {
             get
             {
@@ -47,7 +47,7 @@ namespace RetroPlatform.Levels
             uiController.OnFinishConversation += UiController_OnFinishConversation;
             bossController.OnTouchPlayer += BossController_OnTouchPlayer;
 
-            if (BossLeftTheScene)
+            if (LevelConcluded)
             {
                 bossController.gameObject.SetActive(false);
             }
@@ -79,7 +79,7 @@ namespace RetroPlatform.Levels
         {
             if (GameState.BattleResult == BattleResult.Win)
             {
-                BossLeftTheScene = true;
+                LevelConcluded = true;
                 bossController.RunAway();
             }
         }

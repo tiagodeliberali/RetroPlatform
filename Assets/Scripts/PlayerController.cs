@@ -101,7 +101,7 @@ namespace RetroPlatform
         {
             yield return new WaitForSeconds(5f);
             GameState.Lives = PlayerCore.MaxLives;
-            if (!EntryLevelController.BossLeftTheScene)
+            if (!EntryLevelController.LevelConcluded)
             {
                 NavigationManager.NavigateTo(EntryLevelController.ENTRY_LEVEL);
             }
