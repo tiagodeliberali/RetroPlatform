@@ -61,13 +61,25 @@ namespace RetroPlatform
             MovePlayer();
         }
 
-        void OnCollisionEnter2D(Collision2D col)
+        void OnCollisionEnter2D(Collision2D collision)
         {
-            if (col.gameObject.CompareTag("FloorLimit") || col.gameObject.CompareTag("Trap"))
-                PlayerCore.GetDamage(1);
-
-            if (col.gameObject.CompareTag("Floor"))
+            if (collision.gameObject.CompareTag("Floor"))
                 PlayerCore.HitFloor();
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (!PlayerCore.Protected && (collision.gameObject.CompareTag("FloorLimit") || collision.gameObject.CompareTag("Trap")))
+            {
+                PlayerCore.GetDamage(1);
+                StartCoroutine(FinishPlayerProtection());
+            }
+        }
+
+        IEnumerator FinishPlayerProtection()
+        {
+            yield return new WaitForSeconds(0.5f);
+            PlayerCore.FinishProtection();
         }
 
         void PlayerCore_OnPlayerDie()

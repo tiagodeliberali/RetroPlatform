@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RetroPlatform
 {
@@ -14,6 +15,7 @@ namespace RetroPlatform
         public int Lives { get; private set; }
         public int MaxLives { get; private set; }
         public int Coins { get; private set; }
+        public bool Protected { get; private set; }
 
         public delegate void DataChanged();
         public event DataChanged OnLivesChanged;
@@ -83,8 +85,12 @@ namespace RetroPlatform
 
         public void GetDamage(int damage)
         {
-            Lives -= damage;
-            CallLifeEvents();
+            if (!Protected)
+            {
+                Lives -= damage;
+                CallLifeEvents();
+                Protected = true;
+            }
         }
 
         public void AddCoins(int coins)
@@ -115,6 +121,11 @@ namespace RetroPlatform
             isTalking = true;
             IsRunning = false;
             IsJumping = false;
+        }
+
+        public void FinishProtection()
+        {
+            Protected = false;
         }
     }
 }

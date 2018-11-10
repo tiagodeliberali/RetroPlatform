@@ -241,8 +241,7 @@ namespace RetroPlatformTest
             };
 
             player.AddLives(5);
-            player.GetDamage(2);
-            player.GetDamage(3);
+            player.GetDamage(5);
 
             Assert.True(livesFinished);
         }
@@ -261,6 +260,34 @@ namespace RetroPlatformTest
             player.GetDamage(6);
 
             Assert.True(livesFinished);
+        }
+
+        [Fact]
+        public void OnGetDamageShouldKeepProtectedFromNewDamage()
+        {
+            var player = CreateUser();
+
+            player.AddLives(5);
+            player.GetDamage(2);
+            player.GetDamage(3);
+
+            Assert.Equal(3, player.Lives);
+            Assert.True(player.Protected);
+        }
+
+        [Fact]
+        public void OnFInishProtectionShouldGetDamaged()
+        {
+            var player = CreateUser();
+
+            player.AddLives(5);
+            player.GetDamage(2);
+            player.FinishProtection();
+            player.GetDamage(2);
+            player.FinishProtection();
+
+            Assert.Equal(1, player.Lives);
+            Assert.False(player.Protected);
         }
 
         [Fact]
