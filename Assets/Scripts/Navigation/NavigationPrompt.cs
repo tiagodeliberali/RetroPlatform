@@ -6,8 +6,7 @@ namespace RetroPlatform.Navigation
     public class NavigationPrompt : MonoBehaviour
     {
         public Texture2D FadeTexture;
-        public PlayerController PlayerController;
-
+        
         float fadespeed = 0.5f;
         int drawDepth = -1000;
         float alpha = 0f;
