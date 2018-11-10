@@ -85,7 +85,6 @@ namespace RetroPlatform.Battle
         {
             if (encounterChance <= BattleProbability)
             {
-                GameState.UpdatePlayerData(Player.PlayerCore);
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
                 GameState.BattleCollectable = collectable == null ? null : collectable.sprite;
                 GameState.BattleEnemy = enemy;

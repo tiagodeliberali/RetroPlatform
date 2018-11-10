@@ -232,7 +232,6 @@ namespace RetroPlatform.Battle
                     break;
                 case BattleState.Battle_End:
                     NavigationManager.NavigateTo(GameState.LastSceneName);
-                    GameState.UpdatePlayerData(playerCore);
                     break;
                 default:
                     break;
@@ -300,7 +299,6 @@ namespace RetroPlatform.Battle
 
         public void RunAway()
         {
-            GameState.UpdatePlayerData(playerCore);
             GameState.BattleResult = BattleResult.RunAway;
             NavigationManager.NavigateTo(GameState.LastSceneName);
         }

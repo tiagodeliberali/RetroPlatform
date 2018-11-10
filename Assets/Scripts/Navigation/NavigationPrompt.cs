@@ -19,7 +19,6 @@ namespace RetroPlatform.Navigation
             string destination = tag;
             if (collider.gameObject.CompareTag("Player") && NavigationManager.CanNavigate(destination))
             {
-                GameState.UpdatePlayerData(PlayerController.PlayerCore);
                 fadeOut = true;
                 collider.gameObject.SetActive(false);
                 StartCoroutine(MoveToScene(destination));

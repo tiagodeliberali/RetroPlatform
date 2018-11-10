@@ -46,15 +46,21 @@ namespace RetroPlatform
             }
 
             if (GameState.Lives == -1) GameState.Lives = PlayerCore.MaxLives;
-
-            PlayerCore.OnPlayerDie += PlayerCore_OnPlayerDie;
-            PlayerCore.OnPlayerProtected += PlayerCore_OnPlayerProtected;
-
             PlayerCore.AddLives(GameState.Lives);
             PlayerCore.AddCoins(GameState.Coins);
 
+            PlayerCore.OnPlayerDie += PlayerCore_OnPlayerDie;
+            PlayerCore.OnPlayerProtected += PlayerCore_OnPlayerProtected;
+            PlayerCore.OnLivesChanged += PlayerCore_UpdatePlayerData;
+            PlayerCore.OnCoinsChanged += PlayerCore_UpdatePlayerData;
+
             var lastPosition = GameState.GetLastScenePosition(SceneManager.GetActiveScene().name);
             if (lastPosition != Vector3.zero) transform.position = lastPosition;
+        }
+
+        private void PlayerCore_UpdatePlayerData()
+        {
+            GameState.UpdatePlayerData(PlayerCore);
         }
 
         private void PlayerCore_OnPlayerProtected()
@@ -87,7 +93,6 @@ namespace RetroPlatform
 
         void PlayerCore_OnPlayerDie()
         {
-            Debug.Log("GAME OVER!");
             fadeOut = true;
             StartCoroutine(GameOver());
         }
