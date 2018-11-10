@@ -13,7 +13,6 @@ namespace RetroPlatform.Battle
         public AnimationCurve SpawnAnimationCurve;
         public CanvasGroup Buttons;
         public PlayerController PlayerController;
-        public Slider PlayerLife;
         public GameObject IntroPanel;
         public GameObject SwordParticle;
         public GameObject SelectionCircle;
@@ -258,8 +257,6 @@ namespace RetroPlatform.Battle
 
         void DisplayPlayerHUD()
         {
-            PlayerLife.maxValue = playerCore.MaxLives;
-            PlayerLife.value = playerCore.Lives;
             if (CurrentBattleState == BattleState.Player_Move)
             {
                 Buttons.alpha = 1;
