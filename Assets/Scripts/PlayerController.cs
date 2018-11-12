@@ -12,7 +12,7 @@ namespace RetroPlatform
         Animator playerAnim;
         SpriteRenderer playerSpriteImage;
 
-        float alpha = 0f;
+        UIHelper uiHelper = new UIHelper();
         bool fadeOut;
 
         PlayerCore _core;
@@ -113,18 +113,7 @@ namespace RetroPlatform
 
         void OnGUI()
         {
-            float fadespeed = 0.5f;
-
-            if (!fadeOut) return;
-
-            alpha -= -1 * fadespeed * Time.deltaTime;
-            alpha = Mathf.Clamp01(alpha);
-
-            Color newColor = GUI.color;
-            newColor.a = alpha;
-            GUI.color = newColor;
-            GUI.depth = -1000;
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), FadeTexture);
+            uiHelper.FadeOut(fadeOut, FadeTexture);
         }
 
         void MovePlayer()

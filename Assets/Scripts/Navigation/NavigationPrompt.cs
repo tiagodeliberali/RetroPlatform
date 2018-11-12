@@ -6,11 +6,8 @@ namespace RetroPlatform.Navigation
     public class NavigationPrompt : MonoBehaviour
     {
         public Texture2D FadeTexture;
-        
-        float fadespeed = 0.5f;
-        int drawDepth = -1000;
-        float alpha = 0f;
-        float fadeDir = -1f;
+
+        UIHelper uiHelper = new UIHelper();
         bool fadeOut;
 
         void OnTriggerEnter2D(Collider2D collider)
@@ -32,16 +29,7 @@ namespace RetroPlatform.Navigation
 
         void OnGUI()
         {
-            if (!fadeOut) return;
-
-            alpha -= fadeDir * fadespeed * Time.deltaTime;
-            alpha = Mathf.Clamp01(alpha);
-
-            Color newColor = GUI.color;
-            newColor.a = alpha;
-            GUI.color = newColor;
-            GUI.depth = drawDepth;
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), FadeTexture);
+            uiHelper.FadeOut(fadeOut, FadeTexture);
         }
     }
 }

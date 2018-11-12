@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\PlayerCore.cs" />
     <Compile Include="Assets\Scripts\PopUpMenu.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
+    <Compile Include="Assets\Scripts\UIHelper.cs" />
     <Compile Include="Assets\Scripts\UnityEnvironmentData.cs" />
     <None Include="Assets\BayatGames\DragonWarriorFiles\Read Me.txt" />
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />

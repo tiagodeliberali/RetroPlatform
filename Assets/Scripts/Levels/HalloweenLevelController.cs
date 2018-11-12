@@ -14,6 +14,7 @@ namespace RetroPlatform.Levels
         public SpriteRenderer hammer;
         public GameObject ghost;
         public GameObject portal;
+        public Texture2D FadeTexture;
 
         const string FIRST_TALK = "FirstTalk";
         const string GET_HAMMER = "GetHammer";
@@ -56,6 +57,8 @@ namespace RetroPlatform.Levels
         ConversationComponent conversationComponent;
         PortalController portalController;
         Animator portalAnimator;
+        UIHelper uiHelper = new UIHelper();
+        bool fadeOut;
 
         void Awake()
         {
@@ -68,6 +71,7 @@ namespace RetroPlatform.Levels
 
             if (!HadFirstTalkFact)
             {
+                GameState.BattleResult = BattleResult.None;
                 uiController.StartConversation(conversationComponent.Conversations[0]);
                 HadFirstTalkFact = true;
             }
@@ -104,7 +108,7 @@ namespace RetroPlatform.Levels
             }
             if (LevelConcluded)
             {
-                NavigationManager.NavigateTo("Overworld");
+                StartCoroutine(FinishLevel());
             }
         }
 
@@ -115,6 +119,18 @@ namespace RetroPlatform.Levels
             LevelConcluded = true;
             portal.SetActive(false);
             uiController.StartConversation(conversationComponent.Conversations[3]);
+        }
+
+        IEnumerator FinishLevel()
+        {
+            fadeOut = true;
+            yield return new WaitForSeconds(1.2f);
+            NavigationManager.NavigateTo("Overworld");
+        }
+
+        void OnGUI()
+        {
+            uiHelper.FadeOut(fadeOut, FadeTexture);
         }
     }
 }
