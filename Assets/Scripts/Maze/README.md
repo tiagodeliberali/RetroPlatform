@@ -1,6 +1,6 @@
 # Maze builder
 
-![image](https://user-images.githubusercontent.com/180231/48312637-f7cd0b80-e598-11e8-9071-a1b1043f9754.png)
+![image](https://user-images.githubusercontent.com/180231/48381288-68237c00-e6c2-11e8-8e35-1e0191251188.png)
 
 This is a small project that helps building Mazes. The Maze generation is based on Depth-first search, applied over an array
 of MazeSlots with random decisions to choose next node.
