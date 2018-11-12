@@ -54,7 +54,7 @@ Com o mapa em mãos, ela pode seguir viagem, com o apoio do dragão guerreiro, q
 	
 
 
-# Floresta sobria
+# Floresta sombria
 
 Após a conversa com o dragão guerreiro, com o mapa em mãos, a pirata Alice parte pela Floresta Sombria. Era um local naturalmente assustador, habitado por muitas aranhas venenosas e pouco amistosas. Porém, algo mais estava tornando o lugar mais assustador ainda. Pelo visto, o exército do cabeça de abóbora já tinha passado por lá, construindo armadilhas e fortificando aquela floresta. A medida que a pirata Alice avança, ela percebe que o lugar estava sendo guardado por um peixe-fantasma. Próximo a ele, ela pode notar uma ferramenta estranha, com uma aura mágica. Era um martelo especial, provavelmente uma das razões pelas quais aquele peixe-fantasma estar ali.
 A luta com o fantasma é uma experiência nova para a pirata. Apesar de já ter lutado com muitas criaturas, os seus golpes de espada pareciam nao surtir efeito nela. Suas flechas também eram pouco eficientes, o que a levou a se defender com a sua varinha mágica. Essa foi sua salvação, ja que a criatura parecia ser fortemente afetada por seu poder mágico. Isso era uma informação preciosa que precisava ser levada para os generais, assim como essa ferramenta misteriosa.
