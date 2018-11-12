@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Levels\CoinController.cs" />
     <Compile Include="Assets\Scripts\Levels\EntryLevelController.cs" />
     <Compile Include="Assets\Scripts\Levels\HalloweenLevelController.cs" />
+    <Compile Include="Assets\Scripts\Levels\PortalController.cs" />
     <Compile Include="Assets\Scripts\Maze\MazeBuilder.cs" />
     <Compile Include="Assets\Scripts\Maze\MazeController.cs" />
     <Compile Include="Assets\Scripts\Maze\MazeDrawerGameObject.cs" />

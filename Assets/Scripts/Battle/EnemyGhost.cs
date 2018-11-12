@@ -5,8 +5,8 @@
         public EnemyGhost()
         {
             EnemyName = "Ghost";
-            Health = 10;
-            Attack = 3;
+            Health = 5;
+            Attack = 1;
         }
     }
 }

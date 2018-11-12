@@ -183,6 +183,7 @@ MonoBehaviour:
   collectable: {fileID: 0}
   enemy: 0
   maxEnemies: 0
+  enemyScale: 0
   background: {fileID: 212978335202998492, guid: 4c16e1cdb8b0717438208d9d4a1c70af,
     type: 2}
   FightOnTouch: 1

@@ -17,6 +17,7 @@ TagManager:
   - SwordParticleSystem
   - HalloweenLevel
   - Trap
+  - Portal
   layers:
   - Default
   - TransparentFX
