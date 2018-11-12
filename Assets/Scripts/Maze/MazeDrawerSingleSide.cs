@@ -20,13 +20,13 @@
 
         public void DrawMaze(MazeSlot[,] maze)
         {
-            screen = new T[maze.GetLength(0) * xSize, maze.GetLength(1) * ySize + 1];
+            screen = new T[maze.GetLength(0) * xSize + 1, maze.GetLength(1) * ySize + 1];
 
             for (int y = maze.GetLength(1) - 1; y >= 0; y--)
             {
                 for (int x = 0; x < maze.GetLength(0); x++)
                 {
-                    int screenX = x * xSize;
+                    int screenX = x * xSize + 1;
                     int screenY = y * ySize;
 
                     if (!maze[x, y].DestroyedWalls.Contains(WallPosition.Rigth))
@@ -66,6 +66,8 @@
             {
                 screen[0, y] = Wall;
             }
+
+            screen[0, 0] = Floor;
         }
 
         protected abstract void DrawScreen();

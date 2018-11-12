@@ -45,7 +45,6 @@ void Awake()
 Nice things to understand:
 * The wall of a cell overlaps the wall of the neighboring cell
 * The floor of a cell overlaps the roof of the neighboring cell
-* The **first column of maze cells are with the wrong number of prefabs for the floor/roof** (It is missing one! Its a bug!!)
 * The space between blocks is controlled by `Position scale factor`. Change it to reduce the space and make it looks ok
 
 Here is a maze cell details:
