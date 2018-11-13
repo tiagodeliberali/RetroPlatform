@@ -107,6 +107,7 @@
     <Compile Include="Assets\Scripts\UnityEnvironmentData.cs" />
     <None Include="Assets\BayatGames\DragonWarriorFiles\Read Me.txt" />
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />
+    <None Include="Assets\Scripts\Maze\README.md" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/projetos/RetroPlatform/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

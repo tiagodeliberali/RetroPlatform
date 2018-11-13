@@ -13,7 +13,6 @@ namespace Assets.Scripts.Maze
         {
             if (x <= 1 || y <= 1) throw new ArgumentOutOfRangeException();
             Maze = new MazeSlot[x, y];
-            InitializeMaze();
         }
 
         private void InitializeMaze()
@@ -25,7 +24,15 @@ namespace Assets.Scripts.Maze
                 }
         }
 
-        public void BuildMaze(MazeSlot slot)
+        public MazeSlot[,] Build()
+        {
+            InitializeMaze();
+            BuildMaze(Maze[0, 0]);
+
+            return Maze;
+        }
+
+        private void BuildMaze(MazeSlot slot)
         {
             slot.VisitedByBuilder = true;
             List<MazeSlot> neighbor = GetNeighbor(slot);

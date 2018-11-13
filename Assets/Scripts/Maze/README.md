@@ -18,8 +18,7 @@ First, it creates a Maze with a defined number of horizontal cells and vertical 
           x, // number of horizontal cells
           y  // number of vertical cells
         );
-        builder.BuildMaze(builder.Maze[0, 0]);
-        return builder.Maze;
+        return builder.Build();
     }
 ```
 
