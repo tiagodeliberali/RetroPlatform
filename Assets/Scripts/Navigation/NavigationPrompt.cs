@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RetroPlatform.Navigation
 {
     public class NavigationPrompt : MonoBehaviour
     {
         public Texture2D FadeTexture;
+        public Vector2 GoBackPosition;
 
         UIHelper uiHelper = new UIHelper();
         bool fadeOut;
@@ -15,6 +17,7 @@ namespace RetroPlatform.Navigation
             string destination = tag;
             if (collider.gameObject.CompareTag("Player") && NavigationManager.CanNavigate(destination))
             {
+                GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
                 fadeOut = true;
                 collider.gameObject.SetActive(false);
                 StartCoroutine(MoveToScene(destination));

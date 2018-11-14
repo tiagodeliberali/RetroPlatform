@@ -3,6 +3,7 @@ using RetroPlatform.Battle;
 using RetroPlatform.Conversation;
 using RetroPlatform.Navigation;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RetroPlatform.Levels
 {
@@ -123,6 +124,7 @@ namespace RetroPlatform.Levels
 
         IEnumerator FinishLevel()
         {
+            GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(76.3f, -3f, 0));
             fadeOut = true;
             yield return new WaitForSeconds(1.2f);
             NavigationManager.NavigateTo("Overworld");

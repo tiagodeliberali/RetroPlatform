@@ -1,6 +1,7 @@
 ﻿namespace Assets.Scripts.Maze
 {
     public abstract class MazeDrawerSingleSide<T>
+        where T: class
     {
         T Wall;
         T Floor;
@@ -68,6 +69,12 @@
             }
 
             screen[0, 0] = Floor;
+            screen[screen.GetLength(0) - 1, 0] = Floor;
+
+            for (int y = 1; y < ySize; y++)
+            {
+                screen[screen.GetLength(0) - 1, y] = null;
+            }
         }
 
         protected abstract void DrawScreen();
