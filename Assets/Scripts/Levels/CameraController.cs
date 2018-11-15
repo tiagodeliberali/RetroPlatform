@@ -14,6 +14,9 @@ namespace RetroPlatform.Levels
         public float minXPosition;
         public float maxXPosition;
 
+        public float minYPosition;
+        public float maxYPosition;
+
         GameObject[] backgrounds;
         GameObject[] middlegrounds;
 
@@ -26,9 +29,12 @@ namespace RetroPlatform.Levels
         void LateUpdate()
         {
             float xPosition = Math.Min(Math.Max(player.transform.position.x + xOffset, minXPosition), maxXPosition);
-            transform.position = new Vector3(xPosition, transform.position.y + yOffset, -10);
-            roof.position = new Vector3(player.transform.position.x, roof.transform.position.y, -10);
-            floor.position = new Vector3(player.transform.position.x, floor.transform.position.y, -10);
+            float yPosition = Math.Min(Math.Max(player.transform.position.y + yOffset, minYPosition), maxYPosition);
+
+            transform.position = new Vector3(xPosition, yPosition, -10);
+
+            if (roof != null) roof.position = new Vector3(player.transform.position.x, roof.transform.position.y, -10);
+            if (floor != null) floor.position = new Vector3(player.transform.position.x, floor.transform.position.y, -10);
 
             SetPosition(backgrounds, 2);
             SetPosition(middlegrounds, 6);

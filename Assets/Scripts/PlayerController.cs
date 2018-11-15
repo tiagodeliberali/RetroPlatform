@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using RetroPlatform.Levels;
 using RetroPlatform.Navigation;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace RetroPlatform
 
         public UIController uiController;
         public Texture2D FadeTexture;
+        public bool mapMovement;
 
         void Awake()
         {
@@ -70,7 +72,8 @@ namespace RetroPlatform
 
         void Update()
         {
-            MovePlayer();
+            if (!mapMovement) MovePlayerOnPlatform();
+            else MovePlayerOnMap();
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -116,7 +119,7 @@ namespace RetroPlatform
             uiHelper.FadeOut(fadeOut, FadeTexture);
         }
 
-        void MovePlayer()
+        void MovePlayerOnPlatform()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
                 PlayerCore.Jump();
@@ -126,6 +129,16 @@ namespace RetroPlatform
 
             playerSpriteImage.flipX = PlayerCore.Direction == Direction.Left;
             playerAnim.SetBool("isRunning", PlayerCore.IsRunning);
+        }
+
+        void MovePlayerOnMap()
+        {
+            float velocity = 3f;
+            playerRigidBody2D.velocity = new Vector2(Input.GetAxis("Horizontal") * velocity, Input.GetAxis("Vertical") * velocity);
+            playerAnim.SetBool("isRunning", Math.Pow(Input.GetAxis("Horizontal"), 2) + Math.Pow(Input.GetAxis("Vertical"), 2) != 0);
+
+            if (Input.GetAxis("Horizontal") > 0) playerSpriteImage.flipX = false;
+            else if (Input.GetAxis("Horizontal") < 0) playerSpriteImage.flipX = true;
         }
     }
 }
