@@ -14,6 +14,7 @@ namespace RetroPlatform.Levels
         public BossController bossController;
         public SpriteRenderer map;
         public RandomBattle battleZone;
+        public GameObject bossProtection;
 
         public static bool LevelConcluded
         {
@@ -79,6 +80,7 @@ namespace RetroPlatform.Levels
         {
             if (GameState.BattleResult == BattleResult.Win)
             {
+                bossProtection.SetActive(false);
                 LevelConcluded = true;
                 bossController.RunAway();
             }
