@@ -1752,6 +1752,7 @@ MonoBehaviour:
   enemyScale: 0.3
   background: {fileID: 0}
   FightOnTouch: 0
+  NextBattleName: 1
 --- !u!1001 &671016475
 Prefab:
   m_ObjectHideFlags: 0

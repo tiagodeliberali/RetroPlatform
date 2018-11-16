@@ -44,6 +44,11 @@ namespace RetroPlatform.Battle
 
         void Awake()
         {
+            if (GameState.BattleName == BattleName.None)
+            {
+                throw new UnassignedReferenceException("Should not left BattleName as None");
+            }
+
             battleStateManager = GetComponent<Animator>();
             battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
             battlePanelAnim = IntroPanel.GetComponent<Animator>();
