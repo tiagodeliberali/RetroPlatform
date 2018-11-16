@@ -9,49 +9,43 @@ namespace RetroPlatform.Levels
 {
     public class HalloweenLevelController : MonoBehaviour
     {
-        public static string HALLOWEEN_LEVEL = "EntryLevel";
-
         public UIController uiController;
         public SpriteRenderer hammer;
         public GameObject ghost;
         public GameObject portal;
         public Texture2D FadeTexture;
 
-        const string FIRST_TALK = "FirstTalk";
-        const string GET_HAMMER = "GetHammer";
-        const string PORTAL_DESTROYED = "PortalDestroyed";
-
-        bool HadFirstTalkFact
+        bool PlayerInitialTalk
         {
             get
             {
-                return GameState.GetGameFactBoolean(HALLOWEEN_LEVEL, FIRST_TALK);
+                return GameState.GetGameFactBoolean(GameFact.HalloweenLevelInitialPlayerTalk);
             }
             set
             {
-                GameState.SetGameFact(HALLOWEEN_LEVEL, FIRST_TALK, value);
+                GameState.SetGameFact(GameFact.HalloweenLevelInitialPlayerTalk, value);
             }
         }
-        bool GetHammerFact
+        bool GetPortalDestroyerHammer
         {
             get
             {
-                return GameState.GetGameFactBoolean(HALLOWEEN_LEVEL, GET_HAMMER);
+                return GameState.GetGameFactBoolean(GameFact.GetPortalDestroyerHammer);
             }
             set
             {
-                GameState.SetGameFact(HALLOWEEN_LEVEL, GET_HAMMER, value);
+                GameState.SetGameFact(GameFact.GetPortalDestroyerHammer, value);
             }
         }
         public static bool LevelConcluded
         {
             get
             {
-                return GameState.GetGameFactBoolean(HALLOWEEN_LEVEL, PORTAL_DESTROYED);
+                return GameState.GetGameFactBoolean(GameFact.HalloweenLevelPortalDestroyed);
             }
             set
             {
-                GameState.SetGameFact(HALLOWEEN_LEVEL, PORTAL_DESTROYED, value);
+                GameState.SetGameFact(GameFact.HalloweenLevelPortalDestroyed, value);
             }
         }
         BattleResult GhostsBattleResult
@@ -77,27 +71,25 @@ namespace RetroPlatform.Levels
             uiController.OnFinishConversation += UiController_OnFinishConversation;
             portalController.OnPlayerTouch += Portal_OnPlayerTouch;
 
-            if (!HadFirstTalkFact)
+            if (!PlayerInitialTalk)
             {
                 uiController.StartConversation(conversationComponent.Conversations[0]);
-                HadFirstTalkFact = true;
+                PlayerInitialTalk = true;
             }
             if (GhostsBattleResult == BattleResult.Win)
             {
                 hammer.gameObject.SetActive(false);
                 ghost.SetActive(false);
-                GetHammerFact = true;
             }
             if (LevelConcluded)
             {
-                ghost.SetActive(false);
                 portal.SetActive(false);
             }
         }
 
         private void Portal_OnPlayerTouch()
         {
-            if (GetHammerFact)
+            if (GetPortalDestroyerHammer)
             {
                 uiController.StartConversation(conversationComponent.Conversations[2]);
             }
@@ -134,6 +126,14 @@ namespace RetroPlatform.Levels
             fadeOut = true;
             yield return new WaitForSeconds(1.2f);
             NavigationManager.NavigateTo("Overworld");
+        }
+
+        void Update()
+        {
+            if (GhostsBattleResult == BattleResult.Win && !GetPortalDestroyerHammer)
+            {
+                GetPortalDestroyerHammer = true;
+            }
         }
 
         void OnGUI()

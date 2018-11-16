@@ -83,12 +83,14 @@
     <Compile Include="Assets\Scripts\Conversation\ConversationEntry.cs" />
     <Compile Include="Assets\Scripts\Direction.cs" />
     <Compile Include="Assets\Scripts\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Assets\Scripts\GameFact.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\IEnvironmentData.cs" />
     <Compile Include="Assets\Scripts\Levels\CameraController.cs" />
     <Compile Include="Assets\Scripts\Levels\CoinController.cs" />
     <Compile Include="Assets\Scripts\Levels\EntryLevelController.cs" />
     <Compile Include="Assets\Scripts\Levels\HalloweenLevelController.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelName.cs" />
     <Compile Include="Assets\Scripts\Levels\PortalController.cs" />
     <Compile Include="Assets\Scripts\Maze\MazeBuilder.cs" />
     <Compile Include="Assets\Scripts\Maze\MazeController.cs" />

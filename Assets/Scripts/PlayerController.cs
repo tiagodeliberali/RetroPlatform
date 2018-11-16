@@ -106,7 +106,7 @@ namespace RetroPlatform
             GameState.Lives = PlayerCore.MaxLives;
             if (!EntryLevelController.LevelConcluded)
             {
-                NavigationManager.NavigateTo(EntryLevelController.ENTRY_LEVEL);
+                NavigationManager.NavigateTo(LevelName.EntryLevel);
             }
             else
             {

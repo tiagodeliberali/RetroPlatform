@@ -11,7 +11,7 @@ namespace RetroPlatform
 
         public static string LastSceneName;
         public static Dictionary<string, Vector3> LastScenePositions = new Dictionary<string, Vector3>();
-        public static Dictionary<string, object> GameFacts = new Dictionary<string, object>();
+        public static Dictionary<GameFact, object> GameFacts = new Dictionary<GameFact, object>();
         public static Dictionary<BattleName, BattleResult> BattleResults = new Dictionary<BattleName, BattleResult>();
 
         public static Sprite BattleCollectable;
@@ -21,18 +21,16 @@ namespace RetroPlatform
         public static float BattleMaxEnemyScale;
         public static BattleName BattleName;
 
-        public static bool GetGameFactBoolean(string sceneName, string factName)
+        public static bool GetGameFactBoolean(GameFact factName)
         {
-            string factId = sceneName + "." + factName;
-            object fact = GameState.GameFacts.ReturnIfExists(factId);
+            object fact = GameState.GameFacts.ReturnIfExists(factName);
 
             return fact == null ? false : (bool)fact;
         }
 
-        public static void SetGameFact(string sceneName, string factName, object fact)
+        public static void SetGameFact(GameFact factName, object fact)
         {
-            string factId = sceneName + "." + factName;
-            GameFacts.SetValue(factId, fact);
+            GameFacts.SetValue(factName, fact);
         }
 
         public static Vector3 GetLastScenePosition(string sceneName)

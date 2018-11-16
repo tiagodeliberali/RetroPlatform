@@ -6,10 +6,6 @@ namespace RetroPlatform.Levels
 {
     public class EntryLevelController : MonoBehaviour
     {
-        public static string ENTRY_LEVEL = "EntryLevel";
-        const string FIRST_TALK = "FirstTalk";
-        const string LEFT_SCENE = "BossLeftScene";
-        
         public UIController uiController;
         public BossController bossController;
         public SpriteRenderer map;
@@ -20,22 +16,22 @@ namespace RetroPlatform.Levels
         {
             get
             {
-                return GameState.GetGameFactBoolean(ENTRY_LEVEL, LEFT_SCENE);
+                return GameState.GetGameFactBoolean(GameFact.EntryLevelConcluded);
             }
             set
             {
-                GameState.SetGameFact(ENTRY_LEVEL, LEFT_SCENE, value);
+                GameState.SetGameFact(GameFact.EntryLevelConcluded, value);
             }
         }
         bool HadFirstTalkFact
         {
             get
             {
-                return GameState.GetGameFactBoolean(ENTRY_LEVEL, FIRST_TALK);
+                return GameState.GetGameFactBoolean(GameFact.EntryLevelFirstTalk);
             }
             set
             {
-                GameState.SetGameFact(ENTRY_LEVEL, FIRST_TALK, value);
+                GameState.SetGameFact(GameFact.EntryLevelFirstTalk, value);
             }
         }
         BattleResult BirdsBattleResult
@@ -58,6 +54,7 @@ namespace RetroPlatform.Levels
             if (LevelConcluded)
             {
                 bossController.gameObject.SetActive(false);
+                bossProtection.SetActive(false);
             }
             if (BirdsBattleResult == BattleResult.Win)
             {
