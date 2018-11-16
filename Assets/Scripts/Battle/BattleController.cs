@@ -32,6 +32,7 @@ namespace RetroPlatform.Battle
         Attack attack;
         PlayerCore playerCore;
         Sprite collectable;
+        BattleName battleName;
         List<EnemyController> selectedEnemies = new List<EnemyController>();
         SpriteRenderer background;
         GameObject selectedEnemyPrefab;
@@ -50,6 +51,7 @@ namespace RetroPlatform.Battle
             enemyImage = battlePanelAnim.GetComponentsInChildren<Image>();
             attack = GetComponent<Attack>();
             playerCore = PlayerController.PlayerCore;
+            battleName = GameState.BattleName;
             collectable = GameState.BattleCollectable;
             selectedEnemyPrefab = EnemyPrefabs[GameState.BattleEnemy];
             enemyImage[2].sprite = selectedEnemyPrefab.GetComponent<SpriteRenderer>().sprite;
@@ -213,17 +215,17 @@ namespace RetroPlatform.Battle
                 case BattleState.Battle_Result:
                     if (playerCore.Lives > 0)
                     {
-                        if (CollectableItem != null && GameState.BattleResult == BattleResult.None)
+                        if (CollectableItem != null && GameState.GetBattleResult(battleName) == BattleResult.None)
                         {
                             Vector3 collectablePosition = new Vector3(PlayerController.transform.position.x + 2, PlayerController.transform.position.y + 1);
                             StartCoroutine(MoveObjectToPoint(collectablePosition, CollectableItem, 2f));
                         }
-                        GameState.BattleResult = BattleResult.Win;
+                        GameState.SetBattleResult(battleName, BattleResult.Win);
                         battlePanelAnimText.text = "Você venceu!";
                     }
                     else
                     {
-                        GameState.BattleResult = BattleResult.Lose;
+                        GameState.SetBattleResult(battleName, BattleResult.Lose);
                         battlePanelAnimText.text = "Você perdeu";
                     }
                     battlePanelAnimText.fontSize = 60;
@@ -296,7 +298,7 @@ namespace RetroPlatform.Battle
 
         public void RunAway()
         {
-            GameState.BattleResult = BattleResult.RunAway;
+            GameState.SetBattleResult(battleName, BattleResult.RunAway);
             NavigationManager.NavigateTo(GameState.LastSceneName);
         }
 

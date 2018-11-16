@@ -578,7 +578,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 110896422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.25, y: 3.2, z: 0}
+  m_LocalPosition: {x: 42.25, y: 3.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1088,26 +1088,6 @@ Prefab:
       propertyPath: Player
       value: 
       objectReference: {fileID: 277409302}
-    - target: {fileID: 114648105581437534, guid: 051ffdd7f5b94004c9964d0feeedb193,
-        type: 2}
-      propertyPath: enemy
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114648105581437534, guid: 051ffdd7f5b94004c9964d0feeedb193,
-        type: 2}
-      propertyPath: maxEnemies
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 61191296205368060, guid: 051ffdd7f5b94004c9964d0feeedb193,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114648105581437534, guid: 051ffdd7f5b94004c9964d0feeedb193,
-        type: 2}
-      propertyPath: enemyScale
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 114648105581437534, guid: 051ffdd7f5b94004c9964d0feeedb193,
         type: 2}
       propertyPath: collectable
@@ -3161,7 +3141,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 942306869}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42.37, y: 3.34, z: 0}
+  m_LocalPosition: {x: 42.37, y: 3.58, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 1108501859}

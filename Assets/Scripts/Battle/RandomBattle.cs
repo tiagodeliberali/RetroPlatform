@@ -20,6 +20,7 @@ namespace RetroPlatform.Battle
         public float enemyScale;
         public SpriteRenderer background;
         public bool FightOnTouch = false;
+        public BattleName NextBattleName;
 
         public void DisableZone()
         {
@@ -91,7 +92,7 @@ namespace RetroPlatform.Battle
                 GameState.BattleMaxEnemies = maxEnemies;
                 GameState.BattleMaxEnemyScale = enemyScale;
                 GameState.BattleBackground = background == null ? null : background.sprite;
-                GameState.BattleResult = BattleResult.None;
+                GameState.BattleName = NextBattleName;
                 NavigationManager.NavigateTo(battleSceneName);
             }
         }

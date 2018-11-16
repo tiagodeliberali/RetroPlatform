@@ -54,6 +54,13 @@ namespace RetroPlatform.Levels
                 GameState.SetGameFact(HALLOWEEN_LEVEL, PORTAL_DESTROYED, value);
             }
         }
+        BattleResult GhostsBattleResult
+        {
+            get
+            {
+                return GameState.GetBattleResult(BattleName.HalloweenLevelFishGosts);
+            }
+        }
 
         ConversationComponent conversationComponent;
         PortalController portalController;
@@ -72,11 +79,10 @@ namespace RetroPlatform.Levels
 
             if (!HadFirstTalkFact)
             {
-                GameState.BattleResult = BattleResult.None;
                 uiController.StartConversation(conversationComponent.Conversations[0]);
                 HadFirstTalkFact = true;
             }
-            if (GameState.BattleResult == BattleResult.Win)
+            if (GhostsBattleResult == BattleResult.Win)
             {
                 hammer.gameObject.SetActive(false);
                 ghost.SetActive(false);
@@ -103,7 +109,7 @@ namespace RetroPlatform.Levels
 
         private void UiController_OnFinishConversation()
         {
-            if (GameState.BattleResult == BattleResult.Win)
+            if (GhostsBattleResult == BattleResult.Win)
             {
                 StartCoroutine(DestroyPortal());
             }

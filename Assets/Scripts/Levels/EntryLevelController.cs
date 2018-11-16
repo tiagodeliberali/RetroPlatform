@@ -38,6 +38,13 @@ namespace RetroPlatform.Levels
                 GameState.SetGameFact(ENTRY_LEVEL, FIRST_TALK, value);
             }
         }
+        BattleResult BirdsBattleResult
+        {
+            get
+            {
+                return GameState.GetBattleResult(BattleName.EntryLevelZombieBirds);
+            }
+        }
 
         ConversationComponent conversationComponent;
 
@@ -52,7 +59,7 @@ namespace RetroPlatform.Levels
             {
                 bossController.gameObject.SetActive(false);
             }
-            if (GameState.BattleResult == BattleResult.Win)
+            if (BirdsBattleResult == BattleResult.Win)
             {
                 map.gameObject.SetActive(false);
                 battleZone.DisableZone();
@@ -61,7 +68,7 @@ namespace RetroPlatform.Levels
 
         private void BossController_OnTouchPlayer()
         {
-            if (GameState.BattleResult == BattleResult.Win)
+            if (BirdsBattleResult == BattleResult.Win)
             {
                 uiController.StartConversation(conversationComponent.Conversations[2]);
             }
@@ -78,7 +85,7 @@ namespace RetroPlatform.Levels
 
         void UiController_OnFinishConversation()
         {
-            if (GameState.BattleResult == BattleResult.Win)
+            if (BirdsBattleResult == BattleResult.Win)
             {
                 bossProtection.SetActive(false);
                 LevelConcluded = true;

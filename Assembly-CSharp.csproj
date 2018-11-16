@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Battle\AttackSword.cs" />
     <Compile Include="Assets\Scripts\Battle\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleName.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleResult.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleState.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemy.cs" />
