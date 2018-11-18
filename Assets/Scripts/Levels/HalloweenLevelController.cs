@@ -101,7 +101,7 @@ namespace RetroPlatform.Levels
 
         private void UiController_OnFinishConversation()
         {
-            if (GhostsBattleResult == BattleResult.Win)
+            if (GetPortalDestroyerHammer)
             {
                 StartCoroutine(DestroyPortal());
             }
