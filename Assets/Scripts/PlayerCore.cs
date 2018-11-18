@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Battle;
 using UnityEngine;
 
 namespace RetroPlatform
@@ -16,6 +17,7 @@ namespace RetroPlatform
         public int MaxLives { get; private set; }
         public int Coins { get; private set; }
         public bool Protected { get; private set; }
+        public List<AttackName> Attacks { get; set; }
 
         public delegate void DataChanged();
         public event DataChanged OnLivesChanged;
@@ -30,6 +32,7 @@ namespace RetroPlatform
 
         public PlayerCore()
         {
+            Attacks = new List<AttackName>();
             Direction = Direction.Rigth;
             MaxLives = 8;
         }

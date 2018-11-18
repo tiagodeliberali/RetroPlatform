@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Assets.Scripts.Battle;
 using RetroPlatform.Battle;
 using UnityEngine;
 
@@ -8,6 +10,7 @@ namespace RetroPlatform
     {
         public static int Lives = -1;
         public static int Coins;
+        public static List<AttackName> Attacks;
 
         public static string LastSceneName;
         public static Dictionary<string, Vector3> LastScenePositions = new Dictionary<string, Vector3>();
@@ -48,10 +51,31 @@ namespace RetroPlatform
             BattleResults.SetValue(battle, result);
         }
 
+        internal static void LoadPlayer(PlayerCore playerCore)
+        {
+            if (GameState.Lives == -1) Lives = playerCore.MaxLives;
+            if (GameState.Attacks == null) LoadAttacks();
+
+            playerCore.AddLives(Lives);
+            playerCore.AddCoins(Coins);
+            playerCore.Attacks.Clear();
+            playerCore.Attacks.AddRange(Attacks);
+        }
+
+        private static void LoadAttacks()
+        {
+            GameState.Attacks = new List<AttackName>()
+            {
+                AttackName.Sword,
+                AttackName.Magic
+            };
+        }
+
         public static void UpdatePlayerData(PlayerCore core)
         {
             Lives = core.Lives;
             Coins = core.Coins;
+            Attacks = core.Attacks;
         }
 
         public static void SetLastScene(string sceneName, Vector3 position)

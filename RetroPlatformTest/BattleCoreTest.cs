@@ -318,12 +318,20 @@ namespace RetroPlatformTest
 
         private BaseAttack GetTwoEnemiesRangeAttack()
         {
-            return new AttackMagic();
+            AttackDefinitionInfo info = new AttackDefinitionInfo()
+            {
+                Range = 2
+            };
+            return new BaseAttack(AttackName.Magic, info);
         }
 
         private BaseAttack GetThreeEnemiesRangeAttack()
         {
-            return new AttackBow();
+            AttackDefinitionInfo info = new AttackDefinitionInfo()
+            {
+                Range = 3
+            };
+            return new BaseAttack(AttackName.Bow, info);
         }
 
         private void CountByStrength(BattleCore battle, int expectedCount, EnemyStrength strength)

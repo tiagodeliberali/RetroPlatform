@@ -36,7 +36,7 @@ namespace RetroPlatform.Battle
         Text battlePanelAnimText;
         Image[] enemyImage;
         GameObject attackParticle;
-        Attack attack;
+        AttackController attack;
         PlayerCore playerCore;
         SpriteRenderer background;
         
@@ -93,13 +93,9 @@ namespace RetroPlatform.Battle
             battlePanelAnimText = battlePanelAnim.GetComponentInChildren<Text>();
             enemyImage = battlePanelAnim.GetComponentsInChildren<Image>();
             enemyImage[2].sprite = battleDefinition.Info.EnemyPoster;
-            attack = GetComponent<Attack>();
+            attack = GetComponent<AttackController>();
             attack.OnAttackSelected += (attack) => battleCore.ChooseAttack(attack);
-        }
-
-        private void BattleAnimatorView_OnStatusChanged(BattleState state)
-        {
-            throw new System.NotImplementedException();
+            attack.LoadAttacks(playerCore);
         }
 
         private void SetBackground()

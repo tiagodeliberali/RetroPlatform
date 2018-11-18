@@ -1,16 +1,24 @@
-﻿namespace Assets.Scripts.Battle
+﻿using System.Linq;
+using RetroPlatform.Battle;
+
+namespace Assets.Scripts.Battle
 {
-    public abstract class BaseAttack
+    public class BaseAttack
     {
-        public int HitAmount { get; private set; }
-        public int EnemiesRange { get; private set; }
+        public AttackName Name { get; private set; }
+        public AttackDefinitionInfo Info { get; private set; }
         public bool Locked { get; set; }
 
-        public BaseAttack(int hitAmount, int enemiesRange)
+        public BaseAttack(AttackName name, AttackDefinitionInfo info)
         {
-            HitAmount = hitAmount;
-            EnemiesRange = enemiesRange;
+            Name = name;
+            Info = info;
         }
 
+        public static BaseAttack GetAttack(AttackName name, AttackDefinitionInfo[] attackDefinitions)
+        {
+            AttackDefinitionInfo info = attackDefinitions.First(x => x.Name == name);
+            return new BaseAttack(name, info);
+        }
     }
 }

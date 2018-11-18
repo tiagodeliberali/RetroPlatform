@@ -62,10 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AnimatorView.cs" />
-    <Compile Include="Assets\Scripts\Battle\Attack.cs" />
-    <Compile Include="Assets\Scripts\Battle\Attacks\AttackBow.cs" />
-    <Compile Include="Assets\Scripts\Battle\Attacks\AttackMagic.cs" />
-    <Compile Include="Assets\Scripts\Battle\Attacks\AttackSword.cs" />
+    <Compile Include="Assets\Scripts\Battle\AttackController.cs" />
+    <Compile Include="Assets\Scripts\Battle\Attacks\AttackName.cs" />
     <Compile Include="Assets\Scripts\Battle\Attacks\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleCore.cs" />
@@ -73,6 +71,8 @@
     <Compile Include="Assets\Scripts\Battle\BattleName.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleResult.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleState.cs" />
+    <Compile Include="Assets\Scripts\Battle\Definitions\AttackDefinitionArray.cs" />
+    <Compile Include="Assets\Scripts\Battle\Definitions\AttackDefinitionInfo.cs" />
     <Compile Include="Assets\Scripts\Battle\Definitions\BattleDefinitionArray.cs" />
     <Compile Include="Assets\Scripts\Battle\Definitions\BattleDefinitionInfo.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemies\Enemy.cs" />

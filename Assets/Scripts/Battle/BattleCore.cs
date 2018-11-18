@@ -51,7 +51,7 @@ namespace RetroPlatform.Battle
 
             if (EnemiesUderAttack == null) EnemiesUderAttack = new HashSet<Enemy>();
 
-            if (EnemiesUderAttack.Count < CurrentAttack.EnemiesRange)
+            if (EnemiesUderAttack.Count < CurrentAttack.Info.Range)
             {
                 EnemiesUderAttack.Add(enemy);
                 if (OnEnemySelected != null) OnEnemySelected(enemy);
@@ -59,7 +59,7 @@ namespace RetroPlatform.Battle
 
             CurrentAttack.Locked = true;
 
-            if ((EnemiesUderAttack.Count == CurrentAttack.EnemiesRange || EnemiesUderAttack.Count == Enemies.Count)
+            if ((EnemiesUderAttack.Count == CurrentAttack.Info.Range || EnemiesUderAttack.Count == Enemies.Count)
                 && OnReadyToAttack != null)
                 OnReadyToAttack();
         }
@@ -88,7 +88,7 @@ namespace RetroPlatform.Battle
         {
             foreach (var enemy in EnemiesUderAttack)
             {
-                enemy.GetDamage(CurrentAttack.HitAmount);
+                enemy.GetDamage(CurrentAttack.Info.Damage);
             }
 
             EnemiesUderAttack.Clear();

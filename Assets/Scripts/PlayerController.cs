@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using Assets.Scripts.Battle;
 using RetroPlatform.Levels;
 using RetroPlatform.Navigation;
 using UnityEngine;
@@ -47,9 +49,7 @@ namespace RetroPlatform
                 uiController.OnFinishConversation += () => PlayerCore.FinishConversation();
             }
 
-            if (GameState.Lives == -1) GameState.Lives = PlayerCore.MaxLives;
-            PlayerCore.AddLives(GameState.Lives);
-            PlayerCore.AddCoins(GameState.Coins);
+            GameState.LoadPlayer(PlayerCore);
 
             PlayerCore.OnPlayerDie += PlayerCore_OnPlayerDie;
             PlayerCore.OnPlayerProtected += PlayerCore_OnPlayerProtected;
