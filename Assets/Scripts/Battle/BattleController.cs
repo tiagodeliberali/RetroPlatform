@@ -42,7 +42,7 @@ namespace RetroPlatform.Battle
         
         BattleDefinition battleDefinition;
         BattleCore battleCore;
-        Dictionary<Enemy, EnemyController> enemyControllerDictionary = new Dictionary<Enemy, EnemyController>();
+        Dictionary<EnemyCore, EnemyController> enemyControllerDictionary = new Dictionary<EnemyCore, EnemyController>();
 
         void Awake()
         {
@@ -69,7 +69,7 @@ namespace RetroPlatform.Battle
             StartCoroutine(AttackTarget());
         }
 
-        private void BattleCore_OnEnemySelected(Enemy enemy)
+        private void BattleCore_OnEnemySelected(EnemyCore enemy)
         {
             DrawSelectionCircle(enemyControllerDictionary[enemy]);
         }
@@ -137,7 +137,7 @@ namespace RetroPlatform.Battle
 
                 var enemyController = newEnemy.GetComponent<EnemyController>();
                 enemyController.BattleController = this;
-                enemyController.EnemyProfile = enemy;
+                enemyController.EnemyCore = enemy;
 
                 enemy.OnDie += Enemy_OnDie;
                 enemy.OnRunAway += Enemy_OnRunAway;
@@ -150,13 +150,13 @@ namespace RetroPlatform.Battle
             battleStateManager.SetBool("IntroFinished", true);
         }
 
-        private void Enemy_OnRunAway(Enemy enemy)
+        private void Enemy_OnRunAway(EnemyCore enemy)
         {
             EnemyController controller = enemyControllerDictionary[enemy];
             StartCoroutine(MoveObjectToPoint(new Vector3(1300, controller.transform.position.y, controller.transform.position.z), controller.gameObject, 0.1f));
         }
 
-        private void Enemy_OnDie(Enemy enemy)
+        private void Enemy_OnDie(EnemyCore enemy)
         {
             EnemyController controller = enemyControllerDictionary[enemy];
             controller.gameObject.SetActive(false);

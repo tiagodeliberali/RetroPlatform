@@ -7,12 +7,12 @@ namespace RetroPlatform.Battle
 {
     public class BattleCore
     {
-        public HashSet<Enemy> Enemies { get; set; }
+        public HashSet<EnemyCore> Enemies { get; set; }
         public BaseAttack CurrentAttack { get; private set; }
-        public HashSet<Enemy> EnemiesUderAttack { get; private set; }
+        public HashSet<EnemyCore> EnemiesUderAttack { get; private set; }
 
         public event Action OnReadyToAttack;
-        public event Action<Enemy> OnEnemySelected;
+        public event Action<EnemyCore> OnEnemySelected;
 
         private IEnvironmentData environmentData;
         private BattleDefinition battleDefinition;
@@ -27,10 +27,10 @@ namespace RetroPlatform.Battle
         {
             int enemyCount = environmentData.GetRandom(battleDefinition.Info.MinEnemies, battleDefinition.Info.MaxEnemies);
 
-            Enemies = new HashSet<Enemy>();
+            Enemies = new HashSet<EnemyCore>();
             for (int i = 0; i < enemyCount; i++)
             {
-                Enemy enemy = BuildEnemy(i);
+                EnemyCore enemy = BuildEnemy(i);
                 
                 enemy.OnSelectToBeAttacked += IncludeToBeAttacked;
                 enemy.OnDie += RemoveEnemy;
@@ -40,16 +40,16 @@ namespace RetroPlatform.Battle
             }
         }
 
-        private void RemoveEnemy(Enemy enemy)
+        private void RemoveEnemy(EnemyCore enemy)
         {
             Enemies.Remove(enemy);
         }
 
-        private void IncludeToBeAttacked(Enemy enemy)
+        private void IncludeToBeAttacked(EnemyCore enemy)
         {
             if (CurrentAttack == null) return;
 
-            if (EnemiesUderAttack == null) EnemiesUderAttack = new HashSet<Enemy>();
+            if (EnemiesUderAttack == null) EnemiesUderAttack = new HashSet<EnemyCore>();
 
             if (EnemiesUderAttack.Count < CurrentAttack.Info.Range)
             {
@@ -64,7 +64,7 @@ namespace RetroPlatform.Battle
                 OnReadyToAttack();
         }
 
-        private Enemy BuildEnemy(int createdQuantity)
+        private EnemyCore BuildEnemy(int createdQuantity)
         {
             if (createdQuantity == 0)
                 return battleDefinition.EnemyBuilder.BuildWeakEnemy();

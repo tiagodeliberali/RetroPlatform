@@ -98,9 +98,9 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(4);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
-            Enemy enemy2 = battle.Enemies.ElementAt(1);
-            Enemy enemy3 = battle.Enemies.ElementAt(2);
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy2 = battle.Enemies.ElementAt(1);
+            EnemyCore enemy3 = battle.Enemies.ElementAt(2);
 
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -155,10 +155,10 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(6);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.First();
-            Enemy enemySelected = null;
+            EnemyCore enemy1 = battle.Enemies.First();
+            EnemyCore enemySelected = null;
 
-            battle.OnEnemySelected += (Enemy enemy) => enemySelected = enemy;
+            battle.OnEnemySelected += (EnemyCore enemy) => enemySelected = enemy;
 
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -173,12 +173,12 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(6);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
-            Enemy enemy2 = battle.Enemies.ElementAt(1);
-            Enemy enemy3 = battle.Enemies.ElementAt(2);
-            List<Enemy> enemiesSelected = new List<Enemy>();
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy2 = battle.Enemies.ElementAt(1);
+            EnemyCore enemy3 = battle.Enemies.ElementAt(2);
+            List<EnemyCore> enemiesSelected = new List<EnemyCore>();
 
-            battle.OnEnemySelected += (Enemy enemy) => enemiesSelected.Add(enemy);
+            battle.OnEnemySelected += (EnemyCore enemy) => enemiesSelected.Add(enemy);
 
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -194,13 +194,13 @@ namespace RetroPlatformTest
         public void SelectingEnemiesWithoutAttackShouldNotCallOnEnemySelected()
         {
             BaseAttack attackTwoEnemiesRange = GetTwoEnemiesRangeAttack();
-            Enemy enemySelected = null;
+            EnemyCore enemySelected = null;
 
             BattleCore battle = BuildBattle(6);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.First();
+            EnemyCore enemy1 = battle.Enemies.First();
 
-            battle.OnEnemySelected += (Enemy enemy) => enemySelected = enemy;
+            battle.OnEnemySelected += (EnemyCore enemy) => enemySelected = enemy;
 
             enemy1.SelectToBeAttacked();
 
@@ -214,8 +214,8 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(4);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
-            Enemy enemy2 = battle.Enemies.ElementAt(1);
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy2 = battle.Enemies.ElementAt(1);
             
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -233,8 +233,8 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(4);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
-            Enemy enemy2 = battle.Enemies.ElementAt(1);
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy2 = battle.Enemies.ElementAt(1);
 
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -251,8 +251,8 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(4);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
-            Enemy enemy2 = battle.Enemies.ElementAt(1);
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy2 = battle.Enemies.ElementAt(1);
 
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -269,8 +269,8 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(4);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
-            Enemy enemy2 = battle.Enemies.ElementAt(1);
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy2 = battle.Enemies.ElementAt(1);
 
             battle.ChooseAttack(attackTwoEnemiesRange);
             enemy1.SelectToBeAttacked();
@@ -289,7 +289,7 @@ namespace RetroPlatformTest
 
             BattleCore battle = BuildBattle(4);
             battle.LoadEnemies();
-            Enemy enemy1 = battle.Enemies.ElementAt(0);
+            EnemyCore enemy1 = battle.Enemies.ElementAt(0);
             
             enemy1.RunAway();
             

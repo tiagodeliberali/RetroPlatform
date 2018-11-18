@@ -2,17 +2,17 @@
 
 namespace RetroPlatform.Battle.Enemies
 {
-    public abstract class Enemy
+    public abstract class EnemyCore
     {
         public int Health { get; set; }
         public int Attack { get; set; }
         public EnemyStrength Strength { get; set; }
 
-        public event Action<Enemy> OnSelectToBeAttacked;
-        public event Action<Enemy> OnRunAway;
-        public event Action<Enemy> OnDie;
+        public event Action<EnemyCore> OnSelectToBeAttacked;
+        public event Action<EnemyCore> OnRunAway;
+        public event Action<EnemyCore> OnDie;
 
-        public Enemy()
+        public EnemyCore()
         {
             Strength = EnemyStrength.Normal;
         }

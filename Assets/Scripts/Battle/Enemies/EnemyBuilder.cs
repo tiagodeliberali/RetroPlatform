@@ -3,14 +3,14 @@
 namespace RetroPlatform.Battle.Enemies
 {
     public class EnemyBuilder<T> : IEnemyBuilder
-        where T : Enemy, new()
+        where T : EnemyCore, new()
     {
-        Enemy IEnemyBuilder.BuildNormalEnemy()
+        EnemyCore IEnemyBuilder.BuildNormalEnemy()
         {
             return new T();
         }
 
-        Enemy IEnemyBuilder.BuildStrongEnemy()
+        EnemyCore IEnemyBuilder.BuildStrongEnemy()
         {
             T enemy = new T();
             enemy.Health = (int)Math.Round(enemy.Health * 1.2f);
@@ -20,7 +20,7 @@ namespace RetroPlatform.Battle.Enemies
             return enemy;
         }
 
-        Enemy IEnemyBuilder.BuildWeakEnemy()
+        EnemyCore IEnemyBuilder.BuildWeakEnemy()
         {
             T enemy = new T();
             enemy.Health = (int)Math.Round(enemy.Health * 0.7f);

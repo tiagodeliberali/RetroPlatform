@@ -14,7 +14,7 @@ namespace RetroPlatform
         private CanvasGroup lifeCanvasGroup;
         
         public AnimationCurve SpawnAnimationCurve;
-        public Enemy EnemyProfile;
+        public EnemyCore EnemyCore;
         public BattleController BattleController;
         public GameObject LifeCanvas;
         
@@ -48,36 +48,36 @@ namespace RetroPlatform
 
         void OnMouseDown()
         {
-            EnemyProfile.SelectToBeAttacked();
+            EnemyCore.SelectToBeAttacked();
         }
 
         void CheckRunAway(EnemyBattleState status)
         {
             if (status == EnemyBattleState.Run_Away)
             {
-                EnemyProfile.RunAway();
+                EnemyCore.RunAway();
             }
         }
 
         void UpdateLives()
         {
-            if (EnemyProfile != null)
+            if (EnemyCore != null)
             {
                 if (lifeSlider.maxValue == 0)
                 {
-                    lifeSlider.maxValue = EnemyProfile.Health;
+                    lifeSlider.maxValue = EnemyCore.Health;
                     lifeCanvasGroup.alpha = 1;
                 }
 
-                lifeSlider.value = EnemyProfile.Health;
+                lifeSlider.value = EnemyCore.Health;
             }
         }
 
         void UpdateAI()
         {
-            if (enemyAI != null && EnemyProfile != null)
+            if (enemyAI != null && EnemyCore != null)
             {
-                enemyAI.SetInteger("EnemyHealth", EnemyProfile.Health);
+                enemyAI.SetInteger("EnemyHealth", EnemyCore.Health);
                 enemyAI.SetInteger("PlayerHealth", playerController.PlayerCore.Lives);
                 enemyAI.SetInteger("EnemiesInBattle", BattleController.EnemyCount);
                 enemyAI.SetBool("PlayerSeen", true);

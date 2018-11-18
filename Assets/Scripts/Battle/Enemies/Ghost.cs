@@ -1,6 +1,6 @@
 ﻿namespace RetroPlatform.Battle.Enemies
 {
-    public class Ghost : Enemy
+    public class Ghost : EnemyCore
     {
         public Ghost()
         {

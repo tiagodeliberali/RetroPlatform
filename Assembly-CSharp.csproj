@@ -75,8 +75,8 @@
     <Compile Include="Assets\Scripts\Battle\Definitions\AttackDefinitionInfo.cs" />
     <Compile Include="Assets\Scripts\Battle\Definitions\BattleDefinitionArray.cs" />
     <Compile Include="Assets\Scripts\Battle\Definitions\BattleDefinitionInfo.cs" />
-    <Compile Include="Assets\Scripts\Battle\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemies\EnemyBuilder.cs" />
+    <Compile Include="Assets\Scripts\Battle\Enemies\EnemyCore.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemies\EnemyStrength.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemies\Ghost.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemies\IEnemyBuilder.cs" />

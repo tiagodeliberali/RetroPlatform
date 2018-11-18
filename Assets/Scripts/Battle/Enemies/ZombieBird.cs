@@ -1,6 +1,6 @@
 ﻿namespace RetroPlatform.Battle.Enemies
 {
-    public class ZombieBird : Enemy
+    public class ZombieBird : EnemyCore
     {
         public ZombieBird()
         {

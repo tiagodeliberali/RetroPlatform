@@ -2,8 +2,8 @@
 {
     public interface IEnemyBuilder
     {
-        Enemy BuildNormalEnemy();
-        Enemy BuildStrongEnemy();
-        Enemy BuildWeakEnemy();
+        EnemyCore BuildNormalEnemy();
+        EnemyCore BuildStrongEnemy();
+        EnemyCore BuildWeakEnemy();
     }
 }
