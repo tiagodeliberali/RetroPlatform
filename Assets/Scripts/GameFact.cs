@@ -2,6 +2,7 @@
 {
     public enum GameFact
     {
+        None,
         EntryLevelConcluded,
         EntryLevelFirstTalk,
         HalloweenLevelInitialPlayerTalk,

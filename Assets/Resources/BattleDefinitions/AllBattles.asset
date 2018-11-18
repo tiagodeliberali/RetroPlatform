@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2f95001cfb13e42a769f759822c56b, type: 3}
+  m_Name: AllBattles
+  m_EditorClassIdentifier: 
+  BattleDefinitions:
+  - Name: 1
+    Collectable: {fileID: 21300000, guid: 940aa7fc56bc08e41aad8cb58c7d23ca, type: 3}
+    EnemyPrefab: {fileID: 1102801710275946, guid: ed826b23dcd528a4d9e92d0533eeea20,
+      type: 2}
+    Background: {fileID: 21300000, guid: abda5725a6f5dd44596b6d18d291c4b6, type: 3}
+    EnemyPoster: {fileID: 21300000, guid: 6d75d10c48629ec418c3983ab3d572f0, type: 3}
+    EnemyScale: 0.3
+    MinEnemies: 3
+    MaxEnemies: 6
+  - Name: 2
+    Collectable: {fileID: 21300000, guid: 50cc78ccd608415429dd023db01e14a9, type: 3}
+    EnemyPrefab: {fileID: 1584244613927616, guid: 051ffdd7f5b94004c9964d0feeedb193,
+      type: 2}
+    Background: {fileID: 21300000, guid: f705fe23cf18d4346a41aa56c133677c, type: 3}
+    EnemyPoster: {fileID: 21300008, guid: 83d47cb41b5eaba40ac9a55e7e2e38f8, type: 3}
+    EnemyScale: 0.6
+    MinEnemies: 2
+    MaxEnemies: 4

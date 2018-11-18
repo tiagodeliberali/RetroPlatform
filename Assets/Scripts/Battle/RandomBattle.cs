@@ -14,11 +14,6 @@ namespace RetroPlatform.Battle
         public int SecondsBetweenBattles;
         public Vector2 GoBackPosition;
         public PlayerController Player;
-        public SpriteRenderer collectable;
-        public int enemy;
-        public int maxEnemies;
-        public float enemyScale;
-        public SpriteRenderer background;
         public bool FightOnTouch = false;
         public BattleName NextBattleName;
 
@@ -87,11 +82,6 @@ namespace RetroPlatform.Battle
             if (encounterChance <= BattleProbability)
             {
                 GameState.SetLastScene(SceneManager.GetActiveScene().name, new Vector3(GoBackPosition.x, GoBackPosition.y, 0));
-                GameState.BattleCollectable = collectable == null ? null : collectable.sprite;
-                GameState.BattleEnemy = enemy;
-                GameState.BattleMaxEnemies = maxEnemies;
-                GameState.BattleMaxEnemyScale = enemyScale;
-                GameState.BattleBackground = background == null ? null : background.sprite;
                 GameState.BattleName = NextBattleName;
                 NavigationManager.NavigateTo(battleSceneName);
             }

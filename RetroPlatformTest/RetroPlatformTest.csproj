@@ -64,6 +64,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BattleCoreTest.cs" />
+    <Compile Include="BattleDefinitionTest.cs" />
     <Compile Include="PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironmentData.cs" />

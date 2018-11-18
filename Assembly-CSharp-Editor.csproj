@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Editor\BattleDefinitionAssetCreator.cs" />
     <Compile Include="Assets\Scripts\Editor\ConversationAssetCreator.cs" />
     <Compile Include="Assets\Scripts\Editor\CustomAssetUtility.cs" />
     <Reference Include="UnityEditor.StandardEvents">

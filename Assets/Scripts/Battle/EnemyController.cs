@@ -1,5 +1,5 @@
-﻿using System;
-using RetroPlatform.Battle;
+﻿using RetroPlatform.Battle;
+using RetroPlatform.Battle.Enemies;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,17 +12,12 @@ namespace RetroPlatform
         private AnimatorView<EnemyBattleState> enemyAnimatorView;
         private Slider lifeSlider;
         private CanvasGroup lifeCanvasGroup;
-        private bool canBeSelected;
-
+        
         public AnimationCurve SpawnAnimationCurve;
         public Enemy EnemyProfile;
         public BattleController BattleController;
         public GameObject LifeCanvas;
         public EnemyBattleState CurrentSatus;
-
-        public event Action<EnemyController> OnEnemySelected;
-        public event Action<EnemyController> OnEnemyDie;
-        public event Action<EnemyController> OnEnemyRunAway;
 
         public Text DebugInfo;
 
@@ -38,31 +33,30 @@ namespace RetroPlatform
             life.transform.SetParent(gameObject.transform);
             lifeSlider = life.GetComponent<Canvas>().GetComponentInChildren<Slider>();
             lifeCanvasGroup = life.GetComponent<CanvasGroup>();
-            canBeSelected = true;
         }
 
         void Update()
         {
-            CurrentSatus = enemyAnimatorView.GetCurrentStatus();
+            if (CurrentSatus != enemyAnimatorView.GetCurrentStatus())
+            {
+                CurrentSatus = enemyAnimatorView.GetCurrentStatus();
+                CheckRunAway();
+            }
 
-            CheckRunAway();
             UpdateAI();
             UpdateLives();
         }
 
         void OnMouseDown()
         {
-            if (!canBeSelected) return;
-            canBeSelected = false;
-            if (OnEnemySelected != null) OnEnemySelected(this);
+            EnemyProfile.SelectToBeAttacked();
         }
 
         void CheckRunAway()
         {
-            if (OnEnemyRunAway != null && CurrentSatus == EnemyBattleState.Run_Away)
+            if (CurrentSatus == EnemyBattleState.Run_Away)
             {
-                OnEnemyRunAway(this);
-                OnEnemyRunAway = null;
+                EnemyProfile.RunAway();
             }
         }
 
@@ -77,7 +71,6 @@ namespace RetroPlatform
                 }
 
                 lifeSlider.value = EnemyProfile.Health;
-                if (EnemyProfile.Health <= 0 && OnEnemyDie != null) OnEnemyDie(this);
             }
         }
 
@@ -91,12 +84,6 @@ namespace RetroPlatform
                 enemyAI.SetBool("PlayerSeen", true);
                 enemyAI.SetBool("PlayerAttacking", BattleController.CurrentBattleState != Battle.BattleState.Enemy_Attack);
             }
-        }
-
-        public void GetDamage(int hitAmount)
-        {
-            EnemyProfile.GetDamage(hitAmount);
-            canBeSelected = true;
         }
     }
 }

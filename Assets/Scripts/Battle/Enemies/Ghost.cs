@@ -1,8 +1,8 @@
-﻿namespace RetroPlatform
+﻿namespace RetroPlatform.Battle.Enemies
 {
-    public class EnemyGhost : Enemy
+    public class Ghost : Enemy
     {
-        public EnemyGhost()
+        public Ghost()
         {
             EnemyName = "Ghost";
             Health = 5;

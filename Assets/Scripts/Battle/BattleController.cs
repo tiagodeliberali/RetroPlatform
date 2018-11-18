@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using RetroPlatform.Battle.Enemies;
 using RetroPlatform.Navigation;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,6 @@ namespace RetroPlatform.Battle
     public class BattleController : MonoBehaviour
     {
         public GameObject[] EnemySpawnPoints;
-        public GameObject[] EnemyPrefabs;
         public AnimationCurve SpawnAnimationCurve;
         public CanvasGroup Buttons;
         public PlayerController PlayerController;
@@ -17,9 +17,16 @@ namespace RetroPlatform.Battle
         public GameObject SwordParticle;
         public GameObject SelectionCircle;
         public GameObject CollectableItem;
+        public BattleDefinitionArray BattleDefinitionArray;
 
         public BattleState CurrentBattleState { get; private set; }
-        public int EnemyCount { get; private set; }
+        public int EnemyCount
+        {
+            get
+            {
+                return battleCore == null ? 0 : battleCore.Enemies.Count;
+            }
+        }
 
         public Text DebugInfo;
 
@@ -31,55 +38,75 @@ namespace RetroPlatform.Battle
         GameObject attackParticle;
         Attack attack;
         PlayerCore playerCore;
-        Sprite collectable;
-        BattleName battleName;
-        List<EnemyController> selectedEnemies = new List<EnemyController>();
         SpriteRenderer background;
-        GameObject selectedEnemyPrefab;
-
-        bool attacking = false;
-        bool canSelectEnemy;
-        bool canBeAttacked;
-        int enemyAttackForce;
+        
+        BattleDefinition battleDefinition;
+        BattleCore battleCore;
+        Dictionary<Enemy, EnemyController> enemyControllerDictionary = new Dictionary<Enemy, EnemyController>();
 
         void Awake()
         {
             if (GameState.BattleName == BattleName.None)
-            {
                 throw new UnassignedReferenceException("Should not left BattleName as None");
-            }
 
+            battleDefinition = BattleDefinition.GetBattle(GameState.BattleName, BattleDefinitionArray.BattleDefinitions);
+            
+            playerCore = PlayerController.PlayerCore;
+            playerCore.StartConversation();
+
+            battleCore = new BattleCore(battleDefinition, new UnityEnvironmentData());
+            battleCore.OnReadyToAttack += BattleCore_OnReadyToAttack;
+            battleCore.OnEnemySelected += BattleCore_OnEnemySelected;
+
+            LoadComponents();
+            LoadCollectable();
+            SetBackground();
+        }
+
+        private void BattleCore_OnReadyToAttack()
+        {
+            battleStateManager.SetBool("PlayerReady", true);
+            StartCoroutine(AttackTarget());
+        }
+
+        private void BattleCore_OnEnemySelected(Enemy enemy)
+        {
+            DrawSelectionCircle(enemyControllerDictionary[enemy]);
+        }
+
+        private void DrawSelectionCircle(EnemyController enemy)
+        {
+            var selectionCircleInstance = Instantiate(SelectionCircle);
+            selectionCircleInstance.transform.parent = enemy.transform;
+            selectionCircleInstance.transform.localPosition = new Vector3(0f, -1f, 0f);
+            selectionCircleInstance.transform.localScale = new Vector3(4f, 4f, 1f);
+            selectionCircleInstance.tag = "SelectionCircle";
+            StartCoroutine("SpinObject", selectionCircleInstance);
+        }
+
+        private void LoadComponents()
+        {
             battleStateManager = GetComponent<Animator>();
             battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
             battlePanelAnim = IntroPanel.GetComponent<Animator>();
             battlePanelAnimText = battlePanelAnim.GetComponentInChildren<Text>();
             enemyImage = battlePanelAnim.GetComponentsInChildren<Image>();
+            enemyImage[2].sprite = battleDefinition.Info.EnemyPoster;
             attack = GetComponent<Attack>();
-            playerCore = PlayerController.PlayerCore;
-            battleName = GameState.BattleName;
-            collectable = GameState.BattleCollectable;
-            selectedEnemyPrefab = EnemyPrefabs[GameState.BattleEnemy];
-            enemyImage[2].sprite = selectedEnemyPrefab.GetComponent<SpriteRenderer>().sprite;
-
-            LoadCollectable();
-            playerCore.StartConversation();
-
-            SetBackground();
+            attack.OnAttackSelected += (attack) => battleCore.ChooseAttack(attack);
         }
 
         private void SetBackground()
         {
-            if (GameState.BattleBackground == null) return;
-
             background = GetComponentInChildren<SpriteRenderer>();
-            background.sprite = GameState.BattleBackground;
+            background.sprite = battleDefinition.Info.Background;
         }
 
         private void LoadCollectable()
         {
-            if (collectable)
+            if (battleDefinition.Info.Collectable)
             {
-                CollectableItem.GetComponent<SpriteRenderer>().sprite = collectable;
+                CollectableItem.GetComponent<SpriteRenderer>().sprite = battleDefinition.Info.Collectable;
             }
             else
             {
@@ -89,76 +116,53 @@ namespace RetroPlatform.Battle
 
         void Start()
         {
-            int minEnemies = 2;
-            int maxEnemies = System.Math.Max(minEnemies, GameState.BattleMaxEnemies == 0 ? EnemySpawnPoints.Length : GameState.BattleMaxEnemies);
-            EnemyCount = Random.Range(minEnemies, maxEnemies);
+            battleCore.LoadEnemies();
             StartCoroutine(SpawnEnemies());
         }
 
-        IEnumerator SpawnEnemies()
+        private IEnumerator SpawnEnemies()
         {
             battleStateManager.SetBool("BattleReady", true);
+            int position = 0;
 
-            for (int i = 0; i < EnemyCount; i++)
+            foreach (var enemy in battleCore.Enemies)
             {
-                var newEnemy = (GameObject)Instantiate(selectedEnemyPrefab);
+                var newEnemy = Instantiate(battleDefinition.Info.EnemyPrefab);
                 newEnemy.transform.position = new Vector3(10, -1, 0);
-                newEnemy.transform.localScale = new Vector3(GameState.BattleMaxEnemyScale, GameState.BattleMaxEnemyScale, 0);
-                yield return StartCoroutine(MoveObjectToPoint(EnemySpawnPoints[i].transform.position, newEnemy, 1));
-                newEnemy.transform.parent = EnemySpawnPoints[i].transform;
+                newEnemy.transform.localScale = new Vector3(battleDefinition.Info.EnemyScale, battleDefinition.Info.EnemyScale, 0);
+                yield return StartCoroutine(MoveObjectToPoint(EnemySpawnPoints[position].transform.position, newEnemy, 1));
+                newEnemy.transform.parent = EnemySpawnPoints[position].transform;
 
                 var enemyController = newEnemy.GetComponent<EnemyController>();
                 enemyController.BattleController = this;
-                enemyController.OnEnemySelected += EnemyController_OnEnemySelected;
-                enemyController.OnEnemyDie += EnemyController_OnEnemyDie;
-                enemyController.OnEnemyRunAway += EnemyController_OnEnemyRunAway;
                 enemyController.DebugInfo = DebugInfo;
+                enemyController.EnemyProfile = enemy;
 
-                var EnemyProfile = Enemy.GetByName(selectedEnemyPrefab.name);
-                EnemyProfile.name = EnemyProfile.EnemyName + " " + i.ToString();
-                enemyAttackForce += EnemyProfile.Attack;
+                enemy.OnDie += Enemy_OnDie;
+                enemy.OnRunAway += Enemy_OnRunAway;
 
-                enemyController.EnemyProfile = EnemyProfile;
+                enemyControllerDictionary.Add(enemy, enemyController);
+
+                position++;
             }
 
             battleStateManager.SetBool("IntroFinished", true);
         }
 
-        void EnemyController_OnEnemyRunAway(EnemyController enemy)
+        private void Enemy_OnRunAway(Enemy enemy)
         {
-            enemyAttackForce -= enemy.EnemyProfile.Attack;
-            EnemyCount--;
-            StartCoroutine(MoveObjectToPoint(new Vector3(1300, enemy.transform.position.y, enemy.transform.position.z), enemy.gameObject, 0.1f));
+            EnemyController controller = enemyControllerDictionary[enemy];
+            StartCoroutine(MoveObjectToPoint(new Vector3(1300, controller.transform.position.y, controller.transform.position.z), controller.gameObject, 0.1f));
         }
 
-        void EnemyController_OnEnemyDie(EnemyController enemy)
+        private void Enemy_OnDie(Enemy enemy)
         {
-            enemyAttackForce -= enemy.EnemyProfile.Attack;
-            EnemyCount--;
-            enemy.gameObject.SetActive(false);
-            Destroy(enemy);
+            EnemyController controller = enemyControllerDictionary[enemy];
+            controller.gameObject.SetActive(false);
+            Destroy(controller);
         }
 
-        void EnemyController_OnEnemySelected(EnemyController enemy)
-        {
-            if (!canSelectEnemy) return;
-            attack.Lock();
-
-            var selectionCircleInstance = Instantiate(SelectionCircle);
-            selectionCircleInstance.transform.parent = enemy.transform;
-            selectionCircleInstance.transform.localPosition = new Vector3(0f, -1f, 0f);
-            selectionCircleInstance.transform.localScale = new Vector3(4f, 4f, 1f);
-            selectionCircleInstance.tag = "SelectionCircle";
-            StartCoroutine("SpinObject", selectionCircleInstance);
-            SelectEnemy(enemy);
-
-            if (attack.IsReadyToAttack(selectedEnemies.Count) || selectedEnemies.Count == EnemyCount)
-            {
-                battleStateManager.SetBool("PlayerReady", true);
-            }
-        }
-
-        IEnumerator MoveObjectToPoint(Vector3 destination, GameObject gameObject, float speed)
+        private IEnumerator MoveObjectToPoint(Vector3 destination, GameObject gameObject, float speed)
         {
             float timer = 0f;
             var StartPosition = gameObject.transform.position;
@@ -177,7 +181,7 @@ namespace RetroPlatform.Battle
             }
         }
 
-        IEnumerator SpinObject(GameObject target)
+        private IEnumerator SpinObject(GameObject target)
         {
             while (true)
             {
@@ -188,49 +192,49 @@ namespace RetroPlatform.Battle
 
         void Update()
         {
-            CurrentBattleState = battleAnimatorView.GetCurrentStatus();
+            if (CurrentBattleState != battleAnimatorView.GetCurrentStatus())
+            {
+                CurrentBattleState = battleAnimatorView.GetCurrentStatus();
+                ExecuteBattleStateAction();
+            }
+
             if (DebugInfo != null) DebugInfo.text = CurrentBattleState.ToString();
 
+            DisplayPlayerHUD();
+        }
+
+        private void ExecuteBattleStateAction()
+        {
             switch (CurrentBattleState)
             {
                 case BattleState.Intro:
                     battlePanelAnim.SetTrigger("Intro");
                     break;
                 case BattleState.Player_Move:
-                    canSelectEnemy = attack.ReadyToAttack;
                     break;
                 case BattleState.Player_Attack:
-                    canSelectEnemy = false;
-                    if (!attacking && attack.ReadyToAttack) StartCoroutine(AttackTarget());
                     break;
                 case BattleState.Change_Control:
-                    ClearEnemySelection();
-                    canBeAttacked = true;
                     break;
                 case BattleState.Enemy_Attack:
-                    if (canBeAttacked && EnemyCount > 0)
-                    {
-                        int damage = Random.Range(0, EnemyCount) * enemyAttackForce / EnemyCount;
-                        Debug.Log("Damage: " + damage);
-                        playerCore.GetDamage(damage);
-                    }
-                    canBeAttacked = false;
-                    battleStateManager.SetBool("BattleReady", EnemyCount > 0);
+                    battleCore.AttackPlayer(playerCore);
+                    battleStateManager.SetBool("BattleReady", battleCore.Enemies.Count > 0);
+                    attack.ClearAttack();
                     break;
                 case BattleState.Battle_Result:
                     if (playerCore.Lives > 0)
                     {
-                        if (CollectableItem != null && GameState.GetBattleResult(battleName) == BattleResult.None)
+                        if (CollectableItem != null && battleDefinition.Result == BattleResult.None)
                         {
                             Vector3 collectablePosition = new Vector3(PlayerController.transform.position.x + 2, PlayerController.transform.position.y + 1);
                             StartCoroutine(MoveObjectToPoint(collectablePosition, CollectableItem, 2f));
                         }
-                        GameState.SetBattleResult(battleName, BattleResult.Win);
+                        battleDefinition.Result = BattleResult.Win;
                         battlePanelAnimText.text = "Você venceu!";
                     }
                     else
                     {
-                        GameState.SetBattleResult(battleName, BattleResult.Lose);
+                        battleDefinition.Result = BattleResult.Lose;
                         battlePanelAnimText.text = "Você perdeu";
                     }
                     battlePanelAnimText.fontSize = 60;
@@ -242,27 +246,9 @@ namespace RetroPlatform.Battle
                 default:
                     break;
             }
-
-            DisplayPlayerHUD();
         }
 
-        void ClearEnemySelection()
-        {
-            StopCoroutine("SpinObject");
-
-            DestroyGameObjects("SelectionCircle");
-            DestroyGameObjects("SwordParticleSystem");
-
-            selectedEnemies.Clear();
-        }
-
-        void DestroyGameObjects(string tag)
-        {
-            var gameObjectList = GameObject.FindGameObjectsWithTag(tag);
-            foreach (var target in gameObjectList) Destroy(target);
-        }
-
-        void DisplayPlayerHUD()
+        private void DisplayPlayerHUD()
         {
             if (CurrentBattleState == BattleState.Player_Move)
             {
@@ -278,38 +264,42 @@ namespace RetroPlatform.Battle
             }
         }
 
-        IEnumerator AttackTarget()
+        private IEnumerator AttackTarget()
         {
-            attacking = true;
             yield return new WaitForSeconds(1);
-
-            foreach (var target in selectedEnemies)
+            
+            foreach (var target in battleCore.EnemiesUderAttack)
             {
                 attackParticle = Instantiate(SwordParticle);
                 attackParticle.tag = "SwordParticleSystem";
-
-                if (attackParticle != null)
-                {
-                    attackParticle.transform.position = target.transform.position;
-                }
-                yield return new WaitForSeconds(1);
-                target.GetDamage(attack.CurrentAttack.HitAmount);
+                attackParticle.transform.position = enemyControllerDictionary[target].transform.position;
+                yield return new WaitForSeconds(0.5f);
             }
-            attack.ClearAttack();
-            attacking = false;
-            battleStateManager.SetBool("NoMoreEnemies", EnemyCount == 0);
+
+            yield return new WaitForSeconds(2);
+            battleCore.AttackEnemies();
+            battleStateManager.SetBool("NoMoreEnemies", battleCore.Enemies.Count == 0);
             battleStateManager.SetBool("PlayerReady", false);
+            ClearEnemySelection();
+        }
+
+        private void ClearEnemySelection()
+        {
+            StopCoroutine("SpinObject");
+            DestroyGameObjects("SelectionCircle");
+            DestroyGameObjects("SwordParticleSystem");
+        }
+
+        private void DestroyGameObjects(string tag)
+        {
+            var gameObjectList = GameObject.FindGameObjectsWithTag(tag);
+            foreach (var target in gameObjectList) Destroy(target);
         }
 
         public void RunAway()
         {
-            GameState.SetBattleResult(battleName, BattleResult.RunAway);
+            battleDefinition.Result = BattleResult.RunAway;
             NavigationManager.NavigateTo(GameState.LastSceneName);
-        }
-
-        public void SelectEnemy(EnemyController enemy)
-        {
-            selectedEnemies.Add(enemy);
         }
     }
 }

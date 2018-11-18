@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Battle;
+﻿using System;
+using Assets.Scripts.Battle;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,15 +7,17 @@ namespace RetroPlatform.Battle
 {
     public class Attack : MonoBehaviour
     {
-        bool locked;
         public Button sword;
         public Button bow;
         public Button magic;
-        public BaseAttack CurrentAttack;
+
+        public event Action<BaseAttack> OnAttackSelected;
+
+        private BaseAttack currentAttack;
 
         void Awake()
         {
-            CurrentAttack = null;
+            currentAttack = null;
             HighlightButton();
         }
 
@@ -36,51 +39,32 @@ namespace RetroPlatform.Battle
         private void SelectAttack<T>()
             where T : BaseAttack, new()
         {
-            if (locked) return;
-            CurrentAttack = new T();
+            if (currentAttack != null && currentAttack.Locked) return;
+            currentAttack = new T();
             AttackSelected();
         }
 
         private void AttackSelected()
         {
             HighlightButton();
+            if (OnAttackSelected != null) OnAttackSelected(currentAttack);
         }
 
         void HighlightButton()
         {
-            if (CurrentAttack is AttackSword) sword.GetComponent<Outline>().enabled = true;
+            if (currentAttack is AttackSword) sword.GetComponent<Outline>().enabled = true;
             else sword.GetComponent<Outline>().enabled = false;
 
-            if (CurrentAttack is AttackBow) bow.GetComponent<Outline>().enabled = true;
+            if (currentAttack is AttackBow) bow.GetComponent<Outline>().enabled = true;
             else bow.GetComponent<Outline>().enabled = false;
 
-            if (CurrentAttack is AttackMagic) magic.GetComponent<Outline>().enabled = true;
+            if (currentAttack is AttackMagic) magic.GetComponent<Outline>().enabled = true;
             else magic.GetComponent<Outline>().enabled = false;
-        }
-
-        public bool ReadyToAttack
-        {
-            get
-            {
-                return CurrentAttack != null;
-            }
-        }
-
-        public bool IsReadyToAttack(int count)
-        {
-            return count >= CurrentAttack.EnemiesRange;
         }
 
         public void ClearAttack()
         {
-            CurrentAttack = null;
-            HighlightButton();
-            locked = false;
-        }
-
-        public void Lock()
-        {
-            locked = true;
+            currentAttack = null;
         }
     }
 }

@@ -4,6 +4,7 @@
     {
         public int HitAmount { get; private set; }
         public int EnemiesRange { get; private set; }
+        public bool Locked { get; set; }
 
         public BaseAttack(int hitAmount, int enemiesRange)
         {

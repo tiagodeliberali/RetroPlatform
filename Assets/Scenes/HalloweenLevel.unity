@@ -1093,6 +1093,11 @@ Prefab:
       propertyPath: collectable
       value: 
       objectReference: {fileID: 110896423}
+    - target: {fileID: 114648105581437534, guid: 051ffdd7f5b94004c9964d0feeedb193,
+        type: 2}
+      propertyPath: NextBattleName
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 051ffdd7f5b94004c9964d0feeedb193, type: 2}
   m_IsPrefabAsset: 0
