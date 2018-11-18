@@ -17,8 +17,7 @@ namespace RetroPlatform
         public Enemy EnemyProfile;
         public BattleController BattleController;
         public GameObject LifeCanvas;
-        public EnemyBattleState CurrentSatus;
-
+        
         public EnemyBattleState BattleState { get; private set; }
 
         void Awake()
@@ -26,6 +25,7 @@ namespace RetroPlatform
             playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             enemyAI = GetComponent<Animator>();
             enemyAnimatorView = new AnimatorView<EnemyBattleState>(enemyAI);
+            enemyAnimatorView.OnStatusChanged += BattleStateChanged;
 
             var life = Instantiate(LifeCanvas.gameObject);
             life.transform.SetParent(gameObject.transform);
@@ -33,13 +33,14 @@ namespace RetroPlatform
             lifeCanvasGroup = life.GetComponent<CanvasGroup>();
         }
 
+        private void BattleStateChanged(EnemyBattleState status)
+        {
+            CheckRunAway(status);
+        }
+
         void Update()
         {
-            if (CurrentSatus != enemyAnimatorView.GetCurrentStatus())
-            {
-                CurrentSatus = enemyAnimatorView.GetCurrentStatus();
-                CheckRunAway();
-            }
+            enemyAnimatorView.GetCurrentStatus();
 
             UpdateAI();
             UpdateLives();
@@ -50,9 +51,9 @@ namespace RetroPlatform
             EnemyProfile.SelectToBeAttacked();
         }
 
-        void CheckRunAway()
+        void CheckRunAway(EnemyBattleState status)
         {
-            if (CurrentSatus == EnemyBattleState.Run_Away)
+            if (status == EnemyBattleState.Run_Away)
             {
                 EnemyProfile.RunAway();
             }

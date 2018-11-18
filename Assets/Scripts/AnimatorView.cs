@@ -8,6 +8,9 @@ namespace RetroPlatform.Battle
     {
         Animator animator;
         Dictionary<int, T> animatorStateHash = new Dictionary<int, T>();
+        T currentStatus;
+
+        public event Action<T> OnStatusChanged;
 
         public AnimatorView(Animator animator)
         {
@@ -26,11 +29,20 @@ namespace RetroPlatform.Battle
         public T GetCurrentStatus()
         {
             var hashName = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+            T newStatus;
 
             if (animatorStateHash.ContainsKey(hashName))
-                return animatorStateHash[hashName];
+                newStatus = animatorStateHash[hashName];
+            else
+                newStatus = default(T);
 
-            return default(T);
+            if (!newStatus.Equals(currentStatus))
+            {
+                currentStatus = newStatus;
+                if (OnStatusChanged != null) OnStatusChanged(currentStatus);
+            }
+
+            return currentStatus;
         }
     }
 }

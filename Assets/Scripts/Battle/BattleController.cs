@@ -88,12 +88,18 @@ namespace RetroPlatform.Battle
         {
             battleStateManager = GetComponent<Animator>();
             battleAnimatorView = new AnimatorView<BattleState>(battleStateManager);
+            battleAnimatorView.OnStatusChanged += ExecuteBattleStateAction;
             battlePanelAnim = IntroPanel.GetComponent<Animator>();
             battlePanelAnimText = battlePanelAnim.GetComponentInChildren<Text>();
             enemyImage = battlePanelAnim.GetComponentsInChildren<Image>();
             enemyImage[2].sprite = battleDefinition.Info.EnemyPoster;
             attack = GetComponent<Attack>();
             attack.OnAttackSelected += (attack) => battleCore.ChooseAttack(attack);
+        }
+
+        private void BattleAnimatorView_OnStatusChanged(BattleState state)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void SetBackground()
@@ -191,20 +197,14 @@ namespace RetroPlatform.Battle
 
         void Update()
         {
-            if (CurrentBattleState != battleAnimatorView.GetCurrentStatus())
-            {
-                CurrentBattleState = battleAnimatorView.GetCurrentStatus();
-                ExecuteBattleStateAction();
-            }
-
-            if (DebugInfo != null) DebugInfo.text = CurrentBattleState.ToString();
-
-            DisplayPlayerHUD();
+            CurrentBattleState = battleAnimatorView.GetCurrentStatus();
         }
 
-        private void ExecuteBattleStateAction()
+        private void ExecuteBattleStateAction(BattleState state)
         {
-            switch (CurrentBattleState)
+            if (DebugInfo != null) DebugInfo.text = state.ToString();
+
+            switch (state)
             {
                 case BattleState.Intro:
                     battlePanelAnim.SetTrigger("Intro");
@@ -245,11 +245,13 @@ namespace RetroPlatform.Battle
                 default:
                     break;
             }
+
+            DisplayPlayerHUD(state);
         }
 
-        private void DisplayPlayerHUD()
+        private void DisplayPlayerHUD(BattleState state)
         {
-            if (CurrentBattleState == BattleState.Player_Move)
+            if (state == BattleState.Player_Move)
             {
                 Buttons.alpha = 1;
                 Buttons.interactable = true;
