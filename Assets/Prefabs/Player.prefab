@@ -264,7 +264,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &61409973223014646
 BoxCollider2D:
@@ -361,6 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiController: {fileID: 114388192036285792}
   FadeTexture: {fileID: 2800000, guid: c45fc24c18193874ba872c3ad0b9b418, type: 3}
+  mapMovement: 0
 --- !u!114 &114170470596809928
 MonoBehaviour:
   m_ObjectHideFlags: 1

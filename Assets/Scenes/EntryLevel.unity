@@ -1746,11 +1746,6 @@ MonoBehaviour:
   SecondsBetweenBattles: 10
   GoBackPosition: {x: 12, y: 3}
   Player: {fileID: 1379869095}
-  collectable: {fileID: 675877791}
-  enemy: 0
-  maxEnemies: 9
-  enemyScale: 0.3
-  background: {fileID: 0}
   FightOnTouch: 0
   NextBattleName: 1
 --- !u!1001 &671016475
@@ -5592,6 +5587,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1421544190380958, guid: c86583243ddbdb243b249b9bd21a2e85, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50383496809857638, guid: c86583243ddbdb243b249b9bd21a2e85,
+        type: 2}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50383496809857638, guid: c86583243ddbdb243b249b9bd21a2e85,
+        type: 2}
+      propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
