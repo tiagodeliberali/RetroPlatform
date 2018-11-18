@@ -24,8 +24,6 @@ namespace RetroPlatform.Battle
 
         public void LoadAttacks(PlayerCore player)
         {
-            GameState.LoadPlayer(player);
-
             foreach (var attack in player.Attacks)
             {
                 BaseAttack baseAttack = BaseAttack.GetAttack(attack, AttackDefinitions.AttackDefinitions);

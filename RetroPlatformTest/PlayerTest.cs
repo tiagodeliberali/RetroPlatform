@@ -289,6 +289,18 @@ namespace RetroPlatformTest
         }
 
         [Fact]
+        public void OnDamageWithoutProtectionShouldNotProtectedFromNewDamage()
+        {
+            var player = CreateUser();
+
+            player.AddLives(5);
+            player.GetDamageWithoutProtection(3);
+            
+            Assert.Equal(2, player.Lives);
+            Assert.False(player.Protected);
+        }
+
+        [Fact]
         public void OnFInishProtectionShouldGetDamaged()
         {
             var player = CreateUser();
@@ -317,6 +329,22 @@ namespace RetroPlatformTest
             player.GetDamage(3);
 
             Assert.True(playerProtected);
+        }
+
+        [Fact]
+        public void OnGetDamageWithoutProtectionShouldNotExecuteOnProtected()
+        {
+            bool playerProtected = false;
+            var player = CreateUser();
+            player.OnPlayerProtected += delegate ()
+            {
+                playerProtected = true;
+            };
+
+            player.AddLives(5);
+            player.GetDamageWithoutProtection(3);
+
+            Assert.False(playerProtected);
         }
 
         [Fact]
@@ -424,10 +452,7 @@ namespace RetroPlatformTest
 
         private PlayerCore CreateUser()
         {
-            var player = new PlayerCore
-            {
-                EnvironmentData = new TestEnvironmentData()
-            };
+            var player = new PlayerCore(new TestEnvironmentData());
             return player;
         }
     }

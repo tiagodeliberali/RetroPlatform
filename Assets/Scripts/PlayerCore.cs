@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Battle;
 using UnityEngine;
 
@@ -24,14 +25,15 @@ namespace RetroPlatform
         public event DataChanged OnPlayerDie;
         public event DataChanged OnPlayerProtected;
         public event DataChanged OnCoinsChanged;
-        public IEnvironmentData EnvironmentData;
 
+        IEnvironmentData EnvironmentData;
         float movePlayerHorizontal;
         int currentJump = 0;
         bool isTalking;
 
-        public PlayerCore()
+        public PlayerCore(IEnvironmentData environmentData)
         {
+            EnvironmentData = environmentData;
             Attacks = new List<AttackName>();
             Direction = Direction.Rigth;
             MaxLives = 8;
@@ -91,11 +93,16 @@ namespace RetroPlatform
         {
             if (damage > 0 && !Protected)
             {
-                Lives -= damage;
-                CallLifeEvents();
+                GetDamageWithoutProtection(damage);
                 Protected = true;
                 if (OnPlayerProtected != null) OnPlayerProtected();
             }
+        }
+
+        public void GetDamageWithoutProtection(int damage)
+        {
+            Lives -= damage;
+            CallLifeEvents();
         }
 
         public void AddCoins(int coins)

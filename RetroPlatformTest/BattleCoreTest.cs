@@ -308,12 +308,31 @@ namespace RetroPlatformTest
             environmentData.RandomBoolResults.Push(true);
             environmentData.RandomBoolResults.Push(false);
 
-            PlayerCore player = new PlayerCore();
+            PlayerCore player = new PlayerCore(new TestEnvironmentData());
             player.AddLives(5);
 
             battle.AttackPlayer(player);
 
             Assert.Equal(3, player.Lives);
+        }
+
+        [Fact]
+        public void DuringBattlePlayerShouldNotGetProtected()
+        {
+            BattleCore battle = BuildBattle(4);
+            battle.LoadEnemies();
+
+            environmentData.RandomBoolResults.Push(true);
+            environmentData.RandomBoolResults.Push(false);
+            environmentData.RandomBoolResults.Push(true);
+            environmentData.RandomBoolResults.Push(false);
+
+            PlayerCore player = new PlayerCore(new TestEnvironmentData());
+            player.AddLives(5);
+
+            battle.AttackPlayer(player);
+
+            Assert.False(player.Protected);
         }
 
         private BaseAttack GetTwoEnemiesRangeAttack()

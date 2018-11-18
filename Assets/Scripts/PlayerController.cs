@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Battle;
 using RetroPlatform.Levels;
 using RetroPlatform.Navigation;
 using UnityEngine;
@@ -18,12 +16,12 @@ namespace RetroPlatform
         UIHelper uiHelper = new UIHelper();
         bool fadeOut;
 
-        PlayerCore _core;
+        private PlayerCore _core;
         public PlayerCore PlayerCore
         {
             get
             {
-                if (_core == null) _core = new PlayerCore();
+                if (_core == null) _core = GameState.LoadPlayer();
                 return _core;
             }
         }
@@ -38,8 +36,6 @@ namespace RetroPlatform
             playerAnim = (Animator)GetComponent(typeof(Animator));
             playerSpriteImage = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
 
-            PlayerCore.EnvironmentData = new UnityEnvironmentData();
-
             if (uiController != null)
             {
                 PlayerCore.OnLivesChanged += () => uiController.UpdateLives(PlayerCore.Lives, PlayerCore.MaxLives);
@@ -47,9 +43,10 @@ namespace RetroPlatform
 
                 uiController.OnStartConversation += () => PlayerCore.StartConversation();
                 uiController.OnFinishConversation += () => PlayerCore.FinishConversation();
-            }
 
-            GameState.LoadPlayer(PlayerCore);
+                uiController.UpdateLives(PlayerCore.Lives, PlayerCore.MaxLives);
+                uiController.UpdateCoins(PlayerCore.Coins);
+            }
 
             PlayerCore.OnPlayerDie += PlayerCore_OnPlayerDie;
             PlayerCore.OnPlayerProtected += PlayerCore_OnPlayerProtected;

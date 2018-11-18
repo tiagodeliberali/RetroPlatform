@@ -51,15 +51,19 @@ namespace RetroPlatform
             BattleResults.SetValue(battle, result);
         }
 
-        internal static void LoadPlayer(PlayerCore playerCore)
+        internal static PlayerCore LoadPlayer()
         {
-            if (GameState.Lives == -1) Lives = playerCore.MaxLives;
-            if (GameState.Attacks == null) LoadAttacks();
+            PlayerCore playerCore = new PlayerCore(new UnityEnvironmentData());
+
+            if (Lives == -1) Lives = playerCore.MaxLives;
+            if (Attacks == null) LoadAttacks();
 
             playerCore.AddLives(Lives);
             playerCore.AddCoins(Coins);
             playerCore.Attacks.Clear();
             playerCore.Attacks.AddRange(Attacks);
+
+            return playerCore;
         }
 
         private static void LoadAttacks()

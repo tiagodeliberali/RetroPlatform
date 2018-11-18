@@ -103,7 +103,7 @@ namespace RetroPlatform.Battle
             {
                 damage += environmentData.RandomBool() ? enemy.Attack : 0;
             }
-            player.GetDamage(damage);
+            player.GetDamageWithoutProtection(damage);
         }
     }
 }
