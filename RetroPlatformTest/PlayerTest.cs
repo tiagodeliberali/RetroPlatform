@@ -276,6 +276,19 @@ namespace RetroPlatformTest
         }
 
         [Fact]
+        public void OnGetZeroDamageShouldNotProtectedFromNewDamage()
+        {
+            var player = CreateUser();
+
+            player.AddLives(5);
+            player.GetDamage(0);
+            player.GetDamage(3);
+
+            Assert.Equal(2, player.Lives);
+            Assert.True(player.Protected);
+        }
+
+        [Fact]
         public void OnFInishProtectionShouldGetDamaged()
         {
             var player = CreateUser();

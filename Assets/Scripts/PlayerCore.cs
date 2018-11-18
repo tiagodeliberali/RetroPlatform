@@ -89,7 +89,7 @@ namespace RetroPlatform
 
         public void GetDamage(int damage)
         {
-            if (!Protected)
+            if (damage > 0 && !Protected)
             {
                 Lives -= damage;
                 CallLifeEvents();
