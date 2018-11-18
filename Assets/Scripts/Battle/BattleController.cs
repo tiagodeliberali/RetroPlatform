@@ -135,7 +135,6 @@ namespace RetroPlatform.Battle
 
                 var enemyController = newEnemy.GetComponent<EnemyController>();
                 enemyController.BattleController = this;
-                enemyController.DebugInfo = DebugInfo;
                 enemyController.EnemyProfile = enemy;
 
                 enemy.OnDie += Enemy_OnDie;

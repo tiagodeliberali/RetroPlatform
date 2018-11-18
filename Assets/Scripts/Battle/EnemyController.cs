@@ -19,8 +19,6 @@ namespace RetroPlatform
         public GameObject LifeCanvas;
         public EnemyBattleState CurrentSatus;
 
-        public Text DebugInfo;
-
         public EnemyBattleState BattleState { get; private set; }
 
         void Awake()
