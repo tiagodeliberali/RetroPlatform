@@ -320,7 +320,8 @@ namespace RetroPlatformTest
         {
             AttackDefinitionInfo info = new AttackDefinitionInfo()
             {
-                Range = 2
+                Range = 2,
+                Damage = 4
             };
             return new BaseAttack(AttackName.Magic, info);
         }
@@ -329,7 +330,8 @@ namespace RetroPlatformTest
         {
             AttackDefinitionInfo info = new AttackDefinitionInfo()
             {
-                Range = 3
+                Range = 3,
+                Damage = 2
             };
             return new BaseAttack(AttackName.Bow, info);
         }
