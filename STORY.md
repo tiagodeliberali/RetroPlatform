@@ -1,10 +1,13 @@
 # Prefácio
 
 Ao final de um pedido de ajuda, quando ela retomou o labirinto sagrado do povo da montanha das garras de baratas, ratos e de uma medusa, a lider daquele povo lhe mostrou um futuro sombrio.
-Através de sonhos tão reais quanto a dor da batalha, a pirata Alice viu o zumbi cabeça de abóbora destruindo sua cidade natal, com um exército de zumbis, robos malvados e papagaios zumbis, todos invadindo a cidade através de portais expalhados por toda a terra.
+Através de sonhos tão reais quanto a batalha, a pirata Alice viu o zumbi cabeça de abóbora destruindo sua cidade natal, com um exército de zumbis, robos malvados e papagaios zumbis, através de portais expalhados por toda a terra.
 Nesse sonho, ela via o povo dragão lutando para salvar o reino lado a lado com outros povos que habitavam pacificamente todo aquele lugar.
 Ao acordar, a lider do povo das montanhas confirmou que aquilo não era apenas um sonho, mas uma visão que a estava perseguindo faziam meses.
-Não havia mais tempo! Ela precisava avisar a todos para se prepararem.
+Não havia mais tempo a perder! Ela precisava avisar a todos para se prepararem.
+
+
+## Prelúidio
 
 No final da grande guerra, quando o povo zumbi, liderado pelo cabeça de abóbora, foi expulso para além dos mares vermelhos, todos acreditavam que eles buscariam vingança. As terras pacificas eram um grande continente, separado por mares violentos por todos os lados.
 Como ele era protegido por uma muralha natural de vulcões seguidos de um grande deserto da morte, todos acreditavam que o ataque seria uma volta pelo mar.
@@ -12,11 +15,11 @@ Para se preparar contra esse acontecimento tido como certo pelos reis das terras
 A pirata Alice fazia parte da elite desse exército. Sua inteligencia e habilidades fizeram com que ela se destacasse rapidamente, se tornando parte da marinha real do reino dos humanos.
 
 Mas, agora, tudo estava claro. O plano do zumbi cabeça de abóbora era completamente inesperado! Através do uso de magia, ele iria abrir portais por toda a terra pacífica e sua invasão pegaria todos de surpresa. E que armas eram aquelas que estavam usando? Que criaturas malignas faziam parte daquele ataque que agora povoava sua imaginação sem tréguas?
-O desafio a sua frente era muito grande. Primeiro, precisaria chegar o mais rapido possível ao reino humano e, a partir dali, avisar todos os povos para se prepararem para o conflito que se aproximava. Por outro lado, quem acreditaria nela? Mesmo seus anos como oficial renomada da marinha pareciam pouco agora para trazer uma notícia tão catastrófica: todo o preparo para impedir a invazão zumbi tinha sido na direção errada. Isso colocava muitos estrategistas em posição dificil.
+O desafio a sua frente era muito grande. Primeiro, precisaria chegar o mais rápido possível ao reino humano e, a partir dali, avisar todos os povos para se prepararem para o conflito que se aproximava. Por outro lado, quem acreditaria nela? Mesmo seus anos como oficial renomada da marinha pareciam pouco agora para trazer uma notícia tão catastrófica: todo o preparo para impedir a invazão zumbi tinha sido na direção errada. Isso colocava muitos estrategistas em posição difícil.
 
 Mas não havia alternativas. A notícia precisava se espalhar. Quem sabe o povo dragão já soubesse e também estivesse se preparando? Ela precisava partir imediatamente e, na medida que avançava para casa, precisaria destruir o maximo de portais que conseguisse.
 
-Enquanto isso, o círculo de ansiões do mal, reunidos dentro do exército do zumbi cabeça de abóbora estavam abrindo, pouco a pouco, as fendas para a terra pacífica. O reino não tinha dado muita atenção aos relatos de fantasmas que hora apareciam, vampiros e papagaios zumbis que eram avistados aqui e acola. Tudo era tratado como histórias para assustar crianças. Pouco a pouco, a magia má estava ocupando seu espaço dentro da terra pacífica e os portais estavam sendo construidos e testados, tudo aguardando o grande pesadelo que seria a invasão.
+Enquanto isso, o círculo de ansiões do mal, reunidos dentro do exército do zumbi cabeça de abóbora estavam abrindo, pouco a pouco, as fendas para a terra pacífica. O reino não tinha dado muita atenção aos relatos de fantasmas que hora apareciam, vampiros e papagaios zumbis que eram avistados em um vilarejo distante ou alguma caverna esquecida. Tudo era tratado como histórias para assustar crianças. Pouco a pouco, a magia má estava ocupando seu espaço dentro da terra pacífica e os portais estavam sendo construidos e testados, tudo aguardando o grande pesadelo que seria a invasão.
 
 
 ## Reflexo no jogo:
