@@ -1,7 +1,7 @@
 # Prefácio
 
 Ao final de um pedido de ajuda, quando ela retomou o labirinto sagrado do povo da montanha das garras de baratas, ratos e de uma medusa, a lider daquele povo lhe mostrou um futuro sombrio.
-Através de sonhos tão reais quanto a batalha, a pirata Alice viu o zumbi cabeça de abóbora destruindo sua cidade natal, com um exército de zumbis, robos malvados e papagaios zumbis, através de portais expalhados por toda a terra.
+Através de sonhos tão reais quanto uma batalha, a pirata Alice viu o zumbi cabeça de abóbora destruindo sua cidade natal, com um exército de zumbis, robos malvados e papagaios zumbis, através de portais expalhados por toda a terra.
 Nesse sonho, ela via o povo dragão lutando para salvar o reino lado a lado com outros povos que habitavam pacificamente todo aquele lugar.
 Ao acordar, a lider do povo das montanhas confirmou que aquilo não era apenas um sonho, mas uma visão que a estava perseguindo faziam meses.
 Não havia mais tempo a perder! Ela precisava avisar a todos para se prepararem.
